@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8382d109b4b9c34492e6a7aaf78ecc2, type: 3}
   m_Name: SmallBoids
   m_EditorClassIdentifier: 
-  minSpeed: 3
-  maxSpeed: 10
-  perceptionRadius: 2.5
+  minSpeed: 2.25
+  maxSpeed: 7.76
+  perceptionRadius: 0.9
   avoidanceRadius: 1
   maxSteerForce: 3
   alignWeight: 0.57
@@ -23,7 +23,7 @@ MonoBehaviour:
   targetWeight: 3
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 513
-  boundsRadius: 0.12
-  avoidCollisionWeight: 12
+    m_Bits: 1
+  boundsRadius: 0.06
+  avoidCollisionWeight: 11.4
   collisionAvoidDst: 8

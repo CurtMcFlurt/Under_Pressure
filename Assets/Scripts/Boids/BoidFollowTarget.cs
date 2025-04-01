@@ -8,11 +8,12 @@ public class BoidFollowTarget : MonoBehaviour
     public bool checkIfInside; 
    private BoidManager boidManager;
     public int boidCounter;
+    public GameObject huntTransform;
     private void OnDisable()
     {
         if (checkIfInside) {
           
-            boidManager.targets.Remove(this.gameObject);
+            boidManager.targets.Remove(huntTransform);
         }
     }
     // Update is called once per frame
@@ -32,12 +33,13 @@ public class BoidFollowTarget : MonoBehaviour
         if (fishBowlCollider != null)
         {
             fishBowlCollider.gameObject.TryGetComponent<BoidManager>(out var M);
+            
             boidManager = M;
             if (fishBowlCollider.bounds.Contains(transform.position))
             {
                 checkIfInside = true;
 
-                boidManager.targets.Add(this.gameObject);
+                boidManager.targets.Add(huntTransform);
 
                 foreach(var c in boidManager.boids)
                 {

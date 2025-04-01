@@ -15,8 +15,8 @@ TagManager:
   - FishBowl
   - LightInteracting
   - Player
-  - 
-  - 
+  - Monster
+  - EnterFishCollider
   - 
   - 
   - 

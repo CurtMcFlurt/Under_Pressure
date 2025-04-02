@@ -24,7 +24,7 @@ public static class Bezier
     {
         t = Mathf.Clamp01(t); // Ensure t is within [0, 1]
         float oneMinusT = 1 - t;
-        return oneMinusT * oneMinusT * p0 + 2 * oneMinusT * t * p1 + t * t * p2;
+        return oneMinusT * oneMinusT *p0 + 2 * oneMinusT * t * p1 + t * t * p2;
     }
 
     public static List<Vector3> BezirPath(List<Vector3> points, float pathIntervalLeangth, LayerMask layer, float playerThickness)
@@ -87,14 +87,14 @@ public static class Bezier
         for (int i = 0; i < originalPoints.Count - 1; i++)
         {
             //Creates amount of midPoints between points i and i+1 based on input:ed 'List<float>'s .Count, for each originalPoint, @ List<float>[i]% of point i and i+1
-            //List<Vector3> tempMidPoints = CreateMidPoints(originalPoints[i], originalPoints[i+1], new List<float> { 0.33f, 0.66f });
+            List<Vector3> tempMidPoints = CreateMidPoints(originalPoints[i], originalPoints[i+1], new List<float> { 0.33f, 0.66f });
 
             int draw1 = i;
             int draw2 = i + 1;
 
 
 
-            List<Vector3> tempMidPoints = CreateMidPointsBasedOnDistance(originalPoints[draw1], originalPoints[draw2]);
+            //List<Vector3> tempMidPoints = CreateMidPointsBasedOnDistance(originalPoints[draw1], originalPoints[draw2]);
 
 
             foreach (var v in tempMidPoints)
@@ -585,7 +585,9 @@ public static class Bezier
                 if (inputList[i].Item2 == inputList[i + 1].Item2)
                 {
                     Vector3 middle = (VectorFix.returnVector3With0Y(inputList[i].Item1) + VectorFix.returnVector3With0Y(inputList[i + 1].Item1)) / 2;
-                    currentPoint = GetPoint(inputList[i].Item1, middle, inputList[i + 1].Item1, j);
+                    //currentPoint = GetPoint(inputList[i].Item1, middle, inputList[i + 1].Item1, j);
+                    currentPoint = Vector3.Lerp(inputList[i].Item1, inputList[i + 1].Item1, j);
+
                 }
                 else
                 {
@@ -662,7 +664,6 @@ public static class Bezier
             double t = (100 / (amountOfTValues + 1)) * (i + 1);
             t /= 100;
 
-            Debug.LogWarning("t value = " + t);
             tValues.Add((float)t);
         }
 

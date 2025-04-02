@@ -147,13 +147,13 @@ public static class Bezier
 
                 Vector3 phantomPoint = new Vector3();
 
-                float distanceForNewPoint = 3f;
+                float distanceForNewPoint = 1.5f;
                 RaycastHit rayHit;
                 //Vector3 shouldMovePhantomPointInThisDirection = new Vector3();
 
 
                 //Start a tiny but away from .point
-                if (Physics.Raycast(sphereHitRay.point + (sphereHitRay.normal * 0.1f), (sphereHitRay.normal).normalized, out rayHit, distanceForNewPoint * 1.5f, layer))
+                if (Physics.Raycast(sphereHitRay.point + (sphereHitRay.normal * 0.1f), (sphereHitRay.normal).normalized, out rayHit, distanceForNewPoint, layer))
                 {
                     distanceForNewPoint = rayHit.distance * 0.5f;
                     Debug.LogWarning("Second hitPoint " + rayHit.point);

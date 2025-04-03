@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class WeightChangers : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public float falloff;
+    public int range;
+    public HeatMapValues myHeat;
+
+    public void OnDrawGizmosSelected()
     {
-        
+        Gizmos.color = new Color(myHeat.food, myHeat.safety, myHeat.sound);
+
+        Gizmos.DrawSphere(transform.position, (range*1.5f) / (1+falloff));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

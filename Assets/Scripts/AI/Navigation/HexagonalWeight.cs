@@ -8,8 +8,8 @@ public struct HexCell
     public float height;      // Height Value
     public int stackLevel;    // Stack Position for Multi-level Maps
     public bool isWalkable;   // Walkability Flag
-    public float weight;
-    public HexCell(Vector3 hexCoords, float height, int stackLevel, bool isWalkable,float weight=1)
+    public HeatMapValues weight;
+    public HexCell(Vector3 hexCoords, float height, int stackLevel, bool isWalkable,HeatMapValues weight=new HeatMapValues())
     {
         this.hexCoords = hexCoords;
         this.height = height;
@@ -30,7 +30,7 @@ public class HexagonalWeight : MonoBehaviour
     public Color hexcolor = new Color(0.124f, 0.135f, 0.134f);
     private int oldRange;
     private float oldCell;
-    public HashSet<HexCell> walkableHexagons = new HashSet<HexCell>();
+    public List<HexCell> walkableHexagons = new List<HexCell>();
     public int walkables = 0;
     public LayerMask floorMask;
     private void OnEnable()
@@ -112,7 +112,8 @@ public class HexagonalWeight : MonoBehaviour
     {
         foreach(var hex in walkableHexagons)
         {
-            Gizmos.DrawCube(grid.Axial2Pixel(hex.hexCoords)+hex.height*Vector3.up, new Vector3(1, 2, 1));
+            Gizmos.color = new Color(hex.weight.food/10, hex.weight.safety/10, hex.weight.sound/10);
+            Gizmos.DrawCube(grid.Axial2Pixel(hex.hexCoords)+(hex.height+ new Vector3(hex.weight.food, hex.weight.safety, hex.weight.sound).magnitude/2) *Vector3.up, new Vector3(1, new Vector3(hex.weight.food, hex.weight.safety, hex.weight.sound).magnitude, 1));
 
             corners = new Vector3[6];
             for (int i = 0; i < corners.Length; i++)

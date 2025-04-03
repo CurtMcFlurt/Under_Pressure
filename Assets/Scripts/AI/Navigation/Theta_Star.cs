@@ -116,7 +116,7 @@ public class Theta_Star : Pathfinding
         }
         catch
         {
-            Debug.LogWarning("startPosition double");
+         //   Debug.LogWarning("startPosition double");
         }
         try
         {
@@ -124,7 +124,7 @@ public class Theta_Star : Pathfinding
         }
         catch
         {
-            Debug.LogWarning("endPosition double");
+           // Debug.LogWarning("endPosition double");
         }
         costFromStart.Clear();
         costToGoal.Clear();

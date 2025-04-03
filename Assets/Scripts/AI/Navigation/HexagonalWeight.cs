@@ -8,13 +8,14 @@ public struct HexCell
     public float height;      // Height Value
     public int stackLevel;    // Stack Position for Multi-level Maps
     public bool isWalkable;   // Walkability Flag
-
-    public HexCell(Vector3 hexCoords, float height, int stackLevel, bool isWalkable)
+    public float weight;
+    public HexCell(Vector3 hexCoords, float height, int stackLevel, bool isWalkable,float weight=1)
     {
         this.hexCoords = hexCoords;
         this.height = height;
         this.stackLevel = stackLevel;
         this.isWalkable = isWalkable;
+        this.weight = weight;
     }
 }
 

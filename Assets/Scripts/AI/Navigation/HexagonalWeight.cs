@@ -108,7 +108,7 @@ public class HexagonalWeight : MonoBehaviour
     }
 
 
-    public void OnDrawGizmos()
+    public void OnDrawGizmosSelected()
     {
         foreach(var hex in walkableHexagons)
         {

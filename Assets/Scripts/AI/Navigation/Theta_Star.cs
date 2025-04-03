@@ -44,7 +44,7 @@ public class Theta_Star : Pathfinding
                 }
 
                
-                  if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i],4), 1.25f, (VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i])).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i]))).magnitude, rayCastLayer))
+                  if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i],4), 2f, (VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i])).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i]))).magnitude, rayCastLayer))
                     {
                         continue;
                     }
@@ -81,7 +81,7 @@ public class Theta_Star : Pathfinding
        
         foreach (var p in InstancedPoints)
         {
-            if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(Position, 4), 1.25f, (VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position))).magnitude, raycastLayer))
+            if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(Position, 4), 2f, (VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position))).magnitude, raycastLayer))
             {
                 continue;
             }
@@ -96,7 +96,7 @@ public class Theta_Star : Pathfinding
 
         foreach (var p in temp)
         {
-            if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(Position, 4), 1.25f, (VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position))).magnitude, raycastLayer))
+            if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(Position, 4), 2f, (VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position))).magnitude, raycastLayer))
             {
                 continue;
             }

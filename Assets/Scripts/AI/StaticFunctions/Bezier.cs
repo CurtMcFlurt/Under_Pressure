@@ -113,7 +113,7 @@ public static class Bezier
                 Debug.LogWarning("Between point and endPointsMidPoint");
                 //Right now phi-star makes sure that the path between the last point and the one before is fine, therefore it doesn't need to check here
             }
-            else if (Physics.SphereCast(midPointsTuple[j].Item1, playerThickness + 0.5f, (midPointsTuple[j + 1].Item1 - midPointsTuple[j].Item1).normalized, out sphereHitRay,
+            else if (Physics.SphereCast(midPointsTuple[j].Item1, playerThickness-.5f, (midPointsTuple[j + 1].Item1 - midPointsTuple[j].Item1).normalized, out sphereHitRay,
 
                 Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j + 1].Item1), VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j].Item1)),
 

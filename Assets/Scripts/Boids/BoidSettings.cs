@@ -1,5 +1,5 @@
 using UnityEngine;
-[CreateAssetMenu(menuName ="Scriptables/BoidsData")]
+[CreateAssetMenu(menuName ="Scriptables/Boids/BoidsData")]
 public class BoidSettings : ScriptableObject
 {
     public float minSpeed = 2;

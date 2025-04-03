@@ -44,7 +44,7 @@ public class Pathfinding
             var p2 = navMesh.indices[i * 3 + 1];
             var p3 = navMesh.indices[i * 3 + 2];
             PosPoints.Add(triangleCenter(navMesh.vertices[p1], navMesh.vertices[p2], navMesh.vertices[p3]));
-   
+            PosPoints.Add(navMesh.vertices[p1]);  PosPoints.Add(navMesh.vertices[p2]);  PosPoints.Add(navMesh.vertices[p3]);
         }
 
         return PosPoints;
@@ -52,6 +52,6 @@ public class Pathfinding
 
     protected Vector3 triangleCenter(Vector3 p1, Vector3 p2, Vector3 p3)
     {
-        return new Vector3((p1.x + p2.x + p3.x) / 3, (p1.y + p2.y + p3.y) / 3, (p1.z + p2.z + p3.z) / 3);
+        return VectorFix.ReturnVector3WithGroundHeight(new Vector3((p1.x + p2.x + p3.x) / 3, (p1.y + p2.y + p3.y) / 3, (p1.z + p2.z + p3.z) / 3),0);
     }
 }

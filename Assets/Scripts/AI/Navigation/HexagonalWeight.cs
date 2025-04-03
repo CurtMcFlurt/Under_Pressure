@@ -1,6 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
+public struct HexCell
+{
+    public Vector3 hexCoords; // QRS Coordinates
+    public float height;      // Height Value
+    public int stackLevel;    // Stack Position for Multi-level Maps
+    public bool isWalkable;   // Walkability Flag
+
+    public HexCell(Vector3 hexCoords, float height, int stackLevel, bool isWalkable)
+    {
+        this.hexCoords = hexCoords;
+        this.height = height;
+        this.stackLevel = stackLevel;
+        this.isWalkable = isWalkable;
+    }
+}
+
 [ExecuteAlways]
 public class HexagonalWeight : MonoBehaviour
 {
@@ -12,8 +29,9 @@ public class HexagonalWeight : MonoBehaviour
     public Color hexcolor = new Color(0.124f, 0.135f, 0.134f);
     private int oldRange;
     private float oldCell;
-    public HashSet<Vector4> walkableHexagons = new HashSet<Vector4>();
+    public HashSet<HexCell> walkableHexagons = new HashSet<HexCell>();
     public int walkables = 0;
+    public LayerMask floorMask;
     private void OnEnable()
     {
         SetUpHexes();
@@ -25,7 +43,7 @@ public class HexagonalWeight : MonoBehaviour
         for (int i = 0; i < grid.coordinate.Count; i++)
         {
             currentHex = grid.coordinate[i];
-            DrawHex(currentHex);
+         
         }
         if(range != oldRange || cellSize != oldCell)
         {
@@ -40,64 +58,75 @@ public class HexagonalWeight : MonoBehaviour
         grid = new HexGridScript(range, cellSize);
         oldCell = cellSize;
         oldRange = range;
-        FindAllAcessibleHexes();
+        FindAllAccessibleHexes();
     }
-    private void DrawHex(Vector3 pos)
-    {
-        corners = new Vector3[6];
-        for (int i = 0; i < corners.Length; i++)
-        {
-            corners[i] = HexCorners(pos, i);
-        }
-
-        for (int i = 0; i < corners.Length - 1; i++)
-        {
-            Debug.DrawLine(corners[i], corners[i + 1], hexcolor);
-        }
-        Debug.DrawLine(corners[5], corners[0], hexcolor);
-
-
-        
-
-    }
-    private Vector3 HexCorners(Vector3 pos, int i)
+  
+    private Vector3 HexCorners(Vector3 pos,float height, int i)
     {
         var angle_deg = 60 * i;
         float angle_rad = Mathf.PI / 180 * angle_deg;
-        return new Vector3(pos.x + cellSize * Mathf.Cos(angle_rad), 0, pos.z + cellSize * Mathf.Sin(angle_rad));
+        return new Vector3(pos.x + cellSize * Mathf.Cos(angle_rad), height, pos.z + cellSize * Mathf.Sin(angle_rad));
     }
-    private void FindAllAcessibleHexes()
+    private void FindAllAccessibleHexes()
     {
-        for (int i = 0; i < grid.coordinate.Count; i++)
-       
-
+        walkableHexagons.Clear();
+        foreach (var hex in grid.hexvalue)
         {
+            Vector3 worldPos = grid.Axial2Pixel(hex);
+            int stackLevel = 0;
+            float maxCheckHeight = 50f; // Maximum height to check for additional levels
+            bool foundBase = false;
 
-            if (NavMesh.SamplePosition(grid.coordinate[i],out var hit, 3f, NavMesh.AllAreas))
+            while (worldPos.y <= maxCheckHeight)
             {
-                walkableHexagons.Add(new Vector4(grid.hexvalue[i].x, grid.hexvalue[i].y, grid.hexvalue[i].z, 1));
-                continue;
+                if (NavMesh.SamplePosition(worldPos, out var hit, 3f, NavMesh.AllAreas))
+                {
+                    float height = hit.position.y;
+                    HexCell hexCell = new HexCell(hex, height, stackLevel, true);
+                    walkableHexagons.Add(hexCell);
+                    foundBase = true;
+                }
+
+                if (foundBase)
+                {
+                    if (Physics.Raycast(worldPos, Vector3.up, out RaycastHit levelHit, maxCheckHeight - worldPos.y, floorMask))
+                    {
+                        worldPos = levelHit.point + Vector3.up * 0.1f; // Move slightly above the detected floor
+                        stackLevel++;
+                        continue;
+                    }
+                    else
+                    {
+                        break; // No more levels found
+                    }
+                }
+
+                worldPos.y += cellSize; // Move up incrementally until a base is found
             }
-                       
-            //for (int j = 0; j < 6; j++)
-            //{
-            //    if (NavMesh.SamplePosition(HexCorners(grid.coordinate[i], i), out var hits, 1f, NavMesh.AllAreas))
-            //    {
-            //        walkableHexagons.Add(new Vector4(grid.hexvalue[i].x, grid.hexvalue[i].y, grid.hexvalue[i].z, 1));
-            //        break;
-            //    }
-            //}
         }
     }
-
 
 
     public void OnDrawGizmos()
     {
         foreach(var hex in walkableHexagons)
         {
-            Gizmos.DrawCube(grid.Axial2Pixel(hex), new Vector3(1, 2, 1));
-        }
+            Gizmos.DrawCube(grid.Axial2Pixel(hex.hexCoords)+hex.height*Vector3.up, new Vector3(1, 2, 1));
+
+            corners = new Vector3[6];
+            for (int i = 0; i < corners.Length; i++)
+            {
+                corners[i] = HexCorners(grid.Axial2Pixel(hex.hexCoords) ,hex.height, i);
+            }
+
+            for (int i = 0; i < corners.Length - 1; i++)
+            {
+                Debug.DrawLine(corners[i], corners[i + 1], hexcolor);
+            }
+            Debug.DrawLine(corners[5], corners[0], hexcolor);
+
+
+        } 
     }
 
 

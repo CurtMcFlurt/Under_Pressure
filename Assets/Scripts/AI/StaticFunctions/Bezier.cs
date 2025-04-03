@@ -87,14 +87,14 @@ public static class Bezier
         for (int i = 0; i < originalPoints.Count - 1; i++)
         {
             //Creates amount of midPoints between points i and i+1 based on input:ed 'List<float>'s .Count, for each originalPoint, @ List<float>[i]% of point i and i+1
-            List<Vector3> tempMidPoints = CreateMidPoints(originalPoints[i], originalPoints[i+1], new List<float> { 0.33f, 0.66f });
+            //List<Vector3> tempMidPoints = CreateMidPoints(originalPoints[i], originalPoints[i+1], new List<float> { 0.33f, 0.66f });
 
             int draw1 = i;
             int draw2 = i + 1;
 
 
 
-            //List<Vector3> tempMidPoints = CreateMidPointsBasedOnDistance(originalPoints[draw1], originalPoints[draw2]);
+            List<Vector3> tempMidPoints = CreateMidPointsBasedOnDistance(originalPoints[draw1], originalPoints[draw2]);
 
 
             foreach (var v in tempMidPoints)
@@ -115,7 +115,7 @@ public static class Bezier
             }
             else if (Physics.SphereCast(midPointsTuple[j].Item1, playerThickness + 0.5f, (midPointsTuple[j + 1].Item1 - midPointsTuple[j].Item1).normalized, out sphereHitRay,
 
-                Vector3.Distance(VectorFix.returnVector3With0Y(midPointsTuple[j + 1].Item1), VectorFix.returnVector3With0Y(midPointsTuple[j].Item1)),
+                Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j + 1].Item1), VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j].Item1)),
 
                 layer
             ))
@@ -181,34 +181,6 @@ public static class Bezier
                 Tuple<Vector3, int> tempTuple = new Tuple<Vector3, int>(phantomPoint, midPointsTuple[j].Item2);
 
 
-                //shouldMovePhantomPointInThisDirection = (sphereHitRay.point + ((sphereHitRay.normal).normalized * distanceForNewPoint));
-
-                //phantomPoint = phantomPoint + (shouldMovePhantomPointInThisDirection);
-
-
-
-                //After we have determined where the new point should be, but before we add it, we should check so that a line can be drawn from the previous point
-                //...to it
-
-                //If the linecast doesn't hit anything, i.e if the line is legit, then do everything like we did before.
-                //Note: maybe do a spherecast, so it mimicks how points are determined in phi-star
-
-                //if (!Physics.Linecast(originalPoints[midPointsTuple[j].Item2], phantomPoint, layer))
-                //{
-                //    //tempTuple = new Tuple<Vector3, int>(phantomPoint, midPointsTuple[j].Item2);
-
-                //    if (!sphereHitTuples.Contains(tempTuple))
-                //    {
-                //        sphereHitTuples.Add(tempTuple);
-                //        Debug.LogWarning(tempTuple + " test");
-                //    }
-
-                //    sphereHit = true;
-                //    currentMax = tempTuple.Item2;
-                //    break;
-                //}
-
-
                 //While there's an obstacle between the original point and the phantom point, change where the phantom point is placed
                 while (Physics.Linecast(originalPoints[midPointsTuple[j].Item2], phantomPoint, layer) && distanceForNewPoint > 0)
                 {
@@ -238,58 +210,10 @@ public static class Bezier
                     break;
                 }
 
-                //tempTuple = new Tuple<Vector3, int>(phantomPoint, midPointsTuple[j].Item2);
-
-                //if (!sphereHitTuples.Contains(tempTuple))
-                //{
-                //    sphereHitTuples.Add(tempTuple);
-                //    Debug.LogWarning(tempTuple + " test");
-                //}
-
-                //sphereHit = true;
-                //currentMax = tempTuple.Item2;
-                //break;
+               
             }
 
-            #region oldCode
-            //Origin, radius, direction, out raycastHit, maxDistance, layerMask
-            //RaycastHit[] sphereHits = Physics.SphereCastAll(tempMidPoints[j], playerThickness, (tempMidPoints[j + 1] - tempMidPoints[j]).normalized,
-
-            //    Vector3.Distance(VectorFix.returnVector3With0Y(tempMidPoints[j + 1]), VectorFix.returnVector3With0Y(tempMidPoints[j])),
-
-            //    layer
-            //);
-
-            //foreach (var h in sphereHits)
-            //{
-            //    if (h.transform.CompareTag("outerWall")) continue;
-            //    Debug.LogWarning("test " + h.point);
-
-            //    //Save hit pos and i value in touple list
-
-            //    Vector3 phantomPoint = new Vector3();
-
-            //    float distanceForNewPoint = 10f;
-            //    RaycastHit rayHit;
-            //    Vector3 shouldMovePhantomPointInThisDirection = new Vector3();
-
-            //    if (Physics.Raycast(h.point, (h.point - h.normal).normalized, out rayHit, distanceForNewPoint, layer))
-            //    {
-            //        distanceForNewPoint = rayHit.distance * 0.5f;
-            //    }
-
-            //    shouldMovePhantomPointInThisDirection = (h.point + ((h.point - h.normal).normalized * distanceForNewPoint));
-            //    shouldMovePhantomPointInThisDirection=(h.point - h.normal).normalized * distanceForNewPoint;
-
-            //    phantomPoint = phantomPoint + (shouldMovePhantomPointInThisDirection);
-
-            //    phantomPoint = VectorFix.returnVector3With0Y(phantomPoint);
-
-            //    sphereHitTuples.Add(new Tuple<Vector3, int>(h.point, i));
-
-            //    sphereHit = true;
-            //}
-            #endregion
+      
         }
 
 
@@ -316,20 +240,7 @@ public static class Bezier
             {
                 if (tempOriginalPoints.Contains(originalPoints[i])) continue;
 
-                //bool tb = false;
-
-                //foreach(var hr in hitReps)
-                //{
-                //    if (hr.Item2 < 2) continue;
-
-                //    if (originalPoints[i] == originalPoints[hr.Item3])
-                //    {
-                //        tb = true;
-                //    }
-                //}
-                //if (tb == true) continue;
-
-                //if (originalPoints[i] == originalPoints[])
+              
 
                 tempOriginalPoints.Add(originalPoints[i]);
                 indexOfLastOriginalPointAdded = i;
@@ -361,82 +272,8 @@ public static class Bezier
             tempOriginalPoints.Add(op);
         }
 
-        //It's the short foreach above or the long for below. It depends on if we want functionality down here for if we want to skip
-        //points. Right now we're doing it at another point, so we use the one above. Right now is 2025/03/04
-        #region Explenation of below loop
-        //Assume 3 Lists: y, t, p
-        //y = originalpoints
-        //t = sphereHitTuples
-        //p = tempOriginalPoints
-        //
-        //For this example, Let y.count = 10, t.count = 3 (this example itterates 1 to .count)
-        //Create p according to code above (skip some y), for this example: y1y2y3t1y5t2t3 => .count = 7
-        //
-        //indexOfLastOriginalPointAdded = 5
-        //points remaining in y(overIndex) = 5 (6, 7, 8, 9, 10)
-        //
-        //if i in loop start @ p, there would be y-p points from y to add, therefore start @ p-t (4 in this example)
-        //
-        //If p.contain y(i), continue. If combined list contains the original point with the index i, continue
-        //If i < indexOfLastOriginalPointAdded, continue. In this example, we want to skip y4 but p-t=7-3=4, so i start @ 4, therefore because 4 is lower than 5, skip it
-        //
-        //If we want to skip adding a point from y, above we increase previousIndex to sphereHitTuples.Item2+2. If we skip it there, we want to skip it here too
-        //which coresponds to indexOfLastOriginalPointAdded+2 (in this example 4 < 5+2 if we want to skip 6
-        #endregion
-
-        //for (int i = tempOriginalPoints.Count - sphereHitTuples.Count; i < originalPoints.Count; i++)
-        //{
-        //    if (tempOriginalPoints.Contains(originalPoints[i])) continue;
-
-        //    if (previousIndex == sphereHitTuples[sphereHitTuples.Count - 1].Item2 + 2)
-        //    {
-        //        if (i < indexOfLastOriginalPointAdded + 2) continue;
-        //    }
-        //    else
-        //    {
-        //        if (i < indexOfLastOriginalPointAdded) continue;
-        //    }
-
-        //    //Just to be sure, in case the loop goes to many times
-        //    try
-        //    {
-        //        tempOriginalPoints.Add(originalPoints[i]);
-        //    }
-        //    catch
-        //    {
-        //        Debug.LogWarning("i was out of range @ " + i);
-        //    }
-        //}
-
-        #region Other version that replaces original points instead of just adding to list
-        //int previousIndex = 0;
-        //foreach (var sht in sphereHitTuples)
-        //{
-        //    if (sht.Item2 == 0)
-        //    {
-        //        tempOriginalPoints.Add(sht.Item1);
-        //        continue;
-        //    }
-
-        //    for (int i = previousIndex; i < sht.Item2; i++)
-        //    {
-        //        if (tempOriginalPoints.Contains(originalPoints[i])) continue;
-
-        //        tempOriginalPoints.Add(originalPoints[i]);
-        //    }
-        //    previousIndex = sht.Item2 + 1;
-        //    //Debug.LogWarning(sht.Item2 + " shi");
-        //    tempOriginalPoints.Add(sht.Item1);
-        //}
-
-
-        //for (int i = tempOriginalPoints.Count; i < originalPoints.Count; i++)
-        //{
-        //    if (tempOriginalPoints.Contains(originalPoints[i])) continue;
-        //    tempOriginalPoints.Add(originalPoints[i]);
-        //}
-        #endregion
-
+       
+       
         originalPoints.Clear();
         originalPoints.AddRange(tempOriginalPoints);
         //originalPoints = tempOriginalPoints;
@@ -457,27 +294,7 @@ public static class Bezier
         //below code should be unneccesary
 
         #region oldCode
-        //midPoints with value i or after becomes their value+1
-
-        //foreach (var sht in sphereHitTuples)
-        //{
-        //    int previousValue = 0;
-
-        //    for (int i = 0; i < midPointsTuple.Count; i++)
-        //    {
-        //        if (midPointsTuple[i].Item2 >= sht.Item2 && previousValue == sht.Item2-1)
-        //        {
-        //            previousValue = midPointsTuple[i].Item2;
-        //            continue;
-        //        }
-        //        if (midPointsTuple[i].Item2 >= sht.Item2)
-        //        {
-        //            midPointsTuple[i] = new Tuple<Vector3, int>(midPointsTuple[i].Item1, midPointsTuple[i].Item2 + 1);
-        //        }
-
-        //        previousValue = midPointsTuple[i].Item2;
-        //    }
-        //}
+    
         #endregion
 
         //Add endPoint as a midpoint, in accordance to how the loop above works (last i = .Count-2)
@@ -551,7 +368,7 @@ public static class Bezier
         // Calculate the new position by adding the rotated vector to the original point
         Vector3 newPoint = midPointTheHitCameFrom + rotatedDirection.normalized * distanceForNewPoint;
 
-        newPoint = VectorFix.returnVector3With0Y(newPoint);
+        newPoint = VectorFix.ReturnVector3WithGroundHeight(newPoint);
 
         return newPoint;
     }
@@ -571,7 +388,7 @@ public static class Bezier
         for (int i = 0; i < inputList.Count - 1; i++)
         {
             //Between point and nextPoint
-            stepLenght = Mathf.Pow(Vector3.Distance(VectorFix.returnVector3With0Y(inputList[i].Item1), VectorFix.returnVector3With0Y(inputList[i + 1].Item1)), -1);
+            stepLenght = Mathf.Pow(Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(inputList[i].Item1), VectorFix.ReturnVector3WithGroundHeight(inputList[i + 1].Item1)), -1);
 
             List<Vector3> tempList = new List<Vector3>
             {
@@ -584,7 +401,7 @@ public static class Bezier
 
                 if (inputList[i].Item2 == inputList[i + 1].Item2)
                 {
-                    Vector3 middle = (VectorFix.returnVector3With0Y(inputList[i].Item1) + VectorFix.returnVector3With0Y(inputList[i + 1].Item1)) / 2;
+                    Vector3 middle = (VectorFix.ReturnVector3WithGroundHeight(inputList[i].Item1) + VectorFix.ReturnVector3WithGroundHeight(inputList[i + 1].Item1)) / 2;
                     //currentPoint = GetPoint(inputList[i].Item1, middle, inputList[i + 1].Item1, j);
                     currentPoint = Vector3.Lerp(inputList[i].Item1, inputList[i + 1].Item1, j);
 
@@ -594,7 +411,7 @@ public static class Bezier
                     currentPoint = GetPoint(inputList[i].Item1, originalPoints[inputList[i + 1].Item2], inputList[i + 1].Item1, j);
                 }
 
-                if (Vector3.Distance(VectorFix.returnVector3With0Y(currentPoint), VectorFix.returnVector3With0Y(previousPoint)) > pathIntervalLeangth && !tempList.Contains(currentPoint))
+                if (Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(currentPoint), VectorFix.ReturnVector3WithGroundHeight(previousPoint)) > pathIntervalLeangth && !tempList.Contains(currentPoint))
                 {
                     tempList.Add(currentPoint);
                 }
@@ -636,7 +453,7 @@ public static class Bezier
         List<Vector3> midPointsL = new List<Vector3>();
 
 
-        int distance = (int)Vector3.Distance(VectorFix.returnVector3With0Y(p1), VectorFix.returnVector3With0Y(p2));
+        int distance = (int)Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(p1), VectorFix.ReturnVector3WithGroundHeight(p2));
 
         Debug.LogWarning("Distance " + distance);
 

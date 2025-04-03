@@ -43,23 +43,19 @@ public class Theta_Star : Pathfinding
 
                 if (polygonCenters[i] == endPosition || polygonCenters[j] == endPosition)
                 {
-                    if (Physics.SphereCast(VectorFix.returnVector3With1Y(polygonCenters[i]), 1.25f, (VectorFix.returnVector3With1Y(polygonCenters[j]) - VectorFix.returnVector3With1Y(polygonCenters[i])).normalized, out whatIHit, ((VectorFix.returnVector3With1Y(polygonCenters[j]) - VectorFix.returnVector3With1Y(polygonCenters[i]))).magnitude, rayCastLayer))
+                    if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i],4), 1.25f, (VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i])).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i]))).magnitude, rayCastLayer))
                     {
                         continue;
                     }
                 }
                 else
                 {
-                    if (Physics.SphereCast(VectorFix.returnVector3With1Y(polygonCenters[i]), 1.25f, (VectorFix.returnVector3With1Y(polygonCenters[j]) - VectorFix.returnVector3With1Y(polygonCenters[i])).normalized, out whatIHit, ((VectorFix.returnVector3With1Y(polygonCenters[j]) - VectorFix.returnVector3With1Y(polygonCenters[i]))).magnitude, rayCastLayer))
+                    if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i],4), 1.25f, (VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i])).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i]))).magnitude, rayCastLayer))
                     {
                         continue;
                     }
                 }
-                //if (Physics.SphereCast(VectorFix.returnVector3With1Y(polygonCenters[i]), 1f, (VectorFix.returnVector3With1Y(polygonCenters[j]) - VectorFix.returnVector3With1Y(polygonCenters[i])).normalized, out whatIHit, ((VectorFix.returnVector3With1Y(polygonCenters[j]) - VectorFix.returnVector3With1Y(polygonCenters[i]))).magnitude, rayCastLayer))
-                //{
-                //    continue;
-                //}
-
+           
 
                 //Debug.LogWarning("Hit");
                 hashOfNeighborsCenter.Add(polygonCenters[j]);

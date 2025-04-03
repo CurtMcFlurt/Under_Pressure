@@ -31,7 +31,9 @@ public class Agent_findPath : MonoBehaviour
     public GameObject goal;
     public float curentSpeed;
     public LayerMask LineOfSightLayers;
+    public LayerMask BezierLayers;
     public List<Vector3> debugPath;
+    public bool RecalculatePath;
     void Start()
     {
         rb3d = GetComponent<Rigidbody>();
@@ -44,11 +46,12 @@ public class Agent_findPath : MonoBehaviour
     public void GeneratePath()
     {
         Path.Clear();
-        Path = new Theta_Star().GeneratePathPhiStar(VectorFix.returnVector3With1Y(transform.position), goal.transform.position, LineOfSightLayers);
+        Path = new Theta_Star().GeneratePathPhiStar(VectorFix.ReturnVector3WithGroundHeight(transform.position), VectorFix.ReturnVector3WithGroundHeight(goal.transform.position), LineOfSightLayers);
         debugPath.AddRange(Path);
         List<Vector3> tempA = new List<Vector3>();
         tempA.AddRange(Path);
-        Path = Bezier.BezirPath(tempA, pathIntervalLeangth, LineOfSightLayers, transform.localScale.x);
+        Path = Bezier.BezirPath(tempA, pathIntervalLeangth, BezierLayers, transform.localScale.x);
+
         PathSegment = 0;
     }
 
@@ -57,6 +60,12 @@ public class Agent_findPath : MonoBehaviour
     void Update()
     {
         if (PathSegment < Path.Count-2) MoveAlongPath();
+        if (RecalculatePath)
+        {
+            RecalculatePath=false;
+            GeneratePath();
+        }
+
     }
     public int PathSegment;
     private float TValue=0;

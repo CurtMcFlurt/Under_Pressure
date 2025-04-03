@@ -26,7 +26,7 @@ public class Agent_findPath : MonoBehaviour
     private List<Vector3> Path = new List<Vector3>();
 
     [Tooltip("1 is nextPoint, 0 is averagePoint")]
-
+    private Dictionary<Vector3, PointClass> InstancedPoints = new Dictionary<Vector3, PointClass>();
     public int maxLookahead;
     public GameObject goal;
     public float curentSpeed;
@@ -37,16 +37,22 @@ public class Agent_findPath : MonoBehaviour
     void Start()
     {
         rb3d = GetComponent<Rigidbody>();
-      
-        
+
+        GenerateNavdata();
         GeneratePath();
+    }
+
+    public void GenerateNavdata()
+    {
+        InstancedPoints = new Theta_Star().CreatePointsNavMesh(LineOfSightLayers);
+        Debug.Log(InstancedPoints.Count + " instanced");
     }
 
 
     public void GeneratePath()
     {
         Path.Clear();
-        Path = new Theta_Star().GeneratePathPhiStar(VectorFix.ReturnVector3WithGroundHeight(transform.position), VectorFix.ReturnVector3WithGroundHeight(goal.transform.position), LineOfSightLayers);
+        Path = new Theta_Star().GeneratePathPhiStarNavMesh(VectorFix.ReturnVector3WithGroundHeight(transform.position), VectorFix.ReturnVector3WithGroundHeight(goal.transform.position), LineOfSightLayers,InstancedPoints);
         debugPath.AddRange(Path);
         List<Vector3> tempA = new List<Vector3>();
         tempA.AddRange(Path);
@@ -136,7 +142,6 @@ public class Agent_findPath : MonoBehaviour
             }
 
 
-            Debug.Log(Vector3.Dot(prevDir, curDir) + " dot" + i);
 
             totalAngle += 1-Mathf.Abs(Vector3.Dot(prevDir, curDir));
             if(totalAngle > angleConstant) {break;}
@@ -145,7 +150,6 @@ public class Agent_findPath : MonoBehaviour
 
       
        
-       Debug.Log(totalAngle+" angle");
 
         return totalAngle;
     }

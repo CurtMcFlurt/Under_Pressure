@@ -26,10 +26,12 @@ public class Theta_Star : Pathfinding
         base.GetPath(start, end, mask);
     }
 
-    private void CreatePointsNavMesh(Vector3 startPosition, Vector3 endPosition, LayerMask rayCastLayer)
+    public Dictionary<Vector3, PointClass> CreatePointsNavMesh(LayerMask rayCastLayer)
     {
         #region Neighbor of Centers
+        polygonCenters = GetPolygonCenters();
         List<PointClass> temp = new List<PointClass>();
+        Dictionary<Vector3, PointClass> InstancedPoints = new Dictionary<Vector3, PointClass>();
         for (int i = 0; i < polygonCenters.Count; i++)
         {
             HashSet<Vector3> hashOfNeighborsCenter = new HashSet<Vector3>();
@@ -41,20 +43,12 @@ public class Theta_Star : Pathfinding
                     continue;
                 }
 
-                if (polygonCenters[i] == endPosition || polygonCenters[j] == endPosition)
-                {
-                    if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i],4), 1.25f, (VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i])).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i]))).magnitude, rayCastLayer))
+               
+                  if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i],4), 1.25f, (VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i])).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i]))).magnitude, rayCastLayer))
                     {
                         continue;
                     }
-                }
-                else
-                {
-                    if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i],4), 1.25f, (VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i])).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i]))).magnitude, rayCastLayer))
-                    {
-                        continue;
-                    }
-                }
+                
            
 
                 //Debug.LogWarning("Hit");
@@ -67,47 +61,79 @@ public class Theta_Star : Pathfinding
         {
             try
             {
-                points.Add(p.position, new PointClass(p.position, p.neighborsVertex, p.neighborCenters));
+                InstancedPoints.Add(p.position, new PointClass(p.position, p.neighborsVertex, p.neighborCenters));
             }
             catch
             {
                 Debug.LogWarning("catch when adding point to dict");
             }
         }
+
+        return InstancedPoints;
         #endregion
     }
    
-
-
-
-    public List<Vector3> GeneratePathPhiStar(Vector3 startPosition, Vector3 endPosition, LayerMask raycastLayer)
+               
+    public PointClass AddPos(Vector3 Position, Dictionary<Vector3, PointClass> InstancedPoints,LayerMask raycastLayer)
     {
-            return GeneratePathPhiStarNavMesh(startPosition, endPosition, raycastLayer);
-      
+        HashSet<Vector3> hashOfNeighborsCenter = new HashSet<Vector3>();
+        if(InstancedPoints== null) return new PointClass(Position, null, hashOfNeighborsCenter);
        
+        foreach (var p in InstancedPoints)
+        {
+            if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(Position, 4), 1.25f, (VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position))).magnitude, raycastLayer))
+            {
+                continue;
+            }
+
+            hashOfNeighborsCenter.Add(p.Key);
+        }
+        return  new PointClass(Position, null, hashOfNeighborsCenter);
     }
-
-    
-    List<Vector3> GeneratePathPhiStarNavMesh(Vector3 startPosition, Vector3 endPosition, LayerMask raycastLayer)
+    public Dictionary<Vector3, PointClass> AddEnd(Vector3 Position, Dictionary<Vector3, PointClass> ActivePoints, LayerMask raycastLayer)
     {
-        polygonCenters.Clear();
+        var temp = ActivePoints;
 
-        polygonCenters.Add(startPosition);
-        polygonCenters.AddRange(base.GetPolygonCenters()); //Adds centers of navmesh polygons, Done because centers are needed in creating all possible points and neighbors
-        polygonCenters.Add(endPosition);
+        foreach (var p in temp)
+        {
+            if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(Position, 4), 1.25f, (VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position))).magnitude, raycastLayer))
+            {
+                continue;
+            }
 
-        points.Clear(); //Clear the dict with all the points
-
-        CreatePointsNavMesh(startPosition, endPosition, raycastLayer); //All possible points in a dict
-
+            p.Value.allNeighbors.Add(Position);
+        }
+        temp.Add(Position, new PointClass(Position, null, null));
+        return temp;
+    }
+    public List<Vector3> GeneratePathPhiStarNavMesh(Vector3 startPosition, Vector3 endPosition, LayerMask raycastLayer, Dictionary<Vector3, PointClass> InstancedPoints)
+    {
+        points.Clear();
+        points = InstancedPoints;
+        try
+        {
+            points.Add(startPosition, AddPos(startPosition, InstancedPoints, raycastLayer));
+        }
+        catch
+        {
+            Debug.LogWarning("startPosition double");
+        }
+        try
+        {
+            points= AddEnd(endPosition, points, raycastLayer);
+        }
+        catch
+        {
+            Debug.LogWarning("endPosition double");
+        }
         costFromStart.Clear();
         costToGoal.Clear();
 
         List<PointClass> pointsNotChecked = new List<PointClass>();
         List<Vector3> pointsChecked = new List<Vector3>();
-
+        
         pointsNotChecked.Add(points[startPosition]);
-
+      
         costFromStart.Add(pointsNotChecked[0].position, 0);
         costToGoal.Add(pointsNotChecked[0].position, Heuristic.Distance(pointsNotChecked[0].position, endPosition));
 

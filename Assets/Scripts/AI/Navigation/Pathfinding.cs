@@ -32,10 +32,7 @@ public class Pathfinding
     public virtual List<Vector3> GetPolygonCenters()
     {
         navMesh = NavMesh.CalculateTriangulation();
-        //Debug.Log(navMesh.areas.Length + " areas");
-        //Debug.Log(navMesh.indices.Length + " indicies");
-        //Debug.Log(navMesh.vertices.Length + " Verticies");
-
+        
         PosPoints.Clear();
 
         for (int i = 0; i < navMesh.areas.Length; i++)

@@ -49,9 +49,6 @@ public static class Bezier
         int currentMax = -1;
 
     MidPointLoop:
-        Debug.LogWarning("Start of MidPointLoop");
-
-        Debug.Log(currentMax + " wich tupple");
 
 
         if (panic >= 200)
@@ -70,16 +67,13 @@ public static class Bezier
 
         if (currentMax != -1)
         {
-            Debug.Log(originalPoints.Count + "before");
 
             //If Linecast doesn't find something between the phantom and next-next point, remove the 'next' point
             if (!Physics.Linecast(originalPoints[currentMax + 1], originalPoints[currentMax + 3], layer))
             {
                 originalPoints.RemoveAt(currentMax + 2);
-                Debug.Log("happens");
             }
 
-            Debug.Log(originalPoints.Count + "after");
         }
 
 
@@ -110,7 +104,6 @@ public static class Bezier
 
             if (midPointsTuple[j + 1].Item2 == midPointsTuple[midPointsTuple.Count - 1].Item2)
             {
-                Debug.LogWarning("Between point and endPointsMidPoint");
                 //Right now phi-star makes sure that the path between the last point and the one before is fine, therefore it doesn't need to check here
             }
             else if (Physics.SphereCast(midPointsTuple[j].Item1, playerThickness-.5f, (midPointsTuple[j + 1].Item1 - midPointsTuple[j].Item1).normalized, out sphereHitRay,
@@ -120,14 +113,12 @@ public static class Bezier
                 layer
             ))
             {
-                Debug.LogWarning("hitPoint " + sphereHitRay.point + "for midpoint " + j);
 
                 bool repped = false;
                 for (int i = 0; i < hitReps.Count - 1; i++)
                 {
                     if (hitReps[i].Item1 == sphereHitRay.point)
                     {
-                        Debug.LogWarning("sRep @ " + sphereHitRay.point + " by midpoint " + j);
 
                         hitReps[i] = new Tuple<Vector3, int, int>(hitReps[i].Item1, hitReps[i].Item2 + 1, hitReps[i].Item3);
                         repped = true;
@@ -156,7 +147,6 @@ public static class Bezier
                 if (Physics.Raycast(sphereHitRay.point + (sphereHitRay.normal * 0.1f), (sphereHitRay.normal).normalized, out rayHit, distanceForNewPoint, layer))
                 {
                     distanceForNewPoint = rayHit.distance * 0.5f;
-                    Debug.LogWarning("Second hitPoint " + rayHit.point);
                 }
                 Debug.DrawRay(sphereHitRay.point + (sphereHitRay.normal * 0.01f), (sphereHitRay.normal).normalized * distanceForNewPoint, Color.black, 5f);
 
@@ -202,7 +192,6 @@ public static class Bezier
                     if (!sphereHitTuples.Contains(tempTuple))
                     {
                         sphereHitTuples.Add(tempTuple);
-                        Debug.LogWarning(tempTuple + " test");
                     }
 
                     sphereHit = true;
@@ -455,7 +444,6 @@ public static class Bezier
 
         int distance = (int)Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(p1), VectorFix.ReturnVector3WithGroundHeight(p2));
 
-        Debug.LogWarning("Distance " + distance);
 
         float minDis = 2f;
 

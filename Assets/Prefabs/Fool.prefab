@@ -333,7 +333,7 @@ MonoBehaviour:
   lookSpeed: 0.1
   cameraTransform: {fileID: 6981733371161587601}
   rb: {fileID: 1953910241733474021}
-  glowStick: {fileID: 2628165128578031410, guid: 66821ec208159d747843e843d4375637, type: 3}
+  glowStick: {fileID: 2628165128578031410, guid: 03278d1e2f5046048bd76d69a21cdbb8, type: 3}
   throwPoint: {fileID: 8429873713282857790}
   throwForce: 10
 --- !u!114 &8979354530499879030
@@ -354,6 +354,7 @@ MonoBehaviour:
   sphereCheckRadius: 5
   checkIfInside: 0
   boidCounter: 0
+  huntTransform: {fileID: 0}
 --- !u!114 &5464685001295653959
 MonoBehaviour:
   m_ObjectHideFlags: 0

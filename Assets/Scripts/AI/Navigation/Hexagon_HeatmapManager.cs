@@ -38,7 +38,7 @@ public class Hexagon_HeatmapManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
      foreach(var changer in staticWeightChangers)
         {
@@ -51,11 +51,11 @@ public class Hexagon_HeatmapManager : MonoBehaviour
         for (int i = 0; i < hexList.Count; i++)
         {
             HexCell hex = hexList[i];
-
+            
             // Adjust heat values towards 1
-            hex.weight.food = Mathf.Lerp(hex.weight.food, 1f, cooling * Time.deltaTime);
-            hex.weight.sound = Mathf.Lerp(hex.weight.sound, 1f, cooling * Time.deltaTime);
-            hex.weight.safety = Mathf.Lerp(hex.weight.safety, 1f, cooling * Time.deltaTime);
+            hex.weight.food = Mathf.Lerp(hex.weight.food, 1f, cooling * Time.fixedDeltaTime);
+            hex.weight.sound = Mathf.Lerp(hex.weight.sound, 1f, cooling * Time.fixedDeltaTime);
+            hex.weight.safety = Mathf.Lerp(hex.weight.safety, 1f, cooling * Time.fixedDeltaTime);
 
             // Assign back since structs are value types
             hexList[i] = hex;

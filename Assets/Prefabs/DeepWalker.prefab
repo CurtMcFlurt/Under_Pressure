@@ -75,6 +75,169 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca2bb80224db39144980913acefb76f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WeightMap: {fileID: 0}
+  mood:
+    anger: 0
+    hunger: 0
+    drowsy: 0
+    alertness: 0
+  Roaming:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -2.4039197
+      outSlope: -2.4039197
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.034300793
+    - serializedVersion: 3
+      time: 0.39973614
+      value: 0.0029347092
+      inSlope: 0.008880468
+      outSlope: 0.008880468
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.102725364
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1292876
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  tracking:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  hunting:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0021514893
+      value: 0
+      inSlope: 2.5647502
+      outSlope: 2.5647502
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.065339416
+    - serializedVersion: 3
+      time: 0.77736574
+      value: 0.88078463
+      inSlope: 0.8254615
+      outSlope: 0.8254615
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.14551744
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.02212544
+      outSlope: -0.02212544
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.103789255
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  sleeping:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.487763
+      value: 0.008202806
+      inSlope: 0.05692802
+      outSlope: 0.05692802
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.89692456
+      value: 0.4176426
+      inSlope: 3.4752777
+      outSlope: 3.4752777
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.97188336
+      value: 0.8636381
+      inSlope: 5.39987
+      outSlope: 5.39987
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  eating:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.29073843
+      value: 0.7174033
+      inSlope: 1.6161125
+      outSlope: 1.6161125
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1378517
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  activeLogic: {fileID: 11400000, guid: 96daabbaf154ef440af9dd1f3eb996c6, type: 2}
 --- !u!54 &6723006777707459619
 Rigidbody:
   m_ObjectHideFlags: 0

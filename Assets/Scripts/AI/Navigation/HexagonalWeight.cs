@@ -9,6 +9,7 @@ public struct HexCell
     public int stackLevel;    // Stack Position for Multi-level Maps
     public bool isWalkable;   // Walkability Flag
     public HeatMapValues weight;
+    public float timeSinceChecked;
     public HexCell(Vector3 hexCoords, float height, int stackLevel, bool isWalkable,HeatMapValues weight=new HeatMapValues())
     {
         this.hexCoords = hexCoords;
@@ -16,6 +17,7 @@ public struct HexCell
         this.stackLevel = stackLevel;
         this.isWalkable = isWalkable;
         this.weight = weight;
+        timeSinceChecked = 0;
     }
 }
 

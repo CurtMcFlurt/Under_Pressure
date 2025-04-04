@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
 public struct DeepWalkerMood
@@ -31,13 +33,21 @@ public class DeepWalkerLogic : MonoBehaviour
 
 
     public ScriptableBehaviour activeLogic;
+    public float VictimPositionCertainty = 0;
+
+    private List<HexCell> hexMap = new List<HexCell>();
+    private HexCell myHex;
+    private HexCell optimalSafety;
+    private HexCell optimalFood;
+    private HexCell optimalScouting;
+    private HexCell probableVictimPosition;
+
     
-    
-    
-    void Start()
+    void OnEnable()
     {
         if (WeightMap == null) WeightMap = Object.FindObjectsByType<HexagonalWeight>(FindObjectsSortMode.None)[0];
         mood = new DeepWalkerMood(0, 0, 0, 0);
+        AwakenTheBeast(WeightMap.walkableHexagons);
     }
     void Update()
     {
@@ -45,6 +55,79 @@ public class DeepWalkerLogic : MonoBehaviour
         activeLogic.Behave(this);
 
     }
+
+    public void AwakenTheBeast(List<HexCell> mapMemory)
+    {
+        hexMap = mapMemory;
+        myHex = HexMath.NearestHex(transform.position, mapMemory, WeightMap.cellSize);
+
+    }
+
+
+    public HexCell determineOptimalHex(int value)
+    {
+        HexCell optimalHex=myHex;
+        float WeightValue = 0;
+        float bestValue = 0;
+        switch (value){
+            case 0:
+                {
+                    //optimal safety
+               
+                    foreach (var hex in hexMap)
+                    {
+                        WeightValue = 0;
+                        foreach (var subHex in hexMap)
+                        {
+                            if (HexMath.HexDistance(hex.hexCoords, subHex.hexCoords) > 3) continue;
+
+                            WeightValue += subHex.weight.safety;
+                        }
+                        if (WeightValue > bestValue)
+                        {
+                            optimalHex = hex;
+                            WeightValue = bestValue;
+                        }
+                    }
+                    break;
+                }
+            case 1:
+                
+                {
+
+                    //optimal food
+
+                    foreach (var hex in hexMap)
+                    {
+                        WeightValue = 0;
+                        foreach (var subHex in hexMap)
+                        {
+                            if (HexMath.HexDistance(hex.hexCoords, subHex.hexCoords) > 3) continue;
+
+                            WeightValue += subHex.weight.food;
+                        }
+                        if (WeightValue > bestValue)
+                        {
+                            optimalHex = hex;
+                            WeightValue = bestValue;
+                        }
+                    }
+                    break;
+                }
+            case 2:
+                {
+                    
+                    
+                    break;
+                }
+
+        }
+
+
+        return optimalHex;
+    }
+
+
 
     private void DecideLogic()
     {

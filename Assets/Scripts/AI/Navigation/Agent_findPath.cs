@@ -9,9 +9,19 @@ public class Agent_findPath : MonoBehaviour
     [Tooltip("Movement spped of the player, default 1000")]
     private float minSpeed;
     [SerializeField]
-    [Tooltip("Movement spped of the player, default 1000")]
+    [Tooltip("movement speed of player at max")]
     private float maxSpeed;
 
+
+    [SerializeField]
+    [Tooltip("Movement spped of the Path object, default 1000")]
+    private float FollowMinSpeed;
+    [SerializeField]
+    [Tooltip("Movement spped of the Path object, default 1000")]
+    private float FollowMaxSpeed;
+
+
+    [SerializeField]
     [Tooltip("Reference to own rigidbody")]
     private Rigidbody rb3d;
 
@@ -27,17 +37,21 @@ public class Agent_findPath : MonoBehaviour
 
     [Tooltip("1 is nextPoint, 0 is averagePoint")]
     private Dictionary<Vector3, PointClass> InstancedPoints = new Dictionary<Vector3, PointClass>();
+    [SerializeField]
+    private float followDist = 0;
+    public float maxDist = 5;
     public int maxLookahead;
     public GameObject goal;
+    public GameObject followObject;
     public float curentSpeed;
     public LayerMask LineOfSightLayers;
     public LayerMask BezierLayers;
     public List<Vector3> debugPath;
     public bool RecalculatePath;
-    void Start()
+    void OnEnable()
     {
         rb3d = GetComponent<Rigidbody>();
-
+        followObject.transform.position = transform.position;
         GenerateNavdata();
         GeneratePath();
     }
@@ -65,19 +79,21 @@ public class Agent_findPath : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PathSegment < Path.Count-2) MoveAlongPath();
+        followDist = (transform.position - followObject.transform.position).magnitude;
+        if (PathSegment < Path.Count-1 && followDist<maxDist) MoveAlongPath();
         if (RecalculatePath)
         {
             RecalculatePath=false;
             GeneratePath();
         }
-
+        if(followDist>.6f) MoveTowardsFollow();
+        if (followDist > maxDist - 1 && rb3d.linearVelocity.magnitude < 1) breakMovementToReach();
     }
     public int PathSegment;
     private float TValue=0;
     private void MoveAlongPath()
     {
-       var curSpeed=Mathf.Lerp(maxSpeed,minSpeed,PredictiveMovement());
+        var curSpeed=Mathf.Lerp(FollowMaxSpeed,FollowMinSpeed,PredictiveMovement());
         curentSpeed=curSpeed;
         TValue += Time.deltaTime * curSpeed;
         if (TValue > 1)
@@ -93,8 +109,29 @@ public class Agent_findPath : MonoBehaviour
         Vector3 activeTarget = Path[PathSegment + 1];
     
         Vector3 lerpPos= Vector3.Lerp(acvtiveInterval, activeTarget, TValue);
-        transform.position =new Vector3(lerpPos.x,transform.position.y,lerpPos.z);
+        followObject.transform.position =new Vector3(lerpPos.x, lerpPos.y,lerpPos.z);
+        followDist=(followObject.transform.position-transform.position).magnitude;
     }
+
+    private void MoveTowardsFollow()
+    {
+        Vector3 dir = (followObject.transform.position - transform.position);
+        float tValie = Mathf.Clamp01(followDist / maxDist);
+        float streangth = Mathf.Lerp(minSpeed, maxSpeed,TValue);
+        dir *= streangth;
+        Debug.Log(streangth + " move Values");
+        Vector3 currentVelocity = rb3d.linearVelocity;
+        dir = dir - currentVelocity;
+        dir = VectorFix.returnVector3With0Y(dir).normalized;
+        rb3d.AddForce(dir * streangth*20000 * Time.deltaTime);
+    }
+    private void breakMovementToReach()
+    {
+        Debug.Log("breakMove");
+
+        transform.position = Vector3.Lerp(transform.position, followObject.transform.position, Time.deltaTime);
+    }
+
     private float PredictiveMovement()
     {
         //int futurePointsCount = (int)(lookAheadDistance / pathIntervalLeangth);
@@ -173,6 +210,10 @@ public class Agent_findPath : MonoBehaviour
             Gizmos.DrawLine(Path[i] + Vector3.up * 1.5f, Path[i + 1] + Vector3.up * 1.5f);
         }
 
-      
+        Gizmos.color = Color.white;
+
+        Gizmos.DrawCube(followObject.transform.position, new Vector3(1, 2, 1));
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position+ rb3d.linearVelocity);
     }
 }

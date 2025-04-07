@@ -34,7 +34,8 @@ public class DeepWalkerLogic : MonoBehaviour
 
     public ScriptableBehaviour activeLogic;
     public float VictimPositionCertainty = 0;
-
+    public int areaSizes=3;
+    public int hearingSize = 7;
     private List<HexCell> hexMap = new List<HexCell>();
     private HexCell myHex;
     private HexCell optimalSafety;
@@ -61,6 +62,43 @@ public class DeepWalkerLogic : MonoBehaviour
         hexMap = mapMemory;
         myHex = HexMath.NearestHex(transform.position, mapMemory, WeightMap.cellSize);
 
+        float safetyWeightValue = 0;
+        float foodWeightValue = 0;
+        float scoutWeightValue = 0;
+
+        float bestSaf=0;
+        float bestFoo=0;
+        float bestSco=0;
+
+        foreach (var hex in hexMap)
+        {
+            safetyWeightValue = 0;
+            foodWeightValue = 0;
+            scoutWeightValue = 0;
+            foreach (var subHex in hexMap)
+            {
+                if (HexMath.HexDistance(hex.hexCoords, subHex.hexCoords) > areaSizes) continue;
+
+                safetyWeightValue += subHex.weight.safety;
+                foodWeightValue += subHex.weight.food;
+                scoutWeightValue += subHex.weight.sound;
+            }
+            if (safetyWeightValue > bestSaf)
+            {
+                optimalSafety = hex;
+                bestSaf = safetyWeightValue;
+            } 
+            if (foodWeightValue > bestFoo)
+            {
+                optimalFood = hex;
+                bestFoo = foodWeightValue;
+            } 
+            if (scoutWeightValue > bestSco)
+            {
+                optimalScouting = hex;
+                bestSco = scoutWeightValue;
+            }
+        }
     }
 
 
@@ -79,14 +117,14 @@ public class DeepWalkerLogic : MonoBehaviour
                         WeightValue = 0;
                         foreach (var subHex in hexMap)
                         {
-                            if (HexMath.HexDistance(hex.hexCoords, subHex.hexCoords) > 3) continue;
+                            if (HexMath.HexDistance(hex.hexCoords, subHex.hexCoords) > areaSizes) continue;
 
                             WeightValue += subHex.weight.safety;
                         }
                         if (WeightValue > bestValue)
                         {
                             optimalHex = hex;
-                            WeightValue = bestValue;
+                            bestValue = WeightValue;
                         }
                     }
                     break;
@@ -102,22 +140,57 @@ public class DeepWalkerLogic : MonoBehaviour
                         WeightValue = 0;
                         foreach (var subHex in hexMap)
                         {
-                            if (HexMath.HexDistance(hex.hexCoords, subHex.hexCoords) > 3) continue;
+                            if (HexMath.HexDistance(hex.hexCoords, subHex.hexCoords) > areaSizes) continue;
 
                             WeightValue += subHex.weight.food;
                         }
                         if (WeightValue > bestValue)
                         {
                             optimalHex = hex;
-                            WeightValue = bestValue;
+                            bestValue = WeightValue;
                         }
                     }
                     break;
                 }
             case 2:
                 {
-                    
-                    
+                    foreach (var hex in hexMap)
+                    {
+                        WeightValue = 0;
+                        foreach (var subHex in hexMap)
+                        {
+                            if (HexMath.HexDistance(hex.hexCoords, subHex.hexCoords) > areaSizes) continue;
+
+                            WeightValue += subHex.timeSinceChecked;
+                        }
+                        if (WeightValue > bestValue)
+                        {
+                            optimalHex = hex;
+                            bestValue = WeightValue;
+                        }
+                    }
+
+                    break;
+                }
+            case 3:
+                {
+
+                    foreach (var hex in hexMap)
+                    {
+                        WeightValue = 0;
+                        foreach (var subHex in hexMap)
+                        {
+                            if (HexMath.HexDistance(hex.hexCoords, subHex.hexCoords) > areaSizes) continue;
+
+                            WeightValue += subHex.timeSinceChecked;
+                        }
+                        if (WeightValue > bestValue)
+                        {
+                            optimalHex = hex;
+                            bestValue = WeightValue;
+                        }
+                    }
+
                     break;
                 }
 
@@ -131,13 +204,36 @@ public class DeepWalkerLogic : MonoBehaviour
 
     private void DecideLogic()
     {
+        //if alerted do action
         if (compareCurves(Roaming, tracking, mood.alertness))
         {
+            //if angry do action while alerted
             if(compareCurves(tracking, hunting, mood.anger))
             {
 
             }
+            //if not angry do other action
+            else
+            {
+
+            }
+            //being alerted supercedes all other behaviour, if danger exists deepwalker wont do something else
+            return;
         }
+        //bellow is neutral behaviour aka how to move when not interacting with players
+
+        if (compareCurves(Roaming, eating, mood.hunger))
+        {
+            //if hungry do action
+            return;
+        }
+        if (compareCurves(Roaming, sleeping, mood.drowsy))
+        {
+            //if sleepy do action
+            return;
+        }
+                   
+        //lastly do action when needs are not that important (just roam smh)
 
     }
 

@@ -55,9 +55,40 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 moveInput = moveAction.ReadValue<Vector2>();
         Vector3 moveDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
+        float crouchValue = crouchAction.ReadValue<float>();
+        float sprintValue = sprintAction.ReadValue<float>();
+        bool isCrouching = crouchValue > 0.5f;
+        bool isSprinting = sprintValue > 0.5f && !runCD;
+        if (isCrouching)
+        {
+            moveSpeed = sneakingSpeed;
+            RegenerateStamina();
+        }
+        else if (isSprinting)
+        {
+            moveSpeed = runningSpeed;
+            stamina -= Time.deltaTime * exhaust;
+
+            if (stamina <= 0f)
+            {
+                stamina = 0f;
+                runCD = true;
+            }
+        }
+        else
+        {
+            moveSpeed = walkingSpeed;
+            RegenerateStamina();
+        }
+
+        if (stamina >= 1f)
+        {
+            stamina = 1f;
+            runCD = false;
+        }
         rb.linearVelocity = new Vector3(moveDirection.x * moveSpeed, rb.linearVelocity.y, moveDirection.z * moveSpeed);
     }
-
+    private bool runCD;
     private void Update()
     {
         Vector2 lookInput = lookAction.ReadValue<Vector2>();
@@ -75,28 +106,15 @@ public class PlayerMovement : MonoBehaviour
         {
             ThrowGlowStick();
         }
+       
 
-        if (crouchAction.IsInProgress())
+    }
+    void RegenerateStamina()
+    {
+        if (stamina < 1f)
         {
             stamina += Time.deltaTime * regenerate;
-            moveSpeed = sneakingSpeed;
         }
-        else if (sprintAction.IsInProgress() && stamina > Time.deltaTime*exhaust)
-        {
-            stamina -= Time.deltaTime * exhaust;
-            moveSpeed = runningSpeed;
-        }
-        else
-        {
-            moveSpeed = walkingSpeed;
-            if (stamina < 1)
-            {
-                stamina += Time.deltaTime * regenerate;
-
-            }
-            else stamina = 1;
-        }
-        
     }
 
     private void ThrowGlowStick()

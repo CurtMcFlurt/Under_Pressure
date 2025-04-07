@@ -119,7 +119,6 @@ public class Agent_findPath : MonoBehaviour
         float tValie = Mathf.Clamp01(followDist / maxDist);
         float streangth = Mathf.Lerp(minSpeed, maxSpeed,TValue);
         dir *= streangth;
-        Debug.Log(streangth + " move Values");
         Vector3 currentVelocity = rb3d.linearVelocity;
         dir = dir - currentVelocity;
         dir = VectorFix.returnVector3With0Y(dir).normalized;

@@ -10,24 +10,23 @@ public class BoidManager : MonoBehaviour
     public BoidSettings settings;
     public ComputeShader compute;
     public HashSet<GameObject> targets= new HashSet<GameObject>();
-    public Boids[] boids;
+
+    public List <Boids> boids;
     public Collider boundCollider;
     [System.Obsolete]
     void Start()
     {
         var boidies = FindObjectsOfType<Boids>();
         List<Boids> tempboids = boids.ToList();
-        foreach (Boids b in boidies)
+        foreach (Boids b in boids)
         {
-            if (b.transform.IsChildOf(transform))
-            {
+           
                 b.Initialize(settings, null);
-                tempboids.Add(b);
+             
 
-            }
         }
 
-        boids = tempboids.ToArray();
+     
 
         if(boundCollider != null)
         {
@@ -36,13 +35,16 @@ public class BoidManager : MonoBehaviour
     }
     void Update()
     {
+     
+
+       
         if (boids != null)
         {
 
-            int numBoids = boids.Length;
+            int numBoids = boids.Count;
             var boidData = new BoidData[numBoids];
 
-            for (int i = 0; i < boids.Length; i++)
+            for (int i = 0; i < boids.Count; i++)
             {
                 boidData[i].position = boids[i].position;
                 boidData[i].direction = boids[i].forward;
@@ -53,7 +55,7 @@ public class BoidManager : MonoBehaviour
             boidBuffer.SetData(boidData);
 
             compute.SetBuffer(0, "boids", boidBuffer);
-            compute.SetInt("numBoids", boids.Length);
+            compute.SetInt("numBoids", boids.Count);
             compute.SetFloat("viewRadius", settings.perceptionRadius);
             compute.SetFloat("avoidRadius", settings.avoidanceRadius);
 
@@ -62,7 +64,7 @@ public class BoidManager : MonoBehaviour
 
             boidBuffer.GetData(boidData);
 
-            for (int i = 0; i < boids.Length; i++)
+            for (int i = 0; i < boids.Count; i++)
             {
                 boids[i].avgFlockHeading = boidData[i].flockHeading;
                 boids[i].centreOfFlockmates = boidData[i].flockCentre;

@@ -12,7 +12,15 @@ public static class HexMath
             original.safety + (added.safety * modifier)
         );
     }
-
+  public static Vector3[] cubeDirectionVectors = new Vector3[]
+  {
+        new Vector3(+1, 0, -1),
+        new Vector3(+1, -1, 0),
+        new Vector3(0, -1, +1),
+        new Vector3(-1, 0, +1),
+        new Vector3(-1, +1, 0),
+        new Vector3(0, +1, -1)
+  };
     public static int HexDistance(Vector3 a, Vector3 b)
     {
         return (Mathf.Abs((int)a.x - (int)b.x) + Mathf.Abs((int)a.y - (int)b.y) + Mathf.Abs((int)a.z - (int)b.z)) / 2;

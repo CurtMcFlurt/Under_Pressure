@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+[System.Serializable]
 public struct HexCell
 {
     public Vector3 hexCoords; // QRS Coordinates

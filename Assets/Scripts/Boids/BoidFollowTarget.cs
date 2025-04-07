@@ -53,7 +53,9 @@ public class BoidFollowTarget : MonoBehaviour
             else if (checkIfInside) { 
             
             checkIfInside= false;
-                boidManager.targets.Remove(this.gameObject);
+                Debug.LogWarning("Left The Box");
+                boidManager.targets.Remove(huntTransform);
+               
                 boidManager=null;
             }
 

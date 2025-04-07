@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 [System.Serializable]
@@ -33,7 +33,7 @@ public class DeepWalkerLogic : MonoBehaviour
     public float VictimPositionCertainty = 0;
     public int areaSizes = 3;
     public int hearingRange = 7;
-
+   
     private Dictionary<Vector3, HexCell> hexMap = new();
     private Dictionary<Vector3, HexCell> inHexRange = new();
     private Dictionary<Vector3, HexCell> outHexRange = new();
@@ -44,18 +44,28 @@ public class DeepWalkerLogic : MonoBehaviour
     private HexCell probableVictimPosition;
     private float timeFood=-1;
     private float timeSafety=-1;
+    private HexCell loudestReactHex;
     void OnEnable()
     {
         if (WeightMap == null)
             WeightMap = Object.FindObjectsByType<HexagonalWeight>(FindObjectsSortMode.None)[0];
 
         mood = new DeepWalkerMood(0, 0, 0, 0);
+        loudestReactHex=new HexCell();
+        loudestReactHex.weight.sound = 1;
         AwakenTheBeast(WeightMap.walkableHexagons);
     }
 
     void Update()
     {
         UpdateVision();
+        if (updateSafety && timeSafety <= 0)
+        {
+            updateSafety = false;
+            timeSafety = updateTimer;
+            FindOptimalHex(0);
+        }
+        else timeSafety -= Time.deltaTime;
         if (updateFood && timeFood <= 0)
         {
             updateFood = false;
@@ -63,6 +73,13 @@ public class DeepWalkerLogic : MonoBehaviour
             FindOptimalHex(1);
         }
         else timeFood -= Time.deltaTime;
+
+        if (reactToSound)
+        {
+            Debug.Log("looking for loud");
+            probableVictimPosition = FindSoundOrigin(loudestReactHex);
+            loudestReactHex = new HexCell();
+        }
         DecideLogic();
         
         activeLogic.Behave(this);
@@ -77,6 +94,53 @@ public class DeepWalkerLogic : MonoBehaviour
         optimalFood = FindOptimalHex(1);
         optimalScouting = FindOptimalHex(2);
     }
+
+
+    public HexCell FindSoundOrigin(HexCell soundStartFound)
+    {
+        // Initialize loudest with the starting hex
+        loudestReactHex = soundStartFound;
+        float loudestValue = soundStartFound.weight.sound;
+
+        // BFS-style search
+        Queue<HexCell> openSet = new Queue<HexCell>();
+        HashSet<Vector3> visited = new HashSet<Vector3>();
+
+        openSet.Enqueue(soundStartFound);
+        visited.Add(soundStartFound.hexCoords);
+
+        while (openSet.Count > 0)
+        {
+            HexCell current = openSet.Dequeue();
+
+            // Check if this is the new loudest
+            if (current.weight.sound > loudestValue)
+            {
+                loudestValue = current.weight.sound;
+                loudestReactHex = current;
+            }
+
+            // Check neighbors
+            foreach (Vector3 direction in HexMath.cubeDirectionVectors)
+            {
+                Vector3 neighborCoords = current.hexCoords + direction;
+
+                if (visited.Contains(neighborCoords)) continue;
+
+                if (WeightMap.walkableHexagons.TryGetValue(neighborCoords, out HexCell neighbor))
+                {
+                    if (neighbor.weight.sound >= current.weight.sound)
+                    {
+                        openSet.Enqueue(neighbor);
+                        visited.Add(neighborCoords);
+                    }
+                }
+            }
+        }
+        return loudestReactHex;
+      
+    }
+
 
     public HexCell FindOptimalHex(int type)
     {
@@ -140,7 +204,7 @@ public class DeepWalkerLogic : MonoBehaviour
 
         // Roaming behavior
     }
-
+  
     public bool compareCurves(AnimationCurve neutral, AnimationCurve superceding, float value)
     {
         return neutral.Evaluate(value) > superceding.Evaluate(value);
@@ -148,6 +212,7 @@ public class DeepWalkerLogic : MonoBehaviour
     private bool updateFood, updateSafety, reactToSound;
     public void UpdateVision()
     {
+        myHex = HexMath.NearestHex(transform.position, hexMap.Values.ToList(), WeightMap.cellSize);
         inHexRange.Clear();
         outHexRange.Clear();
 
@@ -161,10 +226,10 @@ public class DeepWalkerLogic : MonoBehaviour
             if (dist <= hearingRange)
             {
                 cell.timeSinceChecked = 0;
-
+              
                 if (cell.weight.food != WeightMap.walkableHexagons[kvp.Key].weight.food) { updateFood = true; timeFood = 1; }
-                if (cell.weight.safety != WeightMap.walkableHexagons[kvp.Key].weight.food){ updateSafety = true; timeSafety = 1;}
-                if (cell.weight.sound != WeightMap.walkableHexagons[kvp.Key].weight.food){ reactToSound = true;}
+                if (cell.weight.safety != WeightMap.walkableHexagons[kvp.Key].weight.safety){ updateSafety = true; timeSafety = 1;}
+                if (cell.weight.sound != WeightMap.walkableHexagons[kvp.Key].weight.sound){ reactToSound = true; if (cell.weight.sound > loudestReactHex.weight.sound) loudestReactHex = cell;  }
 
             inHexRange.Add(kvp.Key,cell);
             }
@@ -182,4 +247,12 @@ public class DeepWalkerLogic : MonoBehaviour
     public void AlertnessInfluence(float alertChange) => mood.alertness = Mathf.Clamp01(mood.alertness + alertChange);
     public void HungerInfluence(float hungerChange) => mood.hunger = Mathf.Clamp01(mood.hunger + hungerChange);
     public void DrowsyInfluence(float drowsyChange) => mood.drowsy = Mathf.Clamp01(mood.drowsy + drowsyChange);
+
+    public void OnDrawGizmosSelected()
+    {
+        if (probableVictimPosition.weight.sound > 4)
+        {
+            Gizmos.DrawCube(HexMath.Axial2World(probableVictimPosition,WeightMap.cellSize), new Vector3(1, 2, 1));
+        }
+    }
 }

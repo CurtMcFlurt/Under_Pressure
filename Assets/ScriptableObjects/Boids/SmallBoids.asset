@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8382d109b4b9c34492e6a7aaf78ecc2, type: 3}
   m_Name: SmallBoids
   m_EditorClassIdentifier: 
-  minSpeed: 3.12
-  maxSpeed: 4.58
+  minSpeed: 5
+  maxSpeed: 8
   perceptionRadius: 1.24
   avoidanceRadius: 1.46
-  maxSteerForce: 3
+  maxSteerForce: 5
   alignWeight: 0.99
   cohesionWeight: 0.89
   seperateWeight: 1.1

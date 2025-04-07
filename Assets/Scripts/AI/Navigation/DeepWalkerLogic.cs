@@ -59,7 +59,8 @@ public class DeepWalkerLogic : MonoBehaviour
         if (updateFood && timeFood <= 0)
         {
             updateFood = false;
-
+            timeFood = updateTimer;
+            FindOptimalHex(1);
         }
         else timeFood -= Time.deltaTime;
         DecideLogic();

@@ -76,12 +76,12 @@ public class PlayerMovement : MonoBehaviour
             ThrowGlowStick();
         }
 
-        if (crouchAction.IsPressed())
+        if (crouchAction.IsInProgress())
         {
             stamina += Time.deltaTime * regenerate;
             moveSpeed = sneakingSpeed;
         }
-        else if (sprintAction.IsPressed() && stamina > 0)
+        else if (sprintAction.IsInProgress() && stamina > Time.deltaTime*exhaust)
         {
             stamina -= Time.deltaTime * exhaust;
             moveSpeed = runningSpeed;
@@ -89,7 +89,12 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             moveSpeed = walkingSpeed;
-            regenerate += Time.deltaTime * regenerate;
+            if (stamina < 1)
+            {
+                stamina += Time.deltaTime * regenerate;
+
+            }
+            else stamina = 1;
         }
         
     }

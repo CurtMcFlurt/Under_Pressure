@@ -30,8 +30,8 @@ public class Hexagon_HeatmapManager : MonoBehaviour
         new Vector3(-1, +1, 0),
         new Vector3(0, +1, -1)
     };
-
-    public float cooling;
+    
+    public HeatMapValues heatcooling;
 
     void OnEnable()
     {
@@ -62,9 +62,9 @@ public class Hexagon_HeatmapManager : MonoBehaviour
         {
             HexCell hex = hexDict[key];
 
-            hex.weight.food = Mathf.Lerp(hex.weight.food, 1f, cooling * Time.fixedDeltaTime);
-            hex.weight.sound = Mathf.Lerp(hex.weight.sound, 1f, cooling * Time.fixedDeltaTime);
-            hex.weight.safety = Mathf.Lerp(hex.weight.safety, 1f, cooling * Time.fixedDeltaTime);
+            hex.weight.food = Mathf.Lerp(hex.weight.food, 1f, heatcooling.food * Time.fixedDeltaTime);
+            hex.weight.sound = Mathf.Lerp(hex.weight.sound, 1f, heatcooling.sound * Time.fixedDeltaTime);
+            hex.weight.safety = Mathf.Lerp(hex.weight.safety, 1f, heatcooling.safety * Time.fixedDeltaTime);
 
             hexDict[key] = hex; // Store modified back
         }

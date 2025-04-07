@@ -697,6 +697,14 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 677111601656938667, guid: 305f00f4a734e55469042b0d069d5e67, type: 3}
+      propertyPath: runningSpeed
+      value: 125
+      objectReference: {fileID: 0}
+    - target: {fileID: 677111601656938667, guid: 305f00f4a734e55469042b0d069d5e67, type: 3}
+      propertyPath: sneakingSpeed
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 770745724381202041, guid: 305f00f4a734e55469042b0d069d5e67, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
       value: 4294967295

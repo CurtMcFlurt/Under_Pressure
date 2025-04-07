@@ -163,11 +163,10 @@ public class DeepWalkerLogic : MonoBehaviour
                 cell.timeSinceChecked = 0;
 
                 if (cell.weight.food != WeightMap.walkableHexagons[kvp.Key].weight.food) { updateFood = true; timeFood = 1; }
-                if (cell.weight.safety != WeightMap.walkableHexagons[kvp.Key].weight.food){ updateSafety = true; timeSafety = 1;
-            }
-            if (cell.weight.sound != WeightMap.walkableHexagons[kvp.Key].weight.food){ reactToSound = true;}
+                if (cell.weight.safety != WeightMap.walkableHexagons[kvp.Key].weight.food){ updateSafety = true; timeSafety = 1;}
+                if (cell.weight.sound != WeightMap.walkableHexagons[kvp.Key].weight.food){ reactToSound = true;}
 
-        inHexRange.Add(kvp.Key,cell);
+            inHexRange.Add(kvp.Key,cell);
             }
             else
             {

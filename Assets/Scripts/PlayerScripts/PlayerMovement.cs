@@ -3,8 +3,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    private float moveSpeed = 5f;
+
+    public float walkingSpeed = 5f;
+    public float runningSpeed = 5f;
+    public float sneakingSpeed = 5f;
     public float lookSpeed = 2f;
+    public float stamina=1;
+    public float exhaust = 200;
+    public float regenerate = 200;
     public Transform cameraTransform;
     public Rigidbody rb;
     public GameObject glowStick;
@@ -13,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction throwAction;
+    private InputAction sprintAction;
+    private InputAction crouchAction;
     private float xRotation = 0f;
 
     private void OnEnable()
@@ -25,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
             moveAction = playerInput.actions.FindAction("Move");
             lookAction = playerInput.actions.FindAction("Look");
             throwAction = playerInput.actions.FindAction("Interact");
+            sprintAction = playerInput.actions.FindAction("Sprint");
+            crouchAction = playerInput.actions.FindAction("Crouch");
+
         }
 
         moveAction.Enable();
@@ -63,6 +75,23 @@ public class PlayerMovement : MonoBehaviour
         {
             ThrowGlowStick();
         }
+
+        if (crouchAction.IsPressed())
+        {
+            stamina += Time.deltaTime * regenerate;
+            moveSpeed = sneakingSpeed;
+        }
+        else if (sprintAction.IsPressed() && stamina > 0)
+        {
+            stamina -= Time.deltaTime * exhaust;
+            moveSpeed = runningSpeed;
+        }
+        else
+        {
+            moveSpeed = walkingSpeed;
+            regenerate += Time.deltaTime * regenerate;
+        }
+        
     }
 
     private void ThrowGlowStick()

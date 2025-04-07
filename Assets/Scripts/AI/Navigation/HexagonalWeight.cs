@@ -24,7 +24,6 @@ public struct HexCell
 [ExecuteAlways]
 public class HexagonalWeight : MonoBehaviour
 {
-
     public int range = 5;
     public float cellSize = 1;
     private Vector3[] corners;
@@ -32,9 +31,12 @@ public class HexagonalWeight : MonoBehaviour
     public Color hexcolor = new Color(0.124f, 0.135f, 0.134f);
     private int oldRange;
     private float oldCell;
-    public List<HexCell> walkableHexagons = new List<HexCell>();
+
+    // Changed from List to Dictionary
+    public Dictionary<Vector3, HexCell> walkableHexagons = new Dictionary<Vector3, HexCell>();
     public int walkables = 0;
     public LayerMask floorMask;
+
     private void OnEnable()
     {
         SetUpHexes();
@@ -42,19 +44,18 @@ public class HexagonalWeight : MonoBehaviour
 
     private void Update()
     {
-        Vector3 currentHex = new Vector3();
-        for (int i = 0; i < grid.coordinate.Count; i++)
+        foreach (var coord in grid.coordinate)
         {
-            currentHex = grid.coordinate[i];
-         
+            // You could draw gizmos here if needed
         }
-        if(range != oldRange || cellSize != oldCell)
+
+        if (range != oldRange || cellSize != oldCell)
         {
             SetUpHexes();
         }
+
         walkables = walkableHexagons.Count;
     }
-
 
     private void SetUpHexes()
     {
@@ -63,21 +64,22 @@ public class HexagonalWeight : MonoBehaviour
         oldRange = range;
         FindAllAccessibleHexes();
     }
-  
-    private Vector3 HexCorners(Vector3 pos,float height, int i)
+
+    private Vector3 HexCorners(Vector3 pos, float height, int i)
     {
-        var angle_deg = 60 * i;
-        float angle_rad = Mathf.PI / 180 * angle_deg;
+        float angle_rad = Mathf.PI / 180 * (60 * i);
         return new Vector3(pos.x + cellSize * Mathf.Cos(angle_rad), height, pos.z + cellSize * Mathf.Sin(angle_rad));
     }
+
     private void FindAllAccessibleHexes()
     {
         walkableHexagons.Clear();
-        foreach (var hex in grid.hexvalue)
+
+        foreach (var hexCoord in grid.hexvalue)
         {
-            Vector3 worldPos = grid.Axial2Pixel(hex);
+            Vector3 worldPos = grid.Axial2Pixel(hexCoord);
             int stackLevel = 0;
-            float maxCheckHeight = 50f; // Maximum height to check for additional levels
+            float maxCheckHeight = 50f;
             bool foundBase = false;
 
             while (worldPos.y <= maxCheckHeight)
@@ -85,8 +87,10 @@ public class HexagonalWeight : MonoBehaviour
                 if (NavMesh.SamplePosition(worldPos, out var hit, 3f, NavMesh.AllAreas))
                 {
                     float height = hit.position.y;
-                    HexCell hexCell = new HexCell(hex, height, stackLevel, true);
-                    walkableHexagons.Add(hexCell);
+                    HexCell hexCell = new HexCell(hexCoord, height, stackLevel, true);
+
+                    // Insert into dictionary using hexCoord as key
+                    walkableHexagons[hexCoord] = hexCell;
                     foundBase = true;
                 }
 
@@ -94,43 +98,44 @@ public class HexagonalWeight : MonoBehaviour
                 {
                     if (Physics.Raycast(worldPos, Vector3.up, out RaycastHit levelHit, maxCheckHeight - worldPos.y, floorMask))
                     {
-                        worldPos = levelHit.point + Vector3.up * 0.1f; // Move slightly above the detected floor
+                        worldPos = levelHit.point + Vector3.up * 0.1f;
                         stackLevel++;
                         continue;
                     }
-                    else
-                    {
-                        break; // No more levels found
-                    }
+                    else break;
                 }
 
-                worldPos.y += cellSize; // Move up incrementally until a base is found
+                worldPos.y += cellSize;
             }
         }
     }
 
 
+
     public void OnDrawGizmosSelected()
     {
-        foreach(var hex in walkableHexagons)
+        foreach (var hex in walkableHexagons.Values)
         {
-            Gizmos.color = new Color(hex.weight.food/10, hex.weight.safety/10, hex.weight.sound/10);
-            Gizmos.DrawCube(grid.Axial2Pixel(hex.hexCoords)+(hex.height+ new Vector3(hex.weight.food, hex.weight.safety, hex.weight.sound).magnitude/2) *Vector3.up, new Vector3(1, new Vector3(hex.weight.food, hex.weight.safety, hex.weight.sound).magnitude, 1));
+            // Calculate heat magnitude for cube size and color
+            var weightVec = new Vector3(hex.weight.food, hex.weight.safety, hex.weight.sound);
+            float magnitude = weightVec.magnitude;
+            Vector3 basePos = grid.Axial2Pixel(hex.hexCoords);
 
+            // Set gizmo color based on heat values
+            Gizmos.color = new Color(hex.weight.food / 10f, hex.weight.safety / 10f, hex.weight.sound / 10f);
+
+            // Draw cube with height based on heat magnitude
+            Gizmos.DrawCube(basePos + (hex.height + magnitude / 2f) * Vector3.up, new Vector3(1, magnitude, 1));
+
+            // Draw hex outline
             corners = new Vector3[6];
-            for (int i = 0; i < corners.Length; i++)
+            for (int i = 0; i < 6; i++)
             {
-                corners[i] = HexCorners(grid.Axial2Pixel(hex.hexCoords) ,hex.height, i);
+                corners[i] = HexCorners(basePos, hex.height, i);
             }
+        }
 
-            for (int i = 0; i < corners.Length - 1; i++)
-            {
-                Debug.DrawLine(corners[i], corners[i + 1], hexcolor);
-            }
-            Debug.DrawLine(corners[5], corners[0], hexcolor);
-
-
-        } 
+        
     }
 
 

@@ -17,7 +17,7 @@ public struct HexCell
         this.stackLevel = stackLevel;
         this.isWalkable = isWalkable;
         this.weight = weight;
-        timeSinceChecked = 0;
+        timeSinceChecked = Time.deltaTime;
     }
 }
 

@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
@@ -33,6 +32,7 @@ public class DeepWalkerLogic : MonoBehaviour
 
 
     public ScriptableBehaviour activeLogic;
+    [Range(0,1)]
     public float VictimPositionCertainty = 0;
     public int areaSizes=3;
     public int hearingSize = 7;

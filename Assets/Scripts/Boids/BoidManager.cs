@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BoidManager : MonoBehaviour
@@ -14,11 +15,20 @@ public class BoidManager : MonoBehaviour
     [System.Obsolete]
     void Start()
     {
-        boids = FindObjectsOfType<Boids>();
-        foreach (Boids b in boids)
+        var boidies = FindObjectsOfType<Boids>();
+        List<Boids> tempboids = boids.ToList();
+        foreach (Boids b in boidies)
         {
-            b.Initialize(settings, null);
+            if (b.transform.IsChildOf(transform))
+            {
+                b.Initialize(settings, null);
+                tempboids.Add(b);
+
+            }
         }
+
+        boids = tempboids.ToArray();
+
         if(boundCollider != null)
         {
             boundCollider=GetComponent<Collider>();

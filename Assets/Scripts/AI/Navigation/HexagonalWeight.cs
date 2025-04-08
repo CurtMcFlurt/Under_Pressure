@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.PlayerSettings;
 [System.Serializable]
 public struct HexCell
 {
@@ -129,14 +130,18 @@ public class HexagonalWeight : MonoBehaviour
 
             // Draw hex outline
             corners = new Vector3[6];
-            Vector3 oldVector= HexCorners(basePos, hex.height, 0);
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < corners.Length; i++)
             {
-                corners[i] = HexCorners(basePos, hex.height, i);
-                if (i > 0) Gizmos.DrawLine(corners[i], oldVector);
-                oldVector=corners[i];
+                corners[i] = HexCorners(basePos,hex.height, i);
+            }
+            for (int i = 0; i < 5; i++)
+            {
+          
+                Gizmos.DrawLine(corners[i], corners[i+1]);
+           
 
             }
+            Gizmos.DrawLine(corners[5], corners[0]);
         }
 
         

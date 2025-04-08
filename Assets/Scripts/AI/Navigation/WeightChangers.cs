@@ -5,7 +5,7 @@ public class WeightChangers : MonoBehaviour
     public float falloff;
     public int range;
     public HeatMapValues myHeat;
-
+    public bool OneOff = false;
     public void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(myHeat.food, myHeat.safety, myHeat.sound);

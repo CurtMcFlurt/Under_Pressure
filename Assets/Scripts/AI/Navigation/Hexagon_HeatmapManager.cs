@@ -45,6 +45,10 @@ public class Hexagon_HeatmapManager : MonoBehaviour
             {
                 var nearest = HexMath.NearestHex(changer.transform.position, hexDict.Values.ToList(), hexWeighter.cellSize);
                 ApplyHeatChange(nearest, changer.range, changer.myHeat, changer.falloff);
+                if (changer.OneOff)
+                {
+                    changer.enabled = false;
+                }
             }
         }
 

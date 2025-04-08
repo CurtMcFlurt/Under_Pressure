@@ -19,7 +19,7 @@ TagManager:
   - EnterFishCollider
   - Floor
   - PostProcessing
-  - 
+  - crouchable
   - 
   - 
   - 

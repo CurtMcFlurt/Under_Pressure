@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6815916663698623574}
   - component: {fileID: 6133248393811533058}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: PostProcessing volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 0}
+  sharedProfile: {fileID: 11400000, guid: 6009c93ad9a007f49b1ba97e9f070572, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 4892368128370833610}
   - component: {fileID: 770745724381202041}
   - component: {fileID: 8330561651230381374}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ MeshCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 4294967295
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 677111601656938667}
   - component: {fileID: 8979354530499879030}
   - component: {fileID: 5464685001295653959}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Fool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3853958961406216230}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.5952254, z: -0, w: 0.8035588}
+  m_LocalRotation: {x: 0, y: -0.5952226, z: 0, w: 0.8035609}
   m_LocalPosition: {x: 20.87, y: 3.859216, z: -4.23}
   m_LocalScale: {x: 1.9811, y: 1.9811, z: 1.9811}
   m_ConstrainProportionsScale: 0
@@ -298,7 +298,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3853958961406216230}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 15
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -329,13 +329,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ace0bfe540cfd3a4c905c27292588509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  walkingSpeed: 12
+  runningSpeed: 25
+  sneakingSpeed: 5
   lookSpeed: 0.1
+  stamina: 1
+  exhaust: 1
+  regenerate: 1
+  crouchHeigtDivision: 2
   cameraTransform: {fileID: 6981733371161587601}
   rb: {fileID: 1953910241733474021}
   glowStick: {fileID: 2628165128578031410, guid: 03278d1e2f5046048bd76d69a21cdbb8, type: 3}
+  cameraPoint: {fileID: 6822449476220128409}
   throwPoint: {fileID: 8429873713282857790}
   throwForce: 10
+  layerstuff:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!114 &8979354530499879030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,11 +360,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishbowlLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   sphereCheckRadius: 5
   checkIfInside: 0
   boidCounter: 0
-  huntTransform: {fileID: 0}
+  huntTransform: {fileID: 6822449476220128409}
 --- !u!114 &5464685001295653959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,7 +406,7 @@ GameObject:
   - component: {fileID: 1872339853821177417}
   - component: {fileID: 2689209026765203354}
   - component: {fileID: 6465301952960709511}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: flashLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +526,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8429873713282857790}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: throwPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -551,7 +561,7 @@ GameObject:
   - component: {fileID: 2556223673051335482}
   - component: {fileID: 7822650789970580755}
   - component: {fileID: 7893081899877251131}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -692,10 +702,10 @@ MonoBehaviour:
   volumeTrigger: {fileID: 6981733371161587601}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 8192
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
-  antialiasingMode: 2
+  antialiasingMode: 1
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25

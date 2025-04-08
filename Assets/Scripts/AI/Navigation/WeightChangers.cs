@@ -10,7 +10,7 @@ public class WeightChangers : MonoBehaviour
     {
         Gizmos.color = new Color(myHeat.food, myHeat.safety, myHeat.sound);
 
-        Gizmos.DrawSphere(transform.position, (range*1.5f) / (1+falloff));
+        Gizmos.DrawSphere(transform.position, 1);
     }
 
 

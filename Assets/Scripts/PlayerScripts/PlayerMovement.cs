@@ -10,20 +10,26 @@ public class PlayerMovement : MonoBehaviour
     public float sneakingSpeed = 5f;
     public float lookSpeed = 2f;
     public float stamina=1;
-    public float exhaust = 200;
-    public float regenerate = 200;
+    public float exhaust = 1;
+    public float regenerate = 1;
+    public float crouchHeigtDivision = 2;
     public Transform cameraTransform;
     public Rigidbody rb;
     public GameObject glowStick;
+    public GameObject cameraPoint;
     public Transform throwPoint;
     public float throwForce = 10f;
+    public LayerMask layerstuff;
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction throwAction;
     private InputAction sprintAction;
     private InputAction crouchAction;
     private float xRotation = 0f;
+    private CapsuleCollider myCollider;
+    private float originalHeight;
 
+    private Vector3 originCamera;
     private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -38,7 +44,9 @@ public class PlayerMovement : MonoBehaviour
             crouchAction = playerInput.actions.FindAction("Crouch");
 
         }
-
+        myCollider = GetComponent<CapsuleCollider>();
+        originalHeight = myCollider.height;
+        originCamera = cameraPoint.transform.position-transform.position;
         moveAction.Enable();
         lookAction.Enable();
         throwAction.Enable();
@@ -51,17 +59,23 @@ public class PlayerMovement : MonoBehaviour
         throwAction.Disable();
     }
 
+    private bool forcedCrouch;
+    private float increasingTvalue=0;
     private void FixedUpdate()
     {
+        
         Vector2 moveInput = moveAction.ReadValue<Vector2>();
         Vector3 moveDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
         float crouchValue = crouchAction.ReadValue<float>();
         float sprintValue = sprintAction.ReadValue<float>();
         bool isCrouching = crouchValue > 0.5f;
         bool isSprinting = sprintValue > 0.5f && !runCD;
-        if (isCrouching)
+
+        bool Hunched = false;
+        if (isCrouching || forcedCrouch)
         {
             moveSpeed = sneakingSpeed;
+            Hunched = isCrouching;
             RegenerateStamina();
         }
         else if (isSprinting)
@@ -86,6 +100,32 @@ public class PlayerMovement : MonoBehaviour
             stamina = 1f;
             runCD = false;
         }
+        if (Hunched)
+        {
+            hunchCharacter(true);
+        }
+        else hunchCharacter(false);
+        
+        if(Hunched || forcedCrouch)
+        {
+            if (increasingTvalue < 1)
+            {
+                increasingTvalue += Time.deltaTime * 2;
+
+            }
+            else increasingTvalue = 1;
+
+            MoveCamera(increasingTvalue);
+        }else
+        {
+            if (increasingTvalue > 0)
+            {
+                increasingTvalue -= Time.deltaTime * 2;
+            }else increasingTvalue = 0;
+
+            MoveCamera(increasingTvalue);
+
+        }
         rb.linearVelocity = new Vector3(moveDirection.x * moveSpeed, rb.linearVelocity.y, moveDirection.z * moveSpeed);
     }
     private bool runCD;
@@ -106,8 +146,36 @@ public class PlayerMovement : MonoBehaviour
         {
             ThrowGlowStick();
         }
-       
 
+    }
+    private bool wasHunched=false;
+    private void hunchCharacter(bool wich)
+    {
+        if (wich && !wasHunched)
+        {
+            //start hunching
+            myCollider.height = originalHeight / crouchHeigtDivision;
+            myCollider.center =new Vector3(myCollider.center.x, - 0.5f,myCollider.center.z);
+            wasHunched = true;
+        }
+
+        if(!wich && wasHunched)
+        {
+            //return to normal
+            var hits =Physics.OverlapCapsule(transform.position, transform.position + myCollider.height*2 * Vector3.up, myCollider.radius,layerstuff);
+            Debug.Log(hits.Length);
+
+            if (hits.Length == 0)
+            {
+                myCollider.center = Vector3.zero;
+                myCollider.height = originalHeight;
+                wasHunched = false;
+                forcedCrouch = false;
+            }
+            else forcedCrouch = true;
+            
+       
+        }
     }
     void RegenerateStamina()
     {
@@ -115,6 +183,10 @@ public class PlayerMovement : MonoBehaviour
         {
             stamina += Time.deltaTime * regenerate;
         }
+    }
+    private void MoveCamera(float tValue)
+    {
+        cameraPoint.transform.position = Vector3.Lerp(originCamera+transform.position, throwPoint.transform.position, tValue);
     }
 
     private void ThrowGlowStick()

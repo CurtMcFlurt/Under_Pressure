@@ -33,7 +33,7 @@ public class Agent_findPath : MonoBehaviour
     public float pathIntervalLeangth = .1f;
 
     [SerializeField]
-    private List<Vector3> Path = new List<Vector3>();
+    public List<Vector3> Path = new List<Vector3>();
 
     [Tooltip("1 is nextPoint, 0 is averagePoint")]
     private Dictionary<Vector3, PointClass> InstancedPoints = new Dictionary<Vector3, PointClass>();
@@ -65,6 +65,7 @@ public class Agent_findPath : MonoBehaviour
 
     public void GeneratePath()
     {
+        debugPath.Clear();
         Path.Clear();
         Path = new Theta_Star().GeneratePathPhiStarNavMesh(VectorFix.ReturnVector3WithGroundHeight(transform.position), VectorFix.ReturnVector3WithGroundHeight(goal.transform.position), LineOfSightLayers,InstancedPoints);
         debugPath.AddRange(Path);
@@ -74,6 +75,20 @@ public class Agent_findPath : MonoBehaviour
 
         PathSegment = 0;
     }
+
+    public void AddPointToCurve(Vector3 position)
+    {
+        List<Vector3> tempA = new List<Vector3>();
+        List<Vector3> tempB = new List<Vector3>();
+        tempA.Add(Path[Path.Count - 1]);
+        tempA.Add(position);
+        tempB = Bezier.BezirPath(tempA, pathIntervalLeangth, BezierLayers, transform.localScale.x);
+        tempA.Remove(Path[Path.Count - 1]);
+        Path.AddRange(tempA);
+
+    }
+
+
 
 
     // Update is called once per frame

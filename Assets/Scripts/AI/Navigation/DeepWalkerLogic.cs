@@ -21,7 +21,7 @@ public class DeepWalkerLogic : MonoBehaviour
 {
     public HexagonalWeight WeightMap;
     public DeepWalkerMood mood;
-
+    public Agent_findPath pathfinder;
     public AnimationCurve Roaming;
     public AnimationCurve tracking;
     public AnimationCurve hunting;
@@ -33,7 +33,8 @@ public class DeepWalkerLogic : MonoBehaviour
     public float VictimPositionCertainty = 0;
     public int areaSizes = 3;
     public int hearingRange = 7;
-   
+    public Vector3 currentTarget;
+    public float minimumSound = 1.5f;
     private Dictionary<Vector3, HexCell> hexMap = new();
     private Dictionary<Vector3, HexCell> inHexRange = new();
     private Dictionary<Vector3, HexCell> outHexRange = new();
@@ -48,9 +49,8 @@ public class DeepWalkerLogic : MonoBehaviour
     private bool updateFood, updateSafety, reactToSound;
     void OnEnable()
     {
-        if (WeightMap == null)
-            WeightMap = Object.FindObjectsByType<HexagonalWeight>(FindObjectsSortMode.None)[0];
-
+        if (WeightMap == null)WeightMap = Object.FindObjectsByType<HexagonalWeight>(FindObjectsSortMode.None)[0];
+        if(pathfinder==null)pathfinder = GetComponent<Agent_findPath>();
         mood = new DeepWalkerMood(0, 0, 0, 0);
         loudestReactHex=new HexCell();
         loudestReactHex.weight.sound = 1;
@@ -80,8 +80,15 @@ public class DeepWalkerLogic : MonoBehaviour
             Debug.Log("looking for loud");
             reactToSound = false;
             probableVictimPosition = FindSoundOrigin(loudestReactHex);
+            updateGoal(HexMath.Axial2World(probableVictimPosition, WeightMap.cellSize));
+       
+        }
+        if (myHex.hexCoords==probableVictimPosition.hexCoords)
+        {
             loudestReactHex = new HexCell();
         }
+        currentTarget = probableVictimPosition.hexCoords;
+
         DecideLogic();
         
         activeLogic.Behave(this);
@@ -114,6 +121,22 @@ public class DeepWalkerLogic : MonoBehaviour
         optimalFood = FindOptimalHex(1);
         optimalScouting = FindOptimalHex(2);
     }
+
+
+    public void updateGoal(Vector3 position)
+    {
+        pathfinder.goal.transform.position = position;
+        pathfinder.RecalculatePath=true;
+        //RaycastHit sphereHitRay;
+        //if (pathfinder.Path.Count < 1) { pathfinder.RecalculatePath = true; return; }
+        //if (Physics.SphereCast(pathfinder.Path[pathfinder.Path.Count - 1], transform.localScale.x, (pathfinder.Path[pathfinder.Path.Count - 1] - position).normalized,
+        //    out sphereHitRay, (pathfinder.Path[pathfinder.Path.Count - 1] - position).magnitude, pathfinder.LineOfSightLayers))
+        //{
+        //    pathfinder.AddPointToCurve(position);
+        //}
+        //else pathfinder.RecalculatePath = true;
+    }
+
 
 
     public HexCell FindSoundOrigin(HexCell soundStartFound)
@@ -150,7 +173,7 @@ public class DeepWalkerLogic : MonoBehaviour
 
                 if (WeightMap.walkableHexagons.TryGetValue(neighborCoords, out HexCell neighbor))
                 {
-                    if (neighbor.weight.sound >= current.weight.sound)
+                    if (neighbor.weight.sound >= loudestReactHex.weight.sound)
                     {
                         openSet.Enqueue(neighbor);
                         visited.Add(neighborCoords);
@@ -240,29 +263,55 @@ public class DeepWalkerLogic : MonoBehaviour
         inHexRange.Clear();
         outHexRange.Clear();
 
-        foreach (var kvp in hexMap)
+        foreach (var kvp in hexMap.ToList())
         {
             Vector3 key = kvp.Key;
             HexCell cell = kvp.Value;
-
             int dist = HexMath.HexDistance(myHex.hexCoords, cell.hexCoords);
 
             if (dist <= hearingRange)
             {
                 cell.timeSinceChecked = 0;
-              
-                if (cell.weight.food != WeightMap.walkableHexagons[kvp.Key].weight.food) { updateFood = true; timeFood = 1; }
-                if (cell.weight.safety != WeightMap.walkableHexagons[kvp.Key].weight.safety){ updateSafety = true; timeSafety = 1;}
-                if (cell.weight.sound != WeightMap.walkableHexagons[kvp.Key].weight.sound){ reactToSound = true; if (cell.weight.sound > loudestReactHex.weight.sound) loudestReactHex = cell;  }
 
-            inHexRange.Add(kvp.Key,cell);
-                HexMath.UpdateWeights(ref cell, WeightMap.walkableHexagons[kvp.Key]);
+                // Fetch the latest live value
+                HexCell liveCell = WeightMap.walkableHexagons[key];
+
+                // Food and safety checks
+                if (cell.weight.food != liveCell.weight.food)
+                {
+                    updateFood = true;
+                    timeFood = 1;
+                }
+
+                if (cell.weight.safety != liveCell.weight.safety)
+                {
+                    updateSafety = true;
+                    timeSafety = 1;
+                }
+
+                // Sound reaction check
+                if (
+                    cell.weight.sound < liveCell.weight.sound && // it's new
+                    liveCell.weight.sound > loudestReactHex.weight.sound && // louder than anything before
+                    liveCell.weight.sound > minimumSound && // above threshold
+                    key != loudestReactHex.hexCoords // not the same hex already reacting to
+                )
+                {
+                    reactToSound = true;
+                    loudestReactHex = liveCell;
+                }
+
+                // Now update the memory
+                HexMath.UpdateWeights(ref cell, liveCell);
+                hexMap[key] = cell;
+                inHexRange[key] = cell;
             }
             else
             {
                 cell.timeSinceChecked += Time.deltaTime;
-                if (inHexRange.ContainsKey(kvp.Key)) inHexRange.Remove(kvp.Key);
-                outHexRange.Add(kvp.Key,cell);
+                hexMap[key] = cell;
+                if (inHexRange.ContainsKey(key)) inHexRange.Remove(key);
+                outHexRange[key] = cell;
             }
         }
     }

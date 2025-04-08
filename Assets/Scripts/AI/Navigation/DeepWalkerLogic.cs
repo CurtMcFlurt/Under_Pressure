@@ -45,6 +45,7 @@ public class DeepWalkerLogic : MonoBehaviour
     private float timeFood=-1;
     private float timeSafety=-1;
     private HexCell loudestReactHex;
+    private bool updateFood, updateSafety, reactToSound;
     void OnEnable()
     {
         if (WeightMap == null)
@@ -77,6 +78,7 @@ public class DeepWalkerLogic : MonoBehaviour
         if (reactToSound)
         {
             Debug.Log("looking for loud");
+            reactToSound = false;
             probableVictimPosition = FindSoundOrigin(loudestReactHex);
             loudestReactHex = new HexCell();
         }
@@ -87,8 +89,26 @@ public class DeepWalkerLogic : MonoBehaviour
 
     public void AwakenTheBeast(Dictionary<Vector3, HexCell> mapMemory)
     {
-        hexMap = mapMemory;
-        myHex = HexMath.NearestHex(transform.position, mapMemory.Values.ToList(), WeightMap.cellSize);
+        hexMap = new Dictionary<Vector3, HexCell>();
+
+        foreach (var kvp in mapMemory)
+        {
+            // Create a deep copy of the HexCell
+            HexCell cellCopy = kvp.Value;
+            cellCopy.weight = new HeatMapValues
+            {
+                food = kvp.Value.weight.food,
+                sound = kvp.Value.weight.sound,
+                safety = kvp.Value.weight.safety
+            };
+
+            // Reset any other values if needed
+            cellCopy.timeSinceChecked = kvp.Value.timeSinceChecked;
+
+            hexMap[kvp.Key] = cellCopy;
+        }
+
+        myHex = HexMath.NearestHex(transform.position, hexMap.Values.ToList(), WeightMap.cellSize);
 
         optimalSafety = FindOptimalHex(0);
         optimalFood = FindOptimalHex(1);
@@ -99,6 +119,7 @@ public class DeepWalkerLogic : MonoBehaviour
     public HexCell FindSoundOrigin(HexCell soundStartFound)
     {
         // Initialize loudest with the starting hex
+        Debug.Log("StartFoundOrigin");
         loudestReactHex = soundStartFound;
         float loudestValue = soundStartFound.weight.sound;
 
@@ -161,12 +182,15 @@ public class DeepWalkerLogic : MonoBehaviour
                     case 1: weightSum += subHex.weight.food; break;
                     case 2: weightSum += subHex.timeSinceChecked; break;
                 }
+                
             }
 
             if (weightSum > bestValue)
             {
                 optimalHex = hex;
                 bestValue = weightSum;
+                Debug.Log("hex"+ hex.hexCoords);
+             
             }
         }
 
@@ -209,7 +233,7 @@ public class DeepWalkerLogic : MonoBehaviour
     {
         return neutral.Evaluate(value) > superceding.Evaluate(value);
     }
-    private bool updateFood, updateSafety, reactToSound;
+
     public void UpdateVision()
     {
         myHex = HexMath.NearestHex(transform.position, hexMap.Values.ToList(), WeightMap.cellSize);
@@ -232,6 +256,7 @@ public class DeepWalkerLogic : MonoBehaviour
                 if (cell.weight.sound != WeightMap.walkableHexagons[kvp.Key].weight.sound){ reactToSound = true; if (cell.weight.sound > loudestReactHex.weight.sound) loudestReactHex = cell;  }
 
             inHexRange.Add(kvp.Key,cell);
+                HexMath.UpdateWeights(ref cell, WeightMap.walkableHexagons[kvp.Key]);
             }
             else
             {
@@ -248,11 +273,25 @@ public class DeepWalkerLogic : MonoBehaviour
     public void HungerInfluence(float hungerChange) => mood.hunger = Mathf.Clamp01(mood.hunger + hungerChange);
     public void DrowsyInfluence(float drowsyChange) => mood.drowsy = Mathf.Clamp01(mood.drowsy + drowsyChange);
 
-    public void OnDrawGizmosSelected()
+    public void OnDrawGizmos()
     {
-        if (probableVictimPosition.weight.sound > 4)
+        Gizmos.color = Color.yellow;
+        if (probableVictimPosition.weight.sound > 1)
         {
-            Gizmos.DrawCube(HexMath.Axial2World(probableVictimPosition,WeightMap.cellSize), new Vector3(1, 2, 1));
+            Gizmos.DrawCube(HexMath.Axial2World(probableVictimPosition,WeightMap.cellSize), new Vector3(2, 2, 2));
         }
+      
+        foreach(var hex in inHexRange)
+        {
+            Gizmos.color = new Color(hex.Value.weight.food/10, hex.Value.weight.safety/10, hex.Value.weight.sound / 10);
+            Gizmos.DrawCube(HexMath.Axial2World(hex.Value,WeightMap.cellSize), new Vector3(3,3,3));
+        }
+
+        foreach (var hex in outHexRange)
+        {
+            Gizmos.color = new Color(hex.Value.weight.food / 10, hex.Value.weight.safety / 10, hex.Value.weight.sound / 10);
+            Gizmos.DrawSphere(HexMath.Axial2World(hex.Value, WeightMap.cellSize), 2.5f);
+        }
+
     }
 }

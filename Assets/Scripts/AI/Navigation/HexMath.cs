@@ -38,6 +38,16 @@ public static class HexMath
 
         return result;
     }
+    public static void UpdateWeights(ref HexCell memoryCell, HexCell liveCell)
+    {
+        HeatMapValues w = memoryCell.weight;
+
+        w.food = liveCell.weight.food;
+        w.safety = liveCell.weight.safety;
+        w.sound = liveCell.weight.sound;
+
+        memoryCell.weight = w;
+    }
     public static Vector3 Axial2World(HexCell con,float cellSize)
     {
         Vector3 centre = new Vector3();

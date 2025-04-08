@@ -112,7 +112,7 @@ public class HexagonalWeight : MonoBehaviour
 
 
 
-    public void OnDrawGizmosSelected()
+    public void OnDrawGizmos()
     {
         foreach (var hex in walkableHexagons.Values)
         {
@@ -129,9 +129,13 @@ public class HexagonalWeight : MonoBehaviour
 
             // Draw hex outline
             corners = new Vector3[6];
+            Vector3 oldVector= HexCorners(basePos, hex.height, 0);
             for (int i = 0; i < 6; i++)
             {
                 corners[i] = HexCorners(basePos, hex.height, i);
+                if (i > 0) Gizmos.DrawLine(corners[i], oldVector);
+                oldVector=corners[i];
+
             }
         }
 

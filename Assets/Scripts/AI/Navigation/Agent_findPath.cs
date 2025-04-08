@@ -58,7 +58,7 @@ public class Agent_findPath : MonoBehaviour
 
     public void GenerateNavdata()
     {
-        InstancedPoints = new Theta_Star().CreatePointsNavMesh(LineOfSightLayers);
+        InstancedPoints = new Theta_Star().CreatePointsNavMesh(LineOfSightLayers,transform.localScale.x);
         Debug.Log(InstancedPoints.Count + " instanced");
     }
 

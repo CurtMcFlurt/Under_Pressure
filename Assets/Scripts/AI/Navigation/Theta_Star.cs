@@ -26,7 +26,7 @@ public class Theta_Star : Pathfinding
         base.GetPath(start, end, mask);
     }
 
-    public Dictionary<Vector3, PointClass> CreatePointsNavMesh(LayerMask rayCastLayer)
+    public Dictionary<Vector3, PointClass> CreatePointsNavMesh(LayerMask rayCastLayer,float radius)
     {
         #region Neighbor of Centers
         polygonCenters = GetPolygonCenters();
@@ -44,7 +44,7 @@ public class Theta_Star : Pathfinding
                 }
 
                
-                  if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i],4), 2f, (VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i])).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i]))).magnitude, rayCastLayer))
+                  if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i],4), radius, (VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i])).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(polygonCenters[j]) - VectorFix.ReturnVector3WithGroundHeight(polygonCenters[i]))).magnitude, rayCastLayer))
                     {
                         continue;
                     }

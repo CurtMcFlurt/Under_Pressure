@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 [System.Serializable]
 public struct DeepWalkerMood
 {
@@ -35,18 +36,21 @@ public class DeepWalkerLogic : MonoBehaviour
     public int hearingRange = 7;
     public Vector3 currentTarget;
     public float minimumSound = 1.5f;
-    private Dictionary<Vector3, HexCell> hexMap = new();
-    private Dictionary<Vector3, HexCell> inHexRange = new();
-    private Dictionary<Vector3, HexCell> outHexRange = new();
-    private HexCell myHex;
-    private HexCell optimalSafety;
-    private HexCell optimalFood;
-    private HexCell optimalScouting;
+    public Dictionary<Vector3, HexCell> hexMap = new();
+    public Dictionary<Vector3, HexCell> inHexRange = new();
+    public Dictionary<Vector3, HexCell> outHexRange = new();
+    public HexCell myHex;
+    public HexCell optimalSafety;
+    public HexCell optimalFood;
+    public HexCell optimalScouting;
     private HexCell probableVictimPosition;
     private float timeFood=-1;
     private float timeSafety=-1;
     private HexCell loudestReactHex;
     private bool updateFood, updateSafety, reactToSound;
+    public bool readyForSleep;
+    public bool readyForEating;
+    public float restTime=0;
     void OnEnable()
     {
         if (WeightMap == null)WeightMap = Object.FindObjectsByType<HexagonalWeight>(FindObjectsSortMode.None)[0];
@@ -125,8 +129,18 @@ public class DeepWalkerLogic : MonoBehaviour
 
     public void updateGoal(Vector3 position)
     {
-        pathfinder.goal.transform.position = position;
-        pathfinder.RecalculatePath=true;
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(position, out hit, WeightMap.cellSize, pathfinder.BezierLayers))
+        {
+            pathfinder.goal.transform.position = hit.position;
+        }
+        else if (NavMesh.SamplePosition(position, out hit, WeightMap.cellSize*3, pathfinder.BezierLayers))
+        {
+
+            pathfinder.goal.transform.position = hit.position;
+        }
+
+            pathfinder.RecalculatePath=true;
         //RaycastHit sphereHitRay;
         //if (pathfinder.Path.Count < 1) { pathfinder.RecalculatePath = true; return; }
         //if (Physics.SphereCast(pathfinder.Path[pathfinder.Path.Count - 1], transform.localScale.x, (pathfinder.Path[pathfinder.Path.Count - 1] - position).normalized,
@@ -203,7 +217,15 @@ public class DeepWalkerLogic : MonoBehaviour
                 {
                     case 0: weightSum += subHex.weight.safety; break;
                     case 1: weightSum += subHex.weight.food; break;
-                    case 2: weightSum += subHex.timeSinceChecked; break;
+                    case 2: 
+                        { 
+                            weightSum += subHex.timeSinceChecked;
+                            weightSum += ((HexMath.Axial2World(subHex, WeightMap.cellSize) + HexMath.Axial2World(myHex, WeightMap.cellSize) / 2).magnitude);
+                            
+                            break; 
+                
+                        
+                        }
                 }
                 
             }

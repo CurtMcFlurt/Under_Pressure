@@ -41,7 +41,7 @@ public class Pathfinding
             var p2 = navMesh.indices[i * 3 + 1];
             var p3 = navMesh.indices[i * 3 + 2];
             PosPoints.Add(triangleCenter(navMesh.vertices[p1], navMesh.vertices[p2], navMesh.vertices[p3]));
-            PosPoints.Add(navMesh.vertices[p1]);  PosPoints.Add(navMesh.vertices[p2]);  PosPoints.Add(navMesh.vertices[p3]);
+            //PosPoints.Add(navMesh.vertices[p1]);  PosPoints.Add(navMesh.vertices[p2]);  PosPoints.Add(navMesh.vertices[p3]);
         }
 
         return PosPoints;

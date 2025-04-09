@@ -7,10 +7,10 @@ public class Agent_findPath : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Movement spped of the player, default 1000")]
-    private float minSpeed;
+    public float minSpeed;
     [SerializeField]
     [Tooltip("movement speed of player at max")]
-    private float maxSpeed;
+    public float maxSpeed;
 
 
     [SerializeField]
@@ -130,6 +130,17 @@ public class Agent_findPath : MonoBehaviour
 
     private void MoveTowardsFollow()
     {
+        Vector3 targetDirection = followObject.transform.position - transform.position;
+        targetDirection.y = 0; // Ignore vertical for flat rotation
+        if (targetDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection.normalized);
+            float rotationSpeed = 25f; // Adjust to control rotation speed
+
+            // SmoothStep over time
+            float t = Mathf.SmoothStep(0, 1, Time.deltaTime * rotationSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, t);
+        }
         Vector3 dir = (followObject.transform.position - transform.position);
         float tValie = Mathf.Clamp01(followDist / maxDist);
         float streangth = Mathf.Lerp(minSpeed, maxSpeed,TValue);

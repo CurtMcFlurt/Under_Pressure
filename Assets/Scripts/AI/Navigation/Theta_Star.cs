@@ -20,7 +20,7 @@ public class Theta_Star : Pathfinding
     private RaycastHit whatIHit;
   
     bool firstFallBackBool = false;
-
+    private float myRadius=2;
     public override void GetPath(Vector3 start, Vector3 end, LayerMask mask)
     {
         base.GetPath(start, end, mask);
@@ -31,6 +31,7 @@ public class Theta_Star : Pathfinding
         #region Neighbor of Centers
         polygonCenters = GetPolygonCenters();
         List<PointClass> temp = new List<PointClass>();
+        myRadius = radius;
         Dictionary<Vector3, PointClass> InstancedPoints = new Dictionary<Vector3, PointClass>();
         for (int i = 0; i < polygonCenters.Count; i++)
         {
@@ -81,7 +82,7 @@ public class Theta_Star : Pathfinding
        
         foreach (var p in InstancedPoints)
         {
-            if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(Position, 4), 2f, (VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position))).magnitude, raycastLayer))
+            if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(Position, 4), myRadius, (VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position))).magnitude, raycastLayer))
             {
                 continue;
             }
@@ -96,7 +97,7 @@ public class Theta_Star : Pathfinding
 
         foreach (var p in temp)
         {
-            if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(Position, 4), 2f, (VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position))).magnitude, raycastLayer))
+            if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(Position, 4), myRadius, (VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position))).magnitude, raycastLayer))
             {
                 continue;
             }

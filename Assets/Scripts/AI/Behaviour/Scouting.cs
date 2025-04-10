@@ -16,7 +16,7 @@ public class Scouting :ScriptableBehaviour
 
     private void FindCorrectHex(DeepWalkerLogic logic)
     {
-        logic.FindOptimalHex(2);
+        logic.currentHexTarget = logic.probableVictimPosition;
         logic.updateGoal(HexMath.Axial2World(logic.optimalScouting, logic.WeightMap.cellSize));
         logic.pathfinder.maxSpeed = scoutingMovementSpeed;
         logic.hearingRange = scoutingHearingRange;

@@ -18,10 +18,12 @@ public class BehaviourHandler : MonoBehaviour
     public ScriptableBehaviour feeding;
     public ScriptableBehaviour tracking;
     public ScriptableBehaviour hunting;
+    public ScriptableBehaviour roaming;
     public ScriptableBehaviour debug_Failure;
 
     public ScriptableBehaviour TimeToChange(ActiveBehaviour changeBehaviour)
     {
+        wichBehaviour = changeBehaviour;
         switch (changeBehaviour)
         {
             case ActiveBehaviour.feeding:
@@ -44,6 +46,9 @@ public class BehaviourHandler : MonoBehaviour
             case ActiveBehaviour.scouting:
             {
                     return (scouting);
+            }   case ActiveBehaviour.roaming:
+            {
+                    return (roaming);
             }
         }
 

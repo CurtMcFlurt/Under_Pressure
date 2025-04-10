@@ -5730,6 +5730,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 400239984}
     - target: {fileID: 2905840010080583124, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: roaming
+      value: 
+      objectReference: {fileID: 11400000, guid: a46f2d37296dc6c4ba0fbd92b6b790a8, type: 2}
+    - target: {fileID: 2905840010080583124, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
       propertyPath: debug_Failure
       value: 
       objectReference: {fileID: 11400000, guid: 96daabbaf154ef440af9dd1f3eb996c6, type: 2}

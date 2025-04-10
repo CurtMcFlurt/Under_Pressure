@@ -48,7 +48,7 @@ public class DeepWalkerLogic : MonoBehaviour
     public HexCell optimalScouting;
     public HexCell optimalTracking;
     public HexCell currentHexTarget;
-    private HexCell probableVictimPosition;
+    public HexCell probableVictimPosition;
     private HexCell loudestReactHex;
     public GameObject TrackingObject;
     private bool updateFood, updateSafety, reactToSound;
@@ -69,6 +69,35 @@ public class DeepWalkerLogic : MonoBehaviour
         loudestReactHex.weight.sound = 1;
         AwakenTheBeast(WeightMap.walkableHexagons);
     }
+    public void AwakenTheBeast(Dictionary<Vector3, HexCell> mapMemory)
+    {
+        hexMap = new Dictionary<Vector3, HexCell>();
+
+        foreach (var kvp in mapMemory)
+        {
+            // Create a deep copy of the HexCell
+            HexCell cellCopy = kvp.Value;
+            cellCopy.weight = new HeatMapValues
+            {
+                food = kvp.Value.weight.food,
+                sound = kvp.Value.weight.sound,
+                safety = kvp.Value.weight.safety
+            };
+
+            // Reset any other values if needed
+            cellCopy.timeSinceChecked = kvp.Value.timeSinceChecked;
+
+            hexMap[kvp.Key] = cellCopy;
+        }
+
+        myHex = HexMath.NearestHex(transform.position, hexMap.Values.ToList(), WeightMap.cellSize);
+
+        optimalSafety = FindOptimalHex(0);
+        optimalFood = FindOptimalHex(1);
+        optimalScouting = FindOptimalHex(2);
+    }
+
+
     private HexCell oldTrackingHex;
     void Update()
     {
@@ -86,14 +115,11 @@ public class DeepWalkerLogic : MonoBehaviour
             reactToSound = false;
             probableVictimPosition = FindSoundOrigin(loudestReactHex);
             AlertnessInfluence(Time.deltaTime * 5);
-            updateGoal(HexMath.Axial2World(probableVictimPosition, WeightMap.cellSize));
         }
         if (myHex.hexCoords==probableVictimPosition.hexCoords)
         {
             loudestReactHex = new HexCell();
         }
-        if (!neutral) return;
-        //logic and behaviour happens when the AI isnt reacting to noise
         
         DecideLogic();
         if(myBehaviour != oldBehaviour)
@@ -173,34 +199,7 @@ public class DeepWalkerLogic : MonoBehaviour
         oldTrackingHex = hex;
     }
 
-    public void AwakenTheBeast(Dictionary<Vector3, HexCell> mapMemory)
-    {
-        hexMap = new Dictionary<Vector3, HexCell>();
-
-        foreach (var kvp in mapMemory)
-        {
-            // Create a deep copy of the HexCell
-            HexCell cellCopy = kvp.Value;
-            cellCopy.weight = new HeatMapValues
-            {
-                food = kvp.Value.weight.food,
-                sound = kvp.Value.weight.sound,
-                safety = kvp.Value.weight.safety
-            };
-
-            // Reset any other values if needed
-            cellCopy.timeSinceChecked = kvp.Value.timeSinceChecked;
-
-            hexMap[kvp.Key] = cellCopy;
-        }
-
-        myHex = HexMath.NearestHex(transform.position, hexMap.Values.ToList(), WeightMap.cellSize);
-
-        optimalSafety = FindOptimalHex(0);
-        optimalFood = FindOptimalHex(1);
-        optimalScouting = FindOptimalHex(2);
-    }
-
+   
 
     public void updateGoal(Vector3 position)
     {

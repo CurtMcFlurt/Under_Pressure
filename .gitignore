@@ -78,3 +78,4 @@ FMODStudioCache.asset
 FMODStudioCache.meta
 FMODStudioBuild/
 FMODStudioCache/
+*.log

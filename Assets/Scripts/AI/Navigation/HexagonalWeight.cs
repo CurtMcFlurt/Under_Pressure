@@ -35,6 +35,7 @@ public class HexagonalWeight : MonoBehaviour
 
     // Changed from List to Dictionary
     public Dictionary<Vector3, HexCell> walkableHexagons = new Dictionary<Vector3, HexCell>();
+    public List<WeightChangers> weightChangers = new List<WeightChangers>();
     public int walkables = 0;
     public LayerMask floorMask;
 

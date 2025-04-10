@@ -19,7 +19,7 @@ public struct HeatMapValues
 public class Hexagon_HeatmapManager : MonoBehaviour
 {
     public HexagonalWeight hexWeighter;
-    public List<WeightChangers> staticWeightChangers = new List<WeightChangers>();
+    public List<WeightChangers> WeightChangers = new List<WeightChangers>();
 
   
     
@@ -30,8 +30,11 @@ public class Hexagon_HeatmapManager : MonoBehaviour
         if (hexWeighter == null)
             hexWeighter = GetComponent<HexagonalWeight>();
 
-        staticWeightChangers.Clear();
-        staticWeightChangers.AddRange(Resources.FindObjectsOfTypeAll<WeightChangers>());
+        WeightChangers.Clear();
+        WeightChangers.AddRange(Resources.FindObjectsOfTypeAll<WeightChangers>());
+
+        hexWeighter.weightChangers = WeightChangers;
+        
     }
 
     void FixedUpdate()
@@ -39,11 +42,12 @@ public class Hexagon_HeatmapManager : MonoBehaviour
         var hexDict = hexWeighter.walkableHexagons;
 
         // Apply active changers
-        foreach (var changer in staticWeightChangers)
+        foreach (var changer in WeightChangers)
         {
             if (changer.isActiveAndEnabled)
             {
                 var nearest = HexMath.NearestHex(changer.transform.position, hexDict.Values.ToList(), hexWeighter.cellSize);
+                changer.myHex = nearest;
                 ApplyHeatChange(nearest, changer.range, changer.myHeat, changer.falloff);
                 if (changer.OneOff)
                 {

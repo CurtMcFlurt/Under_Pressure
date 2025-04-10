@@ -1,5 +1,5 @@
 using UnityEngine;
-
+[CreateAssetMenu(fileName = "Hunting", menuName = "Scriptables/DeepStalker/Hunting", order =5)]
 public class Hunting : ScriptableBehaviour
 {
     public float huntingMovementSpeed = 5;

@@ -22,6 +22,7 @@ public class DeepWalkerLogic : MonoBehaviour
 {
     public HexagonalWeight WeightMap;
     public DeepWalkerMood mood;
+    public ActiveBehaviour myBehaviour;
     public Agent_findPath pathfinder;
     public AnimationCurve Roaming;
     public AnimationCurve tracking;
@@ -44,13 +45,15 @@ public class DeepWalkerLogic : MonoBehaviour
     public HexCell optimalFood;
     public HexCell optimalScouting;
     private HexCell probableVictimPosition;
-    private float timeFood=-1;
-    private float timeSafety=-1;
     private HexCell loudestReactHex;
+    public GameObject TrackingObject;
     private bool updateFood, updateSafety, reactToSound;
     public bool readyForSleep;
     public bool readyForEating;
     public float restTime=0;
+    public float losetime = 3;
+    private float timeLost=0;
+    
     void OnEnable()
     {
         if (WeightMap == null)WeightMap = Object.FindObjectsByType<HexagonalWeight>(FindObjectsSortMode.None)[0];
@@ -60,25 +63,39 @@ public class DeepWalkerLogic : MonoBehaviour
         loudestReactHex.weight.sound = 1;
         AwakenTheBeast(WeightMap.walkableHexagons);
     }
-
+    private HexCell oldTrackingHex;
     void Update()
     {
         UpdateVision();
-        if (updateSafety && timeSafety <= 0)
-        {
-            updateSafety = false;
-            timeSafety = updateTimer;
-            FindOptimalHex(0);
-        }
-        else timeSafety -= Time.deltaTime;
-        if (updateFood && timeFood <= 0)
-        {
-            updateFood = false;
-            timeFood = updateTimer;
-            FindOptimalHex(1);
-        }
-        else timeFood -= Time.deltaTime;
 
+        if (TrackingObject != null)
+        {
+            var hex = HexMath.NearestHex(TrackingObject.transform.position, hexMap.Values.ToList(), WeightMap.cellSize);
+            Debug.Log(hex.hexCoords + " "+ HexMath.HexDistance(hex.hexCoords, myHex.hexCoords) + " hex distances");
+            
+            if(myHex.hexCoords == hex.hexCoords || (transform.position-TrackingObject.transform.position).magnitude<3)
+            {
+                TrackingObject = null; timeLost = 0;
+                Debug.Log("Caught");
+            }
+
+            if (HexMath.HexDistance(hex.hexCoords, myHex.hexCoords) > hearingRange)
+            {
+                timeLost += Time.deltaTime;
+            }
+            else timeLost = 0;
+            if (timeLost >= losetime) { TrackingObject = null; timeLost = 0; Debug.Log("Lost"); }
+
+            if (hex.hexCoords != oldTrackingHex.hexCoords)
+            {
+                updateGoal(TrackingObject.transform.position);
+
+            }
+
+            oldTrackingHex = hex;
+            return;
+        }
+       
         if (reactToSound)
         {
             Debug.Log("looking for loud");
@@ -92,7 +109,7 @@ public class DeepWalkerLogic : MonoBehaviour
             loudestReactHex = new HexCell();
         }
         currentTarget = probableVictimPosition.hexCoords;
-
+       
         DecideLogic();
         
         activeLogic.Behave(this);
@@ -248,22 +265,42 @@ public class DeepWalkerLogic : MonoBehaviour
         {
             if (compareCurves(tracking, hunting, mood.anger))
             {
-                // hunting behavior
+                // tracking behavior
+                //tracking means it might have found a player and is activly trying to find them
+                myBehaviour = ActiveBehaviour.tracking;
+                if (VictimPositionCertainty > .9f)
+                {
+
+                    myBehaviour = ActiveBehaviour.hunting;
+                    //hunting behaviour
+                    //hunting means locked in on a player
+                }
+
+
             }
             else
             {
-                // tracking behavior
+
+                myBehaviour = ActiveBehaviour.scouting;
+                // scouting behavior
+                // scouting means they heard a noise but isnt activly trying to kill a player
             }
             return;
         }
 
         if (compareCurves(Roaming, eating, mood.hunger)) 
-        { 
-            
+        {
+
+            myBehaviour = ActiveBehaviour.feeding;
+            // goto place where food is
             return;
         
         }
-        if (compareCurves(Roaming, sleeping, mood.drowsy)) { 
+        if (compareCurves(Roaming, sleeping, mood.drowsy)) {
+
+
+            myBehaviour = ActiveBehaviour.sleeping;
+            //goto place where its safe
             
             return; 
         
@@ -271,6 +308,8 @@ public class DeepWalkerLogic : MonoBehaviour
         
         }
 
+        myBehaviour = ActiveBehaviour.roaming;
+        // walking around aimlesly to the areas where it has not been for a while that is far away
         // Roaming behavior
     }
   
@@ -298,20 +337,8 @@ public class DeepWalkerLogic : MonoBehaviour
                 // Fetch the latest live value
                 HexCell liveCell = WeightMap.walkableHexagons[key];
 
-                // Food and safety checks
-                if (cell.weight.food != liveCell.weight.food)
-                {
-                    updateFood = true;
-                    timeFood = 1;
-                }
+            
 
-                if (cell.weight.safety != liveCell.weight.safety)
-                {
-                    updateSafety = true;
-                    timeSafety = 1;
-                }
-
-                // Sound reaction check
                 if (
                     cell.weight.sound < liveCell.weight.sound && // it's new
                     liveCell.weight.sound > loudestReactHex.weight.sound && // louder than anything before
@@ -344,7 +371,7 @@ public class DeepWalkerLogic : MonoBehaviour
     public void HungerInfluence(float hungerChange) => mood.hunger = Mathf.Clamp01(mood.hunger + hungerChange);
     public void DrowsyInfluence(float drowsyChange) => mood.drowsy = Mathf.Clamp01(mood.drowsy + drowsyChange);
 
-    public void OnDrawGizmos()
+    public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         if (probableVictimPosition.weight.sound > 1)

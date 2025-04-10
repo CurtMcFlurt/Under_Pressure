@@ -220,7 +220,7 @@ public class Agent_findPath : MonoBehaviour
 
 
 
-    public void OnDrawGizmos()
+    public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.black;
         for (int i = 0; i < debugPath.Count - 1; i++)

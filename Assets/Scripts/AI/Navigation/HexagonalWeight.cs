@@ -11,6 +11,7 @@ public struct HexCell
     public bool isWalkable;   // Walkability Flag
     public HeatMapValues weight;
     public float timeSinceChecked;
+  
     public HexCell(Vector3 hexCoords, float height, int stackLevel, bool isWalkable,HeatMapValues weight=new HeatMapValues())
     {
         this.hexCoords = hexCoords;
@@ -19,6 +20,7 @@ public struct HexCell
         this.isWalkable = isWalkable;
         this.weight = weight;
         timeSinceChecked = Time.deltaTime;
+    
     }
 }
 

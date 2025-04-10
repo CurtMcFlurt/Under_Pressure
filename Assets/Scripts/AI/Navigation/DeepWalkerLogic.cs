@@ -23,6 +23,8 @@ public class DeepWalkerLogic : MonoBehaviour
     public HexagonalWeight WeightMap;
     public DeepWalkerMood mood;
     public ActiveBehaviour myBehaviour;
+    private ActiveBehaviour oldBehaviour;
+    private BehaviourHandler behaveHandle;
     public Agent_findPath pathfinder;
     public AnimationCurve Roaming;
     public AnimationCurve tracking;
@@ -33,7 +35,7 @@ public class DeepWalkerLogic : MonoBehaviour
     public ScriptableBehaviour activeLogic;
     [Range(0, 1)]
     public float VictimPositionCertainty = 0;
-    public int areaSizes = 3;
+    public int areaSizes = 2;
     public int hearingRange = 7;
     public Vector3 currentTarget;
     public float minimumSound = 1.5f;
@@ -44,6 +46,8 @@ public class DeepWalkerLogic : MonoBehaviour
     public HexCell optimalSafety;
     public HexCell optimalFood;
     public HexCell optimalScouting;
+    public HexCell optimalTracking;
+    public HexCell currentHexTarget;
     private HexCell probableVictimPosition;
     private HexCell loudestReactHex;
     public GameObject TrackingObject;
@@ -52,11 +56,13 @@ public class DeepWalkerLogic : MonoBehaviour
     public bool readyForEating;
     public float restTime=0;
     public float losetime = 3;
+    public bool neutral = true;
     private float timeLost=0;
     
     void OnEnable()
     {
         if (WeightMap == null)WeightMap = Object.FindObjectsByType<HexagonalWeight>(FindObjectsSortMode.None)[0];
+        if (behaveHandle == null) behaveHandle = GetComponent<BehaviourHandler>();
         if(pathfinder==null)pathfinder = GetComponent<Agent_findPath>();
         mood = new DeepWalkerMood(0, 0, 0, 0);
         loudestReactHex=new HexCell();
@@ -67,52 +73,104 @@ public class DeepWalkerLogic : MonoBehaviour
     void Update()
     {
         UpdateVision();
-
+        UpdateMoodTicks();
         if (TrackingObject != null)
         {
-            var hex = HexMath.NearestHex(TrackingObject.transform.position, hexMap.Values.ToList(), WeightMap.cellSize);
-            Debug.Log(hex.hexCoords + " "+ HexMath.HexDistance(hex.hexCoords, myHex.hexCoords) + " hex distances");
-            
-            if(myHex.hexCoords == hex.hexCoords || (transform.position-TrackingObject.transform.position).magnitude<3)
-            {
-                TrackingObject = null; timeLost = 0;
-                Debug.Log("Caught");
-            }
-
-            if (HexMath.HexDistance(hex.hexCoords, myHex.hexCoords) > hearingRange)
-            {
-                timeLost += Time.deltaTime;
-            }
-            else timeLost = 0;
-            if (timeLost >= losetime) { TrackingObject = null; timeLost = 0; Debug.Log("Lost"); }
-
-            if (hex.hexCoords != oldTrackingHex.hexCoords)
-            {
-                updateGoal(TrackingObject.transform.position);
-
-            }
-
-            oldTrackingHex = hex;
+            huntThePerson();
             return;
         }
-       
+       //reacting to sound happens when the AI isnt activly hunting a person
         if (reactToSound)
         {
             Debug.Log("looking for loud");
             reactToSound = false;
             probableVictimPosition = FindSoundOrigin(loudestReactHex);
+            AlertnessInfluence(Time.deltaTime * 5);
             updateGoal(HexMath.Axial2World(probableVictimPosition, WeightMap.cellSize));
-       
         }
         if (myHex.hexCoords==probableVictimPosition.hexCoords)
         {
             loudestReactHex = new HexCell();
         }
-        currentTarget = probableVictimPosition.hexCoords;
-       
-        DecideLogic();
+        if (!neutral) return;
+        //logic and behaviour happens when the AI isnt reacting to noise
         
-        activeLogic.Behave(this);
+        DecideLogic();
+        if(myBehaviour != oldBehaviour)
+        {
+            activeLogic = behaveHandle.TimeToChange(myBehaviour);
+
+            activeLogic.Behave(this);
+        }
+        if(currentTarget != currentHexTarget.hexCoords)
+        {
+            updateGoal(HexMath.Axial2World(currentHexTarget, WeightMap.cellSize));
+            currentTarget = currentHexTarget.hexCoords;
+        }
+
+    }
+
+    private void FixedUpdate()
+    {
+        var keys = hexMap.Keys.ToList(); // Copy keys to avoid modifying collection while iterating
+        foreach (var key in keys)
+        {
+            HexCell hex = hexMap[key];
+
+            hex.weight.soundMemory = Mathf.Lerp(hex.weight.food, 1f, .1f * Time.fixedDeltaTime);
+
+            hexMap[key] = hex; // Store modified back
+        }
+    }
+
+    private void UpdateMoodTicks()
+    {
+        if (mood.drowsy < 1)
+        {
+            DrowsyInfluence(Time.deltaTime * activeLogic.tickrateDrowsy);
+        }
+        else mood.drowsy = 1;
+        if (mood.hunger < 1)
+        {
+            DrowsyInfluence(Time.deltaTime * activeLogic.tickrateHunger);
+        }
+        else mood.hunger = 1;
+        if (myBehaviour == ActiveBehaviour.tracking)
+        {
+            AngerInfluence(Time.deltaTime);
+        }
+        if (reactToSound)
+        {
+         
+        }
+        
+
+    }
+    private void huntThePerson()
+    {
+        var hex = HexMath.NearestHex(TrackingObject.transform.position, hexMap.Values.ToList(), WeightMap.cellSize);
+        Debug.Log(hex.hexCoords + " " + HexMath.HexDistance(hex.hexCoords, myHex.hexCoords) + " hex distances");
+
+        if (myHex.hexCoords == hex.hexCoords || (transform.position - TrackingObject.transform.position).magnitude < 3)
+        {
+            TrackingObject = null; timeLost = 0;
+            Debug.Log("Caught");
+        }
+
+        if (HexMath.HexDistance(hex.hexCoords, myHex.hexCoords) > hearingRange)
+        {
+            timeLost += Time.deltaTime;
+        }
+        else timeLost = 0;
+        if (timeLost >= losetime) { TrackingObject = null; timeLost = 0; Debug.Log("Lost"); }
+
+        if (hex.hexCoords != oldTrackingHex.hexCoords)
+        {
+            updateGoal(TrackingObject.transform.position);
+
+        }
+
+        oldTrackingHex = hex;
     }
 
     public void AwakenTheBeast(Dictionary<Vector3, HexCell> mapMemory)
@@ -212,6 +270,30 @@ public class DeepWalkerLogic : MonoBehaviour
                 }
             }
         }
+        // Boost sound memory of the detected loudest hex
+        loudestReactHex.weight.soundMemory = 10;
+
+        // Update the value in memory and vision range
+        hexMap[loudestReactHex.hexCoords] = loudestReactHex;
+        inHexRange[loudestReactHex.hexCoords] = loudestReactHex;
+
+        // Update neighboring hexes
+        foreach (var offset in HexMath.cubeDirectionVectors)
+        {
+            Vector3 neighborCoords = loudestReactHex.hexCoords + offset;
+
+            if (hexMap.TryGetValue(neighborCoords, out HexCell memoryNeighbor) &&
+                WeightMap.walkableHexagons.TryGetValue(neighborCoords, out HexCell liveNeighbor))
+            {
+
+                memoryNeighbor.weight.soundMemory = Mathf.Max(5, memoryNeighbor.weight.soundMemory); // Slightly lower influence for neighbors
+               
+                HexMath.UpdateWeights(ref memoryNeighbor, liveNeighbor);
+
+                hexMap[neighborCoords] = memoryNeighbor;
+                inHexRange[neighborCoords] = memoryNeighbor;
+            }
+        }
         return loudestReactHex;
       
     }
@@ -242,6 +324,11 @@ public class DeepWalkerLogic : MonoBehaviour
                             break; 
                 
                         
+                        }
+                    case 3:
+                        {
+                            weightSum += subHex.weight.soundMemory;
+                            break;
                         }
                 }
                 

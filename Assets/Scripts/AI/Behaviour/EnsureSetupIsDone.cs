@@ -16,7 +16,8 @@ public class EnsureSetupIsDone : MonoBehaviour
         }
         else
         {
-           seconds += Time.deltaTime;
+            deeper.SetActive(false);
+            seconds += Time.deltaTime;
             
         }
     }

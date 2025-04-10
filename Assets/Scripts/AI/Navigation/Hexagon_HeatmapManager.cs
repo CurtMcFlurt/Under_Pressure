@@ -8,11 +8,13 @@ public struct HeatMapValues
     public float food;
     public float sound;
     public float safety;
+    public float soundMemory;
     public HeatMapValues(float food=1,float sound=1,float safety=1)
     {
         this.food = food;
         this.sound = sound;
         this.safety = safety;
+        this.soundMemory = 0;
     }
 }
 [ExecuteAlways]

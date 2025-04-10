@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 7016901524941870790}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391244133674037576}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 3537520178170466896, guid: 3528906a7635ec841a6f175605f8c276, type: 3}
 --- !u!23 &2075300055386913098
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 5603965737738574918}
   - component: {fileID: 1102732122220055505}
   - component: {fileID: 3223803276596787714}
+  - component: {fileID: 2905840010080583124}
   m_Layer: 10
   m_Name: DeepWalker
   m_TagString: Untagged
@@ -219,10 +220,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad38663f177afa54f8c55117e3ccf125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 3
-  maxSpeed: 7
-  FollowMinSpeed: 10.55
-  FollowMaxSpeed: 20
+  minSpeed: 5
+  maxSpeed: 12
+  FollowMinSpeed: 12
+  FollowMaxSpeed: 25
   rb3d: {fileID: 3223803276596787714}
   pathIntervalLeangth: 1.13
   Path: []
@@ -259,6 +260,7 @@ MonoBehaviour:
     hunger: 0
     drowsy: 0
     alertness: 0
+  myBehaviour: 0
   pathfinder: {fileID: 5603965737738574918}
   Roaming:
     serializedVersion: 2
@@ -441,6 +443,51 @@ MonoBehaviour:
   hearingRange: 4
   currentTarget: {x: 0, y: 0, z: 0}
   minimumSound: 1.5
+  myHex:
+    hexCoords: {x: 0, y: 0, z: 0}
+    height: 0
+    stackLevel: 0
+    isWalkable: 0
+    weight:
+      food: 0
+      sound: 0
+      safety: 0
+    timeSinceChecked: 0
+  optimalSafety:
+    hexCoords: {x: 0, y: 0, z: 0}
+    height: 0
+    stackLevel: 0
+    isWalkable: 0
+    weight:
+      food: 0
+      sound: 0
+      safety: 0
+    timeSinceChecked: 0
+  optimalFood:
+    hexCoords: {x: 0, y: 0, z: 0}
+    height: 0
+    stackLevel: 0
+    isWalkable: 0
+    weight:
+      food: 0
+      sound: 0
+      safety: 0
+    timeSinceChecked: 0
+  optimalScouting:
+    hexCoords: {x: 0, y: 0, z: 0}
+    height: 0
+    stackLevel: 0
+    isWalkable: 0
+    weight:
+      food: 0
+      sound: 0
+      safety: 0
+    timeSinceChecked: 0
+  TrackingObject: {fileID: 0}
+  readyForSleep: 0
+  readyForEating: 0
+  restTime: 0
+  losetime: 3
 --- !u!54 &3223803276596787714
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -484,7 +531,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6732623521878096281
 Transform:
   m_ObjectHideFlags: 0
@@ -869,5 +916,26 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3878066795896702927, guid: 7563f4f70eddf2a408a3037007d9d278, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2905840010080583124}
   m_SourcePrefab: {fileID: 100100000, guid: 7563f4f70eddf2a408a3037007d9d278, type: 3}
+--- !u!114 &2905840010080583124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3142143037596131818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60cd2d2fa4a10a343a65e3b6e512e28c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wichBehaviour: 0
+  scouting: {fileID: 11400000, guid: 0aba6eee51f961341bbe3baedf82ead5, type: 2}
+  sleeping: {fileID: 11400000, guid: c4dfab74a6442844381b84be775e8555, type: 2}
+  feeding: {fileID: 11400000, guid: eb774b487f623914dbc80437ae032ef3, type: 2}
+  tracking: {fileID: 11400000, guid: 17300c04c79756441926ba3860ebf776, type: 2}
+  hunting: {fileID: 11400000, guid: 91241667504e4bd46b7857b18b32315c, type: 2}

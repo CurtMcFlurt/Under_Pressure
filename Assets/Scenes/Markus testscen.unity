@@ -464,6 +464,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d676087d3d7bfb14b852deb6bd4235b8, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2360b6a98ba50864690b20ac59e4e490, type: 2}
     - target: {fileID: 919132149155446097, guid: d676087d3d7bfb14b852deb6bd4235b8, type: 3}
       propertyPath: m_Name
       value: Boiler1
@@ -652,6 +656,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9759e9e04efdc064092edd505c97f378, type: 3}
+--- !u!1001 &303646611
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 55048612ddae01845bde714e7665c047, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.992304
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 55048612ddae01845bde714e7665c047, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.1145144
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 55048612ddae01845bde714e7665c047, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.3301044
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 55048612ddae01845bde714e7665c047, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 55048612ddae01845bde714e7665c047, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 55048612ddae01845bde714e7665c047, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 55048612ddae01845bde714e7665c047, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 55048612ddae01845bde714e7665c047, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 55048612ddae01845bde714e7665c047, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 55048612ddae01845bde714e7665c047, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 55048612ddae01845bde714e7665c047, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2360b6a98ba50864690b20ac59e4e490, type: 2}
+    - target: {fileID: 919132149155446097, guid: 55048612ddae01845bde714e7665c047, type: 3}
+      propertyPath: m_Name
+      value: BoilerTop (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 55048612ddae01845bde714e7665c047, type: 3}
 --- !u!1001 &341913309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1000,6 +1065,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: de4ce0a323a45f0489aae6c1589b9142, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2360b6a98ba50864690b20ac59e4e490, type: 2}
     - target: {fileID: 919132149155446097, guid: de4ce0a323a45f0489aae6c1589b9142, type: 3}
       propertyPath: m_Name
       value: Boilerbroken1
@@ -1633,15 +1702,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 55048612ddae01845bde714e7665c047, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.121692
+      value: -6.259172
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 55048612ddae01845bde714e7665c047, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.0936034
+      value: 1.0585936
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 55048612ddae01845bde714e7665c047, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.3917522
+      value: 4.224207
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 55048612ddae01845bde714e7665c047, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1671,6 +1740,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 55048612ddae01845bde714e7665c047, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2360b6a98ba50864690b20ac59e4e490, type: 2}
     - target: {fileID: 919132149155446097, guid: 55048612ddae01845bde714e7665c047, type: 3}
       propertyPath: m_Name
       value: BoilerTop
@@ -2349,7 +2422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f25009f65a8860489428501bdaf4d7d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.943863
+      value: 4.256
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f25009f65a8860489428501bdaf4d7d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2379,6 +2452,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 7f25009f65a8860489428501bdaf4d7d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2360b6a98ba50864690b20ac59e4e490, type: 2}
     - target: {fileID: 919132149155446097, guid: 7f25009f65a8860489428501bdaf4d7d, type: 3}
       propertyPath: m_Name
       value: Boilerbroken2
@@ -3924,3 +4001,4 @@ SceneRoots:
   - {fileID: 544380919}
   - {fileID: 1475414805}
   - {fileID: 1119764445}
+  - {fileID: 303646611}

@@ -13,6 +13,10 @@ public class PlayerMovement : MonoBehaviour
     public float exhaust = 1;
     public float regenerate = 1;
     public float crouchHeigtDivision = 2;
+    public float extraRunningSound = 4;
+    public int extraRunningRange=3;
+    private int regularRange;
+    private float regularSound;
     public Transform cameraTransform;
     public Rigidbody rb;
     public GameObject glowStick;
@@ -28,7 +32,8 @@ public class PlayerMovement : MonoBehaviour
     private float xRotation = 0f;
     private CapsuleCollider myCollider;
     private float originalHeight;
-
+   
+    public WeightChangers walkSound;
     private Vector3 originCamera;
     private void OnEnable()
     {
@@ -50,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
         moveAction.Enable();
         lookAction.Enable();
         throwAction.Enable();
+        if (walkSound != null) { regularSound = walkSound.myHeat.sound; regularRange = walkSound.range; }
     }
 
     private void OnDisable()
@@ -88,13 +94,18 @@ public class PlayerMovement : MonoBehaviour
                 stamina = 0f;
                 runCD = true;
             }
+            if (walkSound != null) {walkSound.myHeat.sound = regularSound + extraRunningSound; walkSound.range = regularRange + extraRunningRange; }
         }
         else
         {
             moveSpeed = walkingSpeed;
             RegenerateStamina();
+            if (walkSound != null) { walkSound.myHeat.sound = regularSound; walkSound.range = regularRange; }
         }
-
+        if(moveInput.magnitude>0.1 && !isCrouching)
+        {
+            walkSound.enabled = true;
+        }
         if (stamina >= 1f)
         {
             stamina = 1f;

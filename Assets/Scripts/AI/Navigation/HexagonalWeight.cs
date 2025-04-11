@@ -38,6 +38,7 @@ public class HexagonalWeight : MonoBehaviour
     // Changed from List to Dictionary
     public Dictionary<Vector3, HexCell> walkableHexagons = new Dictionary<Vector3, HexCell>();
     public List<WeightChangers> weightChangers = new List<WeightChangers>();
+    public List<WeightChangers> playerWeights = new List<WeightChangers>();
     public int walkables = 0;
     public LayerMask floorMask;
 
@@ -57,7 +58,10 @@ public class HexagonalWeight : MonoBehaviour
         {
             SetUpHexes();
         }
-
+        foreach(var Weight in weightChangers)
+        {
+            if (Weight.Player && !playerWeights.Contains(Weight)) playerWeights.Add(Weight);
+        }
         walkables = walkableHexagons.Count;
     }
 

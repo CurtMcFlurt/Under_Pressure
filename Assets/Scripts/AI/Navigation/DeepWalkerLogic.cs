@@ -115,17 +115,15 @@ public class DeepWalkerLogic : MonoBehaviour
             reactToSound = false;
             probableVictimPosition = FindSoundOrigin(loudestReactHex);
             AlertnessInfluence(Time.deltaTime * 5);
-        }
-        if (myHex.hexCoords==probableVictimPosition.hexCoords)
-        {
             loudestReactHex = new HexCell();
         }
+     
         
         DecideLogic();
         if(myBehaviour != oldBehaviour)
         {
             activeLogic = behaveHandle.TimeToChange(myBehaviour);
-
+            oldBehaviour = myBehaviour;
             activeLogic.Behave(this);
         }
         if(currentTarget != currentHexTarget.hexCoords)
@@ -153,17 +151,17 @@ public class DeepWalkerLogic : MonoBehaviour
     {
         if (mood.drowsy < 1)
         {
-            DrowsyInfluence(Time.deltaTime * activeLogic.tickrateDrowsy);
+            DrowsyInfluence((Time.deltaTime * activeLogic.tickrateDrowsy)/100);
         }
         else mood.drowsy = 1;
         if (mood.hunger < 1)
         {
-            DrowsyInfluence(Time.deltaTime * activeLogic.tickrateHunger);
+            HungerInfluence((Time.deltaTime * activeLogic.tickrateHunger)/100);
         }
         else mood.hunger = 1;
         if (myBehaviour == ActiveBehaviour.tracking)
         {
-            AngerInfluence(Time.deltaTime);
+            AngerInfluence(Time.deltaTime/10);
         }
         if (reactToSound)
         {
@@ -199,10 +197,11 @@ public class DeepWalkerLogic : MonoBehaviour
         oldTrackingHex = hex;
     }
 
-   
+    private Vector3 previousGoal;
 
     public void updateGoal(Vector3 position)
     {
+        if (position == previousGoal) return;
         NavMeshHit hit;
         if (NavMesh.SamplePosition(position, out hit, WeightMap.cellSize, pathfinder.BezierLayers))
         {
@@ -215,6 +214,7 @@ public class DeepWalkerLogic : MonoBehaviour
         }
 
             pathfinder.RecalculatePath=true;
+        previousGoal = position;
         //RaycastHit sphereHitRay;
         //if (pathfinder.Path.Count < 1) { pathfinder.RecalculatePath = true; return; }
         //if (Physics.SphereCast(pathfinder.Path[pathfinder.Path.Count - 1], transform.localScale.x, (pathfinder.Path[pathfinder.Path.Count - 1] - position).normalized,
@@ -401,7 +401,7 @@ public class DeepWalkerLogic : MonoBehaviour
   
     public bool compareCurves(AnimationCurve neutral, AnimationCurve superceding, float value)
     {
-        return neutral.Evaluate(value) > superceding.Evaluate(value);
+        return neutral.Evaluate(value) < superceding.Evaluate(value);
     }
 
     public void UpdateVision()
@@ -427,7 +427,7 @@ public class DeepWalkerLogic : MonoBehaviour
 
                 if (
                     cell.weight.sound < liveCell.weight.sound && // it's new
-                    liveCell.weight.sound > loudestReactHex.weight.sound && // louder than anything before
+                   // liveCell.weight.sound > loudestReactHex.weight.sound && // louder than anything before
                     liveCell.weight.sound > minimumSound && // above threshold
                     key != loudestReactHex.hexCoords // not the same hex already reacting to
                 )
@@ -450,13 +450,20 @@ public class DeepWalkerLogic : MonoBehaviour
             }
         }
     }
+    public void GuessPlayerPosition(HexCell probablePlayerPosition)
+    {
+        if (inHexRange.Values.Contains(probablePlayerPosition))
+        {
+
+        }
+    }
 
     // Mood modifiers
     public void AngerInfluence(float angerChange) => mood.anger = Mathf.Clamp01(mood.anger + angerChange);
     public void AlertnessInfluence(float alertChange) => mood.alertness = Mathf.Clamp01(mood.alertness + alertChange);
     public void HungerInfluence(float hungerChange) => mood.hunger = Mathf.Clamp01(mood.hunger + hungerChange);
     public void DrowsyInfluence(float drowsyChange) => mood.drowsy = Mathf.Clamp01(mood.drowsy + drowsyChange);
-
+    
     public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
@@ -476,6 +483,16 @@ public class DeepWalkerLogic : MonoBehaviour
             Gizmos.color = new Color(hex.Value.weight.food / 10, hex.Value.weight.safety / 10, hex.Value.weight.sound / 10);
             Gizmos.DrawSphere(HexMath.Axial2World(hex.Value, WeightMap.cellSize), 2.5f);
         }
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(HexMath.Axial2World(optimalSafety, WeightMap.cellSize) + Vector3.up * 3, 3);
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(HexMath.Axial2World(optimalFood, WeightMap.cellSize) + Vector3.up * 3, 3); 
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(HexMath.Axial2World(optimalScouting, WeightMap.cellSize) + Vector3.up * 3, 3);
+        Gizmos.color = Color.white;
+        Gizmos.DrawSphere(HexMath.Axial2World(optimalTracking, WeightMap.cellSize) + Vector3.up * 3, 3);
+
 
     }
 }

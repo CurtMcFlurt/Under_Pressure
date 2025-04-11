@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d56cd3e5bf203544a8484563fb17a164, type: 3}
   m_Name: Scouting
   m_EditorClassIdentifier: 
-  tickrateDrowsy: 1
-  tickrateHunger: 1
+  tickrateDrowsy: 0.01
+  tickrateHunger: 0.01
   tickrateAlert: 1
   scoutingMovementSpeed: 5
   scoutingHearingRange: 4

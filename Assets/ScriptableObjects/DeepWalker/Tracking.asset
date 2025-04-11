@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74727194e19b3a14eb20b58f12f78adc, type: 3}
   m_Name: Tracking
   m_EditorClassIdentifier: 
-  tickrateDrowsy: 1
-  tickrateHunger: 1
+  tickrateDrowsy: 0.01
+  tickrateHunger: 0.01
   tickrateAlert: 1
+  roamingMovementSpeed: 5
+  roamingHearingRange: 4

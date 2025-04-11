@@ -13,7 +13,7 @@ public class Tracking :ScriptableBehaviour
     private void FindCorrectHex(DeepWalkerLogic logic)
     {
         logic.currentHexTarget = logic.FindOptimalHex(3);
-        logic.updateGoal(HexMath.Axial2World(logic.optimalScouting, logic.WeightMap.cellSize));
+        logic.updateGoal(HexMath.Axial2World(logic.currentHexTarget, logic.WeightMap.cellSize));
         logic.pathfinder.maxSpeed = roamingMovementSpeed;
         logic.hearingRange = roamingHearingRange;
 

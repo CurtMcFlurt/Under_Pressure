@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec8514ef674f974497e8b4edde416d7, type: 3}
   m_Name: Roaming
   m_EditorClassIdentifier: 
-  tickrateDrowsy: 0.01
-  tickrateHunger: 0.01
+  tickrateDrowsy: 5
+  tickrateHunger: 1
   tickrateAlert: 1
-  roamingMovementSpeed: 5
+  roamingMovementSpeed: 6
   roamingHearingRange: 4

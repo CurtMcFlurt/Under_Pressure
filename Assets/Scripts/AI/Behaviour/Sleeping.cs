@@ -14,9 +14,10 @@ public class Sleeping : ScriptableBehaviour
     public void FindSleep(DeepWalkerLogic logic)
     {
         logic.FindOptimalHex(0);
-        logic.updateGoal(HexMath.Axial2World(logic.optimalSafety, logic.WeightMap.cellSize));
+        logic.currentHexTarget = logic.optimalSafety;
         logic.pathfinder.maxSpeed = sleepingMovementSpeed;
         logic.hearingRange = sleepingHearingRange;
+        logic.sleepTime=restTime;
         logic.readyForSleep = true;
     }
 

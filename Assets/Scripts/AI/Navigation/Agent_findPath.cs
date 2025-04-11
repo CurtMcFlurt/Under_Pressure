@@ -124,7 +124,7 @@ public class Agent_findPath : MonoBehaviour
         Vector3 activeTarget = Path[PathSegment + 1];
     
         Vector3 lerpPos= Vector3.Lerp(acvtiveInterval, activeTarget, TValue);
-        followObject.transform.position =new Vector3(lerpPos.x, lerpPos.y+1,lerpPos.z);
+        followObject.transform.position =new Vector3(lerpPos.x, transform.position.y,lerpPos.z);
         followDist=(followObject.transform.position-transform.position).magnitude;
     }
 

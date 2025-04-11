@@ -13,8 +13,9 @@ public class Roaming : ScriptableBehaviour
 
     private void FindCorrectHex(DeepWalkerLogic logic)
     {
-        logic.currentHexTarget = logic.FindOptimalHex(2);
-        logic.updateGoal(HexMath.Axial2World(logic.optimalScouting, logic.WeightMap.cellSize));
+        logic.optimalRoaming = logic.FindOptimalHex(2);
+        logic.currentHexTarget = logic.optimalRoaming;
+        logic.updateGoal(HexMath.Axial2World(logic.optimalRoaming, logic.WeightMap.cellSize));
         logic.pathfinder.maxSpeed = roamingMovementSpeed;
         logic.hearingRange = roamingHearingRange;
 

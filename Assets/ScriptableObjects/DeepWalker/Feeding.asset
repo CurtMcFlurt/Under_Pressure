@@ -15,6 +15,6 @@ MonoBehaviour:
   tickrateDrowsy: 0.05
   tickrateHunger: 0
   tickrateAlert: 1
-  feedTime: 5
+  feedTime: 2
   feedingMovementSpeed: 5
   feedingHearingRange: 3

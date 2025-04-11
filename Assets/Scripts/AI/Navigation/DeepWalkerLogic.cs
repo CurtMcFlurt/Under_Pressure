@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using Object = UnityEngine.Object;
 [System.Serializable]
 public struct DeepWalkerMood
 {
@@ -45,7 +47,7 @@ public class DeepWalkerLogic : MonoBehaviour
     public HexCell myHex;
     public HexCell optimalSafety;
     public HexCell optimalFood;
-    public HexCell optimalScouting;
+    public HexCell optimalRoaming;
     public HexCell optimalTracking;
     public HexCell currentHexTarget;
     public HexCell probableVictimPosition;
@@ -61,7 +63,9 @@ public class DeepWalkerLogic : MonoBehaviour
     private float recalculateTime;
     public bool neutral = true;
     private float timeLost=0;
-    
+    private float maxDistance = 0f;
+    public float feedTime = 0;
+    public float sleepTime = 0;
     void OnEnable()
     {
         if (WeightMap == null)WeightMap = Object.FindObjectsByType<HexagonalWeight>(FindObjectsSortMode.None)[0];
@@ -71,6 +75,12 @@ public class DeepWalkerLogic : MonoBehaviour
         loudestReactHex=new HexCell();
         loudestReactHex.weight.sound = 1;
         AwakenTheBeast(WeightMap.walkableHexagons);
+        foreach (var hex in hexMap.Values)
+        {
+            float dist = (VectorFix.returnVector3With0Y(HexMath.Axial2World(hex, WeightMap.cellSize)) -
+                          VectorFix.returnVector3With0Y(HexMath.Axial2World(myHex, WeightMap.cellSize))).magnitude;
+            if (dist > maxDistance) maxDistance = dist;
+        }
     }
     public void AwakenTheBeast(Dictionary<Vector3, HexCell> mapMemory)
     {
@@ -97,7 +107,7 @@ public class DeepWalkerLogic : MonoBehaviour
 
         optimalSafety = FindOptimalHex(0);
         optimalFood = FindOptimalHex(1);
-        optimalScouting = FindOptimalHex(2);
+        optimalRoaming = FindOptimalHex(2);
     }
 
 
@@ -125,13 +135,14 @@ public class DeepWalkerLogic : MonoBehaviour
      
         
         DecideLogic();
-        if(myBehaviour != oldBehaviour || myHex.hexCoords==currentHexTarget.hexCoords)
+        if(myBehaviour != oldBehaviour || myHex.hexCoords==currentHexTarget.hexCoords&& myBehaviour==ActiveBehaviour.roaming)
         {
             activeLogic = behaveHandle.TimeToChange(myBehaviour);
             oldBehaviour = myBehaviour;
             activeLogic.Behave(this);
+
         }
-        if(currentTarget != currentHexTarget.hexCoords)
+        if(currentTarget != currentHexTarget.hexCoords || HexMath.NearestHex(pathfinder.goal.transform.position,hexMap.Values.ToList(),WeightMap.cellSize).hexCoords!=currentHexTarget.hexCoords)
         {
             updateGoal(HexMath.Axial2World(currentHexTarget, WeightMap.cellSize));
             currentTarget = currentHexTarget.hexCoords;
@@ -140,16 +151,28 @@ public class DeepWalkerLogic : MonoBehaviour
         if (myBehaviour == ActiveBehaviour.roaming && pathfinder.followDist < .5f)
         {
             roamingBreakCounter += Time.deltaTime;
-
+            Debug.LogWarning("roaming break");
         }
-        else roamingBreakCounter = 0;
+        else { roamingBreakCounter = 0;  }
         if (debugRoamFinder || roamingBreakCounter>roamingBreak)
         {
             debugRoamFinder = false;
-            currentHexTarget = FindOptimalHex(2);
+            optimalRoaming = FindOptimalHex(2);
+            currentHexTarget = optimalRoaming;
             updateGoal(HexMath.Axial2World(currentHexTarget, WeightMap.cellSize));
         }
 
+
+
+
+        if(readyForEating && myHex.hexCoords == optimalFood.hexCoords)
+        {
+            TimeToEat();
+        }  
+        if(readyForSleep && myHex.hexCoords == optimalSafety.hexCoords)
+        {
+            TimeToSleep();
+        }
     }
 
     private void FixedUpdate()
@@ -187,6 +210,25 @@ public class DeepWalkerLogic : MonoBehaviour
         }
         
 
+    }
+    
+    private void TimeToEat()
+    {
+        feedTime -= Time.deltaTime;
+        if (feedTime <= 0)
+        {
+            mood.hunger = 0;
+            readyForEating = false;
+        }
+    }
+    private void TimeToSleep()
+    {
+        sleepTime -= Time.deltaTime;
+        if (sleepTime <= 0)
+        {
+            mood.drowsy = 0;
+            readyForSleep = false;
+        }
     }
     private void huntThePerson()
     {
@@ -321,44 +363,51 @@ public class DeepWalkerLogic : MonoBehaviour
     public HexCell FindOptimalHex(int type)
     {
         HexCell optimalHex = myHex;
-        float bestValue = 0;
+        float bestValue = float.MinValue;
 
         foreach (var hex in hexMap.Values)
         {
             float weightSum = 0;
+            int count = 0;
 
             foreach (var subHex in hexMap.Values)
             {
-                if (HexMath.HexDistance(hex.hexCoords, subHex.hexCoords) > areaSizes) continue;
+                if (HexMath.HexDistance(hex.hexCoords, subHex.hexCoords) > areaSizes)
+                    continue;
 
                 switch (type)
                 {
-                    case 0: weightSum += subHex.weight.safety; break;
-                    case 1: weightSum += subHex.weight.food; break;
-                    case 2: 
-                        { 
-                            weightSum += subHex.timeSinceChecked;
-                            weightSum += (VectorFix.returnVector3With0Y(HexMath.Axial2World(subHex, WeightMap.cellSize)) -VectorFix.returnVector3With0Y( HexMath.Axial2World(myHex, WeightMap.cellSize))).magnitude/areaSizes*6;
-                            
-                            break; 
-                
-                        
-                        }
+                    case 0:
+                        weightSum += subHex.weight.safety;
+                        break;
+                    case 1:
+                        weightSum += subHex.weight.food;
+                        break;
+                    case 2:
+                        weightSum += subHex.timeSinceChecked;
+                        count++;
+                        break;
                     case 3:
-                        {
-                            weightSum += subHex.weight.soundMemory;
-                            break;
-                        }
+                        weightSum += subHex.weight.soundMemory;
+                        break;
                 }
+            }
+
+            if (type == 2)
+            {
                 
+                float distance = (VectorFix.returnVector3With0Y(HexMath.Axial2World(hex, WeightMap.cellSize)) -
+                                  VectorFix.returnVector3With0Y(HexMath.Axial2World(myHex, WeightMap.cellSize))).magnitude;
+
+                float normalizedDistance = maxDistance > 0 ? distance / maxDistance : 0;
+                weightSum += normalizedDistance/20; // Encourages exploration
             }
 
             if (weightSum > bestValue)
             {
                 optimalHex = hex;
                 bestValue = weightSum;
-                Debug.Log("hex"+ hex.hexCoords);
-             
+
             }
         }
 
@@ -515,7 +564,7 @@ public class DeepWalkerLogic : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(HexMath.Axial2World(optimalFood, WeightMap.cellSize) + Vector3.up * 3, 3); 
         Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(HexMath.Axial2World(optimalScouting, WeightMap.cellSize) + Vector3.up * 3, 3);
+        Gizmos.DrawSphere(HexMath.Axial2World(optimalRoaming, WeightMap.cellSize) + Vector3.up * 3, 3);
         Gizmos.color = Color.white;
         Gizmos.DrawSphere(HexMath.Axial2World(optimalTracking, WeightMap.cellSize) + Vector3.up * 3, 3);
 

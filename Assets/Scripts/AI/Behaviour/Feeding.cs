@@ -9,16 +9,18 @@ public class Feeding : ScriptableBehaviour
     public override void Behave(DeepWalkerLogic logic)
     {
         base.Behave(logic);
-
+        feed(logic);
     }
 
     private void feed(DeepWalkerLogic logic)
     {
         logic.FindOptimalHex(1);
-        logic.updateGoal(HexMath.Axial2World(logic.optimalSafety, logic.WeightMap.cellSize));
+        logic.currentHexTarget = logic.optimalFood;
         logic.pathfinder.maxSpeed = feedingMovementSpeed;
         logic.hearingRange = feedingHearingRange;
         logic.readyForEating = true;
+        logic.feedTime = feedTime;
+      
     }
 
 

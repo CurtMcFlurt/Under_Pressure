@@ -38,7 +38,7 @@ public class Agent_findPath : MonoBehaviour
     [Tooltip("1 is nextPoint, 0 is averagePoint")]
     private Dictionary<Vector3, PointClass> InstancedPoints = new Dictionary<Vector3, PointClass>();
     [SerializeField]
-    private float followDist = 0;
+    public float followDist = 0;
     public float maxDist = 5;
     public int maxLookahead;
     public GameObject goal;

@@ -49,6 +49,70 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+--- !u!1 &2836616349415142813
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6735085778067252751}
+  - component: {fileID: 1121432409670542375}
+  m_Layer: 9
+  m_Name: PersonalWeight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6735085778067252751
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2836616349415142813}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9027510292019023371}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1121432409670542375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2836616349415142813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bdf55ef606672e4880826d04a88b657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  falloff: 0.125
+  range: 4
+  myHeat:
+    food: 0
+    sound: 6
+    safety: 0
+    soundMemory: 0
+  OneOff: 1
+  Player: 1
+  myHex:
+    hexCoords: {x: 0, y: 0, z: 0}
+    height: 0
+    stackLevel: 0
+    isWalkable: 0
+    weight:
+      food: 0
+      sound: 0
+      safety: 0
+      soundMemory: 0
+    timeSinceChecked: 0
 --- !u!1 &3840838470521763577
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,6 +276,7 @@ Transform:
   - {fileID: 6815916663698623574}
   - {fileID: 6981733371161587601}
   - {fileID: 8429873713282857790}
+  - {fileID: 6735085778067252751}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -73.057, z: 0}
 --- !u!33 &3803711540607360505
@@ -337,6 +402,8 @@ MonoBehaviour:
   exhaust: 1
   regenerate: 1
   crouchHeigtDivision: 2
+  extraRunningSound: 4
+  extraRunningRange: 3
   cameraTransform: {fileID: 6981733371161587601}
   rb: {fileID: 1953910241733474021}
   glowStick: {fileID: 2628165128578031410, guid: 03278d1e2f5046048bd76d69a21cdbb8, type: 3}
@@ -346,6 +413,7 @@ MonoBehaviour:
   layerstuff:
     serializedVersion: 2
     m_Bits: 16384
+  walkSound: {fileID: 1121432409670542375}
 --- !u!114 &8979354530499879030
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -54,8 +54,11 @@ public class DeepWalkerLogic : MonoBehaviour
     private bool updateFood, updateSafety, reactToSound;
     public bool readyForSleep;
     public bool readyForEating;
+    public bool debugRoamFinder;
     public float restTime=0;
     public float losetime = 3;
+    public float minimumWaitToRecalculate=3;
+    private float recalculateTime;
     public bool neutral = true;
     private float timeLost=0;
     
@@ -99,6 +102,8 @@ public class DeepWalkerLogic : MonoBehaviour
 
 
     private HexCell oldTrackingHex;
+    private float roamingBreak=5;
+    private float roamingBreakCounter;
     void Update()
     {
         UpdateVision();
@@ -120,7 +125,7 @@ public class DeepWalkerLogic : MonoBehaviour
      
         
         DecideLogic();
-        if(myBehaviour != oldBehaviour)
+        if(myBehaviour != oldBehaviour || myHex.hexCoords==currentHexTarget.hexCoords)
         {
             activeLogic = behaveHandle.TimeToChange(myBehaviour);
             oldBehaviour = myBehaviour;
@@ -130,6 +135,19 @@ public class DeepWalkerLogic : MonoBehaviour
         {
             updateGoal(HexMath.Axial2World(currentHexTarget, WeightMap.cellSize));
             currentTarget = currentHexTarget.hexCoords;
+        }
+        if (recalculateTime > 0) recalculateTime -= Time.deltaTime;
+        if (myBehaviour == ActiveBehaviour.roaming && pathfinder.followDist < .5f)
+        {
+            roamingBreakCounter += Time.deltaTime;
+
+        }
+        else roamingBreakCounter = 0;
+        if (debugRoamFinder || roamingBreakCounter>roamingBreak)
+        {
+            debugRoamFinder = false;
+            currentHexTarget = FindOptimalHex(2);
+            updateGoal(HexMath.Axial2World(currentHexTarget, WeightMap.cellSize));
         }
 
     }
@@ -194,6 +212,7 @@ public class DeepWalkerLogic : MonoBehaviour
 
         }
 
+
         oldTrackingHex = hex;
     }
 
@@ -201,7 +220,7 @@ public class DeepWalkerLogic : MonoBehaviour
 
     public void updateGoal(Vector3 position)
     {
-        if (position == previousGoal) return;
+        if (position == previousGoal || recalculateTime>0) return;
         NavMeshHit hit;
         if (NavMesh.SamplePosition(position, out hit, WeightMap.cellSize, pathfinder.BezierLayers))
         {
@@ -215,6 +234,7 @@ public class DeepWalkerLogic : MonoBehaviour
 
             pathfinder.RecalculatePath=true;
         previousGoal = position;
+        recalculateTime = minimumWaitToRecalculate;
         //RaycastHit sphereHitRay;
         //if (pathfinder.Path.Count < 1) { pathfinder.RecalculatePath = true; return; }
         //if (Physics.SphereCast(pathfinder.Path[pathfinder.Path.Count - 1], transform.localScale.x, (pathfinder.Path[pathfinder.Path.Count - 1] - position).normalized,
@@ -318,7 +338,7 @@ public class DeepWalkerLogic : MonoBehaviour
                     case 2: 
                         { 
                             weightSum += subHex.timeSinceChecked;
-                            weightSum += ((HexMath.Axial2World(subHex, WeightMap.cellSize) + HexMath.Axial2World(myHex, WeightMap.cellSize) / 2).magnitude);
+                            weightSum += (VectorFix.returnVector3With0Y(HexMath.Axial2World(subHex, WeightMap.cellSize)) -VectorFix.returnVector3With0Y( HexMath.Axial2World(myHex, WeightMap.cellSize))).magnitude/areaSizes*6;
                             
                             break; 
                 
@@ -435,7 +455,7 @@ public class DeepWalkerLogic : MonoBehaviour
                     reactToSound = true;
                     loudestReactHex = liveCell;
                 }
-
+                liveCell.timeSinceChecked = 0;
                 // Now update the memory
                 HexMath.UpdateWeights(ref cell, liveCell);
                 hexMap[key] = cell;
@@ -454,7 +474,13 @@ public class DeepWalkerLogic : MonoBehaviour
     {
         if (inHexRange.Values.Contains(probablePlayerPosition))
         {
-
+           foreach(var phex in WeightMap.playerWeights)
+            {
+                if (phex.myHex.hexCoords == probablePlayerPosition.hexCoords)
+                {
+                    TrackingObject = phex.transform.gameObject;
+                }
+            }
         }
     }
 
@@ -481,7 +507,7 @@ public class DeepWalkerLogic : MonoBehaviour
         foreach (var hex in outHexRange)
         {
             Gizmos.color = new Color(hex.Value.weight.food / 10, hex.Value.weight.safety / 10, hex.Value.weight.sound / 10);
-            Gizmos.DrawSphere(HexMath.Axial2World(hex.Value, WeightMap.cellSize), 2.5f);
+            Gizmos.DrawSphere(HexMath.Axial2World(hex.Value, WeightMap.cellSize)+Vector3.up*hex.Value.timeSinceChecked, 2.5f);
         }
 
         Gizmos.color = Color.green;

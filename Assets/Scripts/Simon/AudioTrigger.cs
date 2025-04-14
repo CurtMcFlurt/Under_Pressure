@@ -2,27 +2,24 @@ using System;
 using UnityEngine;
 using FMODUnity;
 
-public enum TriggerAction
-{
-    None,
-    Play,
-    Stop,
-    SetParameter,
-    LoadBank
-}
+
 public class AudioTrigger : MonoBehaviour
 {
     [System.Serializable]
     public struct AudioSettings
     {
-        public TriggerAction tAction;
+        public TriggerAction Action;
         public string eventEmitterName;
         public string paramName;
         public float paramValue;
     }
     
-    [Header("AudioSettings")]
-    public AudioSettings aSettings;
+    [Header("General Settings")]
+    public string colliderTag;
+    public bool destroyAfterUse = false;
+    
+    [Header("TriggerSettings")]
+    public AudioSettings[] audioSettings;
 
     private MusicManager mManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -33,28 +30,33 @@ public class AudioTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Triggered!");
-        
-        switch (aSettings.tAction)
+        if (other.tag == colliderTag)
         {
-            case TriggerAction.None: Debug.Log("You haven't entered a valid Trigger Action");
-                break;
-            case TriggerAction.Play:
-                Debug.Log("Activating Play");
-                mManager.PlayMusic(aSettings.eventEmitterName); 
-                break;
-            case TriggerAction.Stop:
-                mManager.StopMusic(aSettings.eventEmitterName);
-                break;
-            case TriggerAction.SetParameter: 
-                break;
+            Debug.Log("Triggered!");
+            foreach (AudioSettings aS in audioSettings)
+            {
+                switch (aS.Action)
+                {
+                    case TriggerAction.None: 
+                        Debug.Log("You haven't entered a valid Trigger Action"); 
+                        break;
+                    case TriggerAction.Play: 
+                        Debug.Log("Activating Play"); 
+                        mManager.PlayMusic(aS.eventEmitterName); 
+                        break;
+                    case TriggerAction.Stop: 
+                        mManager.StopMusic(aS.eventEmitterName); 
+                        break;
+                    case TriggerAction.SetParameter: 
+                        mManager.SetParameter(aS.eventEmitterName, aS.paramName, aS.paramValue); 
+                        break;
+                }
+            }
+            
+            if (destroyAfterUse == true)
+            {
+                Destroy(gameObject);
+            }
         }
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

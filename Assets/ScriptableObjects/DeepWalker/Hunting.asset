@@ -15,5 +15,5 @@ MonoBehaviour:
   tickrateDrowsy: 0.01
   tickrateHunger: 0.05
   tickrateAlert: 1
-  huntingMovementSpeed: 5
-  huntingHearingRange: 5
+  huntingMovementSpeed: 32
+  huntingHearingRange: 6

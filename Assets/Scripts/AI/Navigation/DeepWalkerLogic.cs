@@ -272,10 +272,12 @@ public class DeepWalkerLogic : MonoBehaviour
         var hex = HexMath.NearestHex(TrackingObject.transform.position, hexMap.Values.ToList(), WeightMap.cellSize);
     
 
-        if (myHex.hexCoords == hex.hexCoords || (transform.position - TrackingObject.transform.position).magnitude < 2)
+        if (myHex.hexCoords == hex.hexCoords || (transform.position - TrackingObject.transform.position).magnitude <= 4)
         {
             TrackingObject = null; timeLost = 0;
+            VictimPositionCertainty = 0;
             Debug.Log("Caught");
+            mood.anger = 0;
             return;
             
         }
@@ -285,9 +287,9 @@ public class DeepWalkerLogic : MonoBehaviour
             timeLost += Time.deltaTime;
         }
         else timeLost = 0;
-        if (timeLost >= losetime) { TrackingObject = null; timeLost = 0; Debug.Log("Lost"); }
+        if (timeLost >= losetime) { TrackingObject = null; timeLost = 0; Debug.Log("Lost");VictimPositionCertainty = 0; }
 
-        if (hex.hexCoords != oldTrackingHex.hexCoords)
+        if (hex.hexCoords != oldTrackingHex.hexCoords || pathfinder.curentSpeed<5)
         {
             updateGoal(TrackingObject.transform.position);
             Debug.Log("getting Position");

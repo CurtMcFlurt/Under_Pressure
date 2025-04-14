@@ -67,7 +67,19 @@ public class Agent_findPath : MonoBehaviour
     {
         debugPath.Clear();
         Path.Clear();
-        Path = new Theta_Star().GeneratePathPhiStarNavMesh(VectorFix.ReturnVector3WithGroundHeight(transform.position), VectorFix.ReturnVector3WithGroundHeight(goal.transform.position), LineOfSightLayers,InstancedPoints);
+        RaycastHit whatIHit;
+        if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(transform.position, 4), 3, (VectorFix.ReturnVector3WithGroundHeight(goal.transform.position) - VectorFix.ReturnVector3WithGroundHeight(transform.position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(goal.transform.position) - VectorFix.ReturnVector3WithGroundHeight(transform.position))).magnitude, LineOfSightLayers))
+        {
+            Path = new Theta_Star().GeneratePathPhiStarNavMesh(VectorFix.ReturnVector3WithGroundHeight(transform.position), VectorFix.ReturnVector3WithGroundHeight(goal.transform.position), LineOfSightLayers, InstancedPoints);
+
+        }
+        else
+        {
+
+            Path.Add(transform.position);
+            Path.Add(goal.transform.position);
+
+        }
         debugPath.AddRange(Path);
         List<Vector3> tempA = new List<Vector3>();
         tempA.AddRange(Path);

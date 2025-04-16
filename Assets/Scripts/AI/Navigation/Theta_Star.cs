@@ -20,7 +20,7 @@ public class Theta_Star : Pathfinding
     private RaycastHit whatIHit;
   
     bool firstFallBackBool = false;
-    private float myRadius=2;
+    private float myRadius=1.125f;
     public override void GetPath(Vector3 start, Vector3 end, LayerMask mask)
     {
         base.GetPath(start, end, mask);
@@ -82,7 +82,7 @@ public class Theta_Star : Pathfinding
        
         foreach (var p in InstancedPoints)
         {
-            if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(Position, 4), myRadius, (VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position))).magnitude, raycastLayer))
+            if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(Position, 2), myRadius, (VectorFix.ReturnVector3WithGroundHeight(p.Key,2) - VectorFix.ReturnVector3WithGroundHeight(Position,2)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position,2))).magnitude, raycastLayer))
             {
                 continue;
             }
@@ -97,7 +97,7 @@ public class Theta_Star : Pathfinding
 
         foreach (var p in temp)
         {
-            if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(Position, 4), myRadius, (VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(p.Key) - VectorFix.ReturnVector3WithGroundHeight(Position))).magnitude, raycastLayer))
+            if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(Position, 2), myRadius, (VectorFix.ReturnVector3WithGroundHeight(p.Key,2) - VectorFix.ReturnVector3WithGroundHeight(Position,2)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(p.Key,2) - VectorFix.ReturnVector3WithGroundHeight(Position,2))).magnitude, raycastLayer))
             {
                 continue;
             }

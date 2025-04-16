@@ -8,6 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Elias Scen.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/NGO_Minimal_Setup/NGO_Setup.unity
+    guid: 648fc68c7f5ef99439ee76db81727ca0
+  - enabled: 1
+    path: Assets/DA_Minimal_Setup/DA_Setup.unity
+    guid: caeb500802fc92f4193e789d0dab1a6d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

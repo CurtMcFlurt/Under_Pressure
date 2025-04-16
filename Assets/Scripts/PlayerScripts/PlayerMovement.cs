@@ -1,7 +1,8 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     private float moveSpeed = 5f;
 
@@ -32,13 +33,15 @@ public class PlayerMovement : MonoBehaviour
     private float xRotation = 0f;
     private CapsuleCollider myCollider;
     private float originalHeight;
-   
     public WeightChangers walkSound;
     private Vector3 originCamera;
-    private void OnEnable()
+    public override void OnNetworkSpawn()
     {
+        if (!IsOwner) { cameraTransform.GetComponent<Camera>().enabled = false; return; }
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
         var playerInput = GetComponent<PlayerInput>();
         if (playerInput != null)
         {
@@ -48,28 +51,35 @@ public class PlayerMovement : MonoBehaviour
             sprintAction = playerInput.actions.FindAction("Sprint");
             crouchAction = playerInput.actions.FindAction("Crouch");
 
+            moveAction.Enable();
+            lookAction.Enable();
+            throwAction.Enable();
         }
+
         myCollider = GetComponent<CapsuleCollider>();
         originalHeight = myCollider.height;
-        originCamera = cameraPoint.transform.position-transform.position;
-        moveAction.Enable();
-        lookAction.Enable();
-        throwAction.Enable();
-        if (walkSound != null) { regularSound = walkSound.myHeat.sound; regularRange = walkSound.range; }
+        originCamera = cameraPoint.transform.position - transform.position;
+
+        if (walkSound != null)
+        {
+            regularSound = walkSound.myHeat.sound;
+            regularRange = walkSound.range;
+        }
     }
 
     private void OnDisable()
     {
-        moveAction.Disable();
-        lookAction.Disable();
-        throwAction.Disable();
+        moveAction?.Disable();
+        lookAction?.Disable();
+        throwAction?.Disable();
     }
 
     private bool forcedCrouch;
     private float increasingTvalue=0;
     private void FixedUpdate()
     {
-        
+
+        if (!IsOwner) return;
         Vector2 moveInput = moveAction.ReadValue<Vector2>();
         Vector3 moveDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
         float crouchValue = crouchAction.ReadValue<float>();
@@ -142,6 +152,8 @@ public class PlayerMovement : MonoBehaviour
     private bool runCD;
     private void Update()
     {
+
+        if (!IsOwner) return;
         Vector2 lookInput = lookAction.ReadValue<Vector2>();
 
         float mouseX = lookInput.x * lookSpeed;

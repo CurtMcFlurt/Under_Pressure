@@ -13,7 +13,7 @@ public static class VectorFix
         return new Vector3(input.x, 1, input.z);
     }
 
-    public static Vector3 ReturnVector3WithGroundHeight(Vector3 input, float heightAboveGround = 3f)
+    public static Vector3 ReturnVector3WithGroundHeight(Vector3 input, float heightAboveGround = 2f)
     {
         if (Physics.Raycast(input + Vector3.up * 10f, Vector3.down, out RaycastHit hit, 20f, groundMask))
         {

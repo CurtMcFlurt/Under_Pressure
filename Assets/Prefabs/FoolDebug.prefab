@@ -451,7 +451,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16.23007, y: 18.648014, z: 10.019043}
-  m_LocalScale: {x: 1.98, y: 1.98, z: 1.98}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7678465585004245259}
@@ -625,12 +625,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkingSpeed: 5
-  runningSpeed: 5
-  sneakingSpeed: 5
+  runningSpeed: 11
+  sneakingSpeed: 2.5
   lookSpeed: 0.1
   stamina: 1
-  exhaust: 1
-  regenerate: 1
+  exhaust: 0.3
+  regenerate: 0.2
   crouchHeigtDivision: 2
   extraRunningSound: 4
   extraRunningRange: 3

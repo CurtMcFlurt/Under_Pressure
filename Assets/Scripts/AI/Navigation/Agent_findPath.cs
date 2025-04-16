@@ -68,7 +68,7 @@ public class Agent_findPath : MonoBehaviour
         debugPath.Clear();
         Path.Clear();
         RaycastHit whatIHit;
-        if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(transform.position, 4), 3, (VectorFix.ReturnVector3WithGroundHeight(goal.transform.position) - VectorFix.ReturnVector3WithGroundHeight(transform.position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(goal.transform.position) - VectorFix.ReturnVector3WithGroundHeight(transform.position))).magnitude, LineOfSightLayers))
+        if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(transform.position, 4), 1.5f, (VectorFix.ReturnVector3WithGroundHeight(goal.transform.position) - VectorFix.ReturnVector3WithGroundHeight(transform.position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(goal.transform.position) - VectorFix.ReturnVector3WithGroundHeight(transform.position))).magnitude, LineOfSightLayers))
         {
             Path = new Theta_Star().GeneratePathPhiStarNavMesh(VectorFix.ReturnVector3WithGroundHeight(transform.position), VectorFix.ReturnVector3WithGroundHeight(goal.transform.position), LineOfSightLayers, InstancedPoints);
 
@@ -114,7 +114,7 @@ public class Agent_findPath : MonoBehaviour
             GeneratePath();
         }
         if(followDist>.6f) MoveTowardsFollow();
-        if (followDist > maxDist - 1 && rb3d.linearVelocity.magnitude < 1) breakMovementToReach();
+        if (followDist > maxDist - 1 && rb3d.linearVelocity.magnitude < .25f) breakMovementToReach();
     }
     public int PathSegment;
     private float TValue=0;

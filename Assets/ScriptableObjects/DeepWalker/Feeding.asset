@@ -16,5 +16,5 @@ MonoBehaviour:
   tickrateHunger: 0
   tickrateAlert: 1
   feedTime: 2
-  feedingMovementSpeed: 5
+  feedingMovementSpeed: 3
   feedingHearingRange: 3

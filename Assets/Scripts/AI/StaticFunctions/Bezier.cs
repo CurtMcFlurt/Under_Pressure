@@ -106,9 +106,9 @@ public static class Bezier
             {
                 //Right now phi-star makes sure that the path between the last point and the one before is fine, therefore it doesn't need to check here
             }
-            else if (Physics.SphereCast(midPointsTuple[j].Item1, playerThickness+0.25f, (midPointsTuple[j + 1].Item1 - midPointsTuple[j].Item1).normalized, out sphereHitRay,
+            else if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j].Item1), playerThickness+0.125f, (midPointsTuple[j + 1].Item1 - midPointsTuple[j].Item1).normalized, out sphereHitRay,
 
-                Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j + 1].Item1,2), VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j].Item1,2)),
+                Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j + 1].Item1), VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j].Item1)),
 
                 layer
             ))
@@ -445,7 +445,7 @@ public static class Bezier
         int distance = (int)Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(p1), VectorFix.ReturnVector3WithGroundHeight(p2));
 
 
-        float minDis = 2f;
+        float minDis = 0.25f;
 
         int amountOfTValues = 0;
 
@@ -453,7 +453,7 @@ public static class Bezier
 
         //From really quick testing, 10 seems good. Test more
         //After more testing, 5 is better
-        distance = distance / 5;
+        distance = distance / 10;
 
         if (distance < minDis)
         {

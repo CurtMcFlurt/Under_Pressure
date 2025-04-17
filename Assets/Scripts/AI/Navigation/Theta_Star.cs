@@ -20,7 +20,7 @@ public class Theta_Star : Pathfinding
     private RaycastHit whatIHit;
   
     bool firstFallBackBool = false;
-    private float myRadius=1.125f;
+    private float myRadius=0.925f;
     public override void GetPath(Vector3 start, Vector3 end, LayerMask mask)
     {
         base.GetPath(start, end, mask);

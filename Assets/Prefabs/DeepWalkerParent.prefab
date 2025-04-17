@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4404304328101661816}
   - component: {fileID: 7341959943589502638}
   - component: {fileID: 2075300055386913098}
-  - component: {fileID: 5889366004017849946}
   m_Layer: 10
   m_Name: Capsule
   m_TagString: Untagged
@@ -28,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 391244133674037576}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.51, z: 0}
+  m_LocalScale: {x: 0.025, y: 0.025, z: 0.025}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7316719599339142153}
@@ -41,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 7016901524941870790}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391244133674037576}
-  m_Mesh: {fileID: 3537520178170466896, guid: 3528906a7635ec841a6f175605f8c276, type: 3}
+  m_Mesh: {fileID: 3537520178170466896, guid: 4e9ab00e0f20ccb4e928b27f52c18148, type: 3}
 --- !u!23 &2075300055386913098
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -87,29 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5889366004017849946
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 5471882233399819362, guid: 7563f4f70eddf2a408a3037007d9d278, type: 3}
-  m_PrefabInstance: {fileID: 7016901524941870790}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 391244133674037576}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1296515915791838372
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,6 +161,7 @@ GameObject:
   - component: {fileID: 1102732122220055505}
   - component: {fileID: 3223803276596787714}
   - component: {fileID: 2905840010080583124}
+  - component: {fileID: 3792912133228432505}
   m_Layer: 10
   m_Name: DeepWalker
   m_TagString: Untagged
@@ -201,8 +178,8 @@ Transform:
   m_GameObject: {fileID: 3142143037596131818}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.4, y: 2.8, z: 111.8}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalPosition: {x: 0, y: 2.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4404304328101661816}
@@ -220,16 +197,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad38663f177afa54f8c55117e3ccf125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 5
-  maxSpeed: 12
-  FollowMinSpeed: 12
-  FollowMaxSpeed: 25
+  minSpeed: 2
+  maxSpeed: 3
+  FollowMinSpeed: 3
+  FollowMaxSpeed: 5
   rb3d: {fileID: 3223803276596787714}
-  pathIntervalLeangth: 1.13
+  pathIntervalLeangth: 0.85
   Path: []
   followDist: 0
-  maxDist: 7
-  maxLookahead: 3
+  maxDist: 2
+  maxLookahead: 1
   goal: {fileID: 1296515915791838372}
   followObject: {fileID: 1592724232757780704}
   curentSpeed: 0
@@ -267,30 +244,21 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: -2.4039197
-      outSlope: -2.4039197
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.034300793
-    - serializedVersion: 3
-      time: 0.4580705
-      value: 0.20660903
-      inSlope: 0.008880468
-      outSlope: 0.008880468
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.102725364
-    - serializedVersion: 3
-      time: 1
-      value: 0.2
+      value: 0.5
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.1292876
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -300,25 +268,25 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 0.4
+      inSlope: 0.045746837
+      outSlope: 0.045746837
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.12061817
     - serializedVersion: 3
-      time: 0.244657
-      value: 0.44918504
-      inSlope: 0.74964654
-      outSlope: 0.74964654
+      time: 0.55357665
+      value: 0.52905273
+      inSlope: 0.474749
+      outSlope: 0.474749
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.26120502
     - serializedVersion: 3
       time: 1
-      value: 0.5
+      value: 0.76
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -334,21 +302,21 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.0021514893
       value: 0
-      inSlope: 1.0491664
-      outSlope: 1.0491664
+      inSlope: 0.27437764
+      outSlope: 0.27437764
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.081472896
+      outWeight: 0.125532
     - serializedVersion: 3
-      time: 0.4598649
-      value: 0.45492572
-      inSlope: 0.3396895
-      outSlope: 0.3396895
+      time: 0.7152509
+      value: 0.29176775
+      inSlope: 0.8841805
+      outSlope: 0.8841805
       tangentMode: 0
       weightedMode: 0
       inWeight: 1
-      outWeight: 0.33333334
+      outWeight: 0.2556812
     - serializedVersion: 3
       time: 1
       value: 1
@@ -393,7 +361,7 @@ MonoBehaviour:
       outWeight: 0.58928883
     - serializedVersion: 3
       time: 1
-      value: 0.5
+      value: 0.8
       inSlope: 8.931078
       outSlope: 8.931078
       tangentMode: 0
@@ -437,7 +405,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   updateTimer: 0
-  activeLogic: {fileID: 11400000, guid: 96daabbaf154ef440af9dd1f3eb996c6, type: 2}
+  activeLogic: {fileID: 11400000, guid: 0aba6eee51f961341bbe3baedf82ead5, type: 2}
   VictimPositionCertainty: 0
   areaSizes: 3
   hearingRange: 4
@@ -452,6 +420,7 @@ MonoBehaviour:
       food: 0
       sound: 0
       safety: 0
+      soundMemory: 0
     timeSinceChecked: 0
   optimalSafety:
     hexCoords: {x: 0, y: 0, z: 0}
@@ -462,6 +431,7 @@ MonoBehaviour:
       food: 0
       sound: 0
       safety: 0
+      soundMemory: 0
     timeSinceChecked: 0
   optimalFood:
     hexCoords: {x: 0, y: 0, z: 0}
@@ -472,8 +442,9 @@ MonoBehaviour:
       food: 0
       sound: 0
       safety: 0
+      soundMemory: 0
     timeSinceChecked: 0
-  optimalScouting:
+  optimalRoaming:
     hexCoords: {x: 0, y: 0, z: 0}
     height: 0
     stackLevel: 0
@@ -482,12 +453,51 @@ MonoBehaviour:
       food: 0
       sound: 0
       safety: 0
+      soundMemory: 0
+    timeSinceChecked: 0
+  optimalTracking:
+    hexCoords: {x: 0, y: 0, z: 0}
+    height: 0
+    stackLevel: 0
+    isWalkable: 0
+    weight:
+      food: 0
+      sound: 0
+      safety: 0
+      soundMemory: 0
+    timeSinceChecked: 0
+  currentHexTarget:
+    hexCoords: {x: 0, y: 0, z: 0}
+    height: 0
+    stackLevel: 0
+    isWalkable: 0
+    weight:
+      food: 0
+      sound: 0
+      safety: 0
+      soundMemory: 0
+    timeSinceChecked: 0
+  probableVictimPosition:
+    hexCoords: {x: 0, y: 0, z: 0}
+    height: 0
+    stackLevel: 0
+    isWalkable: 0
+    weight:
+      food: 0
+      sound: 0
+      safety: 0
+      soundMemory: 0
     timeSinceChecked: 0
   TrackingObject: {fileID: 0}
   readyForSleep: 0
   readyForEating: 0
+  debugRoamFinder: 0
   restTime: 0
-  losetime: 3
+  losetime: 6
+  minimumWaitToRecalculate: 1.25
+  neutral: 1
+  feedTime: 0
+  sleepTime: 0
 --- !u!54 &3223803276596787714
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -920,6 +930,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3878066795896702927, guid: 7563f4f70eddf2a408a3037007d9d278, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2905840010080583124}
+    - targetCorrespondingSourceObject: {fileID: 3878066795896702927, guid: 7563f4f70eddf2a408a3037007d9d278, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3792912133228432505}
   m_SourcePrefab: {fileID: 100100000, guid: 7563f4f70eddf2a408a3037007d9d278, type: 3}
 --- !u!114 &2905840010080583124
 MonoBehaviour:
@@ -939,3 +952,28 @@ MonoBehaviour:
   feeding: {fileID: 11400000, guid: eb774b487f623914dbc80437ae032ef3, type: 2}
   tracking: {fileID: 11400000, guid: 17300c04c79756441926ba3860ebf776, type: 2}
   hunting: {fileID: 11400000, guid: 91241667504e4bd46b7857b18b32315c, type: 2}
+  roaming: {fileID: 11400000, guid: a46f2d37296dc6c4ba0fbd92b6b790a8, type: 2}
+  debug_Failure: {fileID: 11400000, guid: 96daabbaf154ef440af9dd1f3eb996c6, type: 2}
+--- !u!136 &3792912133228432505
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3142143037596131818}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

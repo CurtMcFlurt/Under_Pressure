@@ -44,7 +44,9 @@ public class HexagonalWeight : MonoBehaviour
 
     private void OnEnable()
     {
+        
         SetUpHexes();
+        playerWeights.Clear();
     }
 
     private void Update()

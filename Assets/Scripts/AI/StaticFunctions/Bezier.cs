@@ -106,9 +106,9 @@ public static class Bezier
             {
                 //Right now phi-star makes sure that the path between the last point and the one before is fine, therefore it doesn't need to check here
             }
-            else if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j].Item1), playerThickness+0.125f, (midPointsTuple[j + 1].Item1 - midPointsTuple[j].Item1).normalized, out sphereHitRay,
+            else if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j].Item1), playerThickness, (midPointsTuple[j + 1].Item1 - midPointsTuple[j].Item1).normalized, out sphereHitRay,
 
-                Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j + 1].Item1), VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j].Item1)),
+                Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j + 1].Item1,0), VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j].Item1,0)),
 
                 layer
             ))
@@ -138,7 +138,7 @@ public static class Bezier
 
                 Vector3 phantomPoint = new Vector3();
 
-                float distanceForNewPoint = 1.5f;
+                float distanceForNewPoint = .5f;
                 RaycastHit rayHit;
                 //Vector3 shouldMovePhantomPointInThisDirection = new Vector3();
 
@@ -148,12 +148,12 @@ public static class Bezier
                 {
                     distanceForNewPoint = rayHit.distance * 0.5f;
                 }
-                Debug.DrawRay(sphereHitRay.point + (sphereHitRay.normal * 0.01f), (sphereHitRay.normal).normalized * distanceForNewPoint, Color.black, 5f);
+                Debug.DrawRay(sphereHitRay.point + (sphereHitRay.normal * 0.01f), (sphereHitRay.normal).normalized * distanceForNewPoint, Color.black, 10f);
 
 
 
 
-                Vector3 direction = sphereHitRay.point - midPointsTuple[j].Item1;
+                Vector3 direction = (VectorFix.returnVector3With0Y(sphereHitRay.point) - VectorFix.returnVector3With0Y(midPointsTuple[j].Item1)).normalized;
 
                 // Choose the rotation axis (e.g., Y-axis rotation)
                 Vector3 rotationAxis = Vector3.up; // Adjust if you want to rotate around a different axis
@@ -187,7 +187,7 @@ public static class Bezier
                 }
                 else
                 {
-                    tempTuple = new Tuple<Vector3, int>(phantomPoint, midPointsTuple[j].Item2);
+                    tempTuple = new Tuple<Vector3, int>(VectorFix.ReturnVector3WithGroundHeight(phantomPoint,0), midPointsTuple[j].Item2);
 
                     if (!sphereHitTuples.Contains(tempTuple))
                     {
@@ -357,7 +357,7 @@ public static class Bezier
         // Calculate the new position by adding the rotated vector to the original point
         Vector3 newPoint = midPointTheHitCameFrom + rotatedDirection.normalized * distanceForNewPoint;
 
-        newPoint = VectorFix.ReturnVector3WithGroundHeight(newPoint);
+        newPoint = VectorFix.ReturnVector3WithGroundHeight(newPoint,0);
 
         return newPoint;
     }
@@ -377,8 +377,8 @@ public static class Bezier
         for (int i = 0; i < inputList.Count - 1; i++)
         {
             //Between point and nextPoint
-            stepLenght = Mathf.Pow(Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(inputList[i].Item1), VectorFix.ReturnVector3WithGroundHeight(inputList[i + 1].Item1)), -1);
 
+            stepLenght = Mathf.Pow(Vector3.Distance(VectorFix.returnVector3With0Y(inputList[i].Item1), VectorFix.returnVector3With0Y(inputList[i + 1].Item1)), -1);
             List<Vector3> tempList = new List<Vector3>
             {
                 inputList[i].Item1, //startpoint of each bezier path
@@ -390,7 +390,7 @@ public static class Bezier
 
                 if (inputList[i].Item2 == inputList[i + 1].Item2)
                 {
-                    Vector3 middle = (VectorFix.ReturnVector3WithGroundHeight(inputList[i].Item1) + VectorFix.ReturnVector3WithGroundHeight(inputList[i + 1].Item1)) / 2;
+                    Vector3 middle = (VectorFix.returnVector3With0Y(inputList[i].Item1) + VectorFix.returnVector3With0Y(inputList[i + 1].Item1)) / 2;
                     //currentPoint = GetPoint(inputList[i].Item1, middle, inputList[i + 1].Item1, j);
                     currentPoint = Vector3.Lerp(inputList[i].Item1, inputList[i + 1].Item1, j);
 
@@ -400,7 +400,7 @@ public static class Bezier
                     currentPoint = GetPoint(inputList[i].Item1, originalPoints[inputList[i + 1].Item2], inputList[i + 1].Item1, j);
                 }
 
-                if (Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(currentPoint), VectorFix.ReturnVector3WithGroundHeight(previousPoint)) > pathIntervalLeangth && !tempList.Contains(currentPoint))
+                if (Vector3.Distance(VectorFix.returnVector3With0Y(currentPoint), VectorFix.returnVector3With0Y(previousPoint)) > pathIntervalLeangth && !tempList.Contains(currentPoint))
                 {
                     tempList.Add(currentPoint);
                 }
@@ -442,10 +442,10 @@ public static class Bezier
         List<Vector3> midPointsL = new List<Vector3>();
 
 
-        int distance = (int)Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(p1), VectorFix.ReturnVector3WithGroundHeight(p2));
+        int distance = (int)Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(p1,0), VectorFix.ReturnVector3WithGroundHeight(p2,0));
 
 
-        float minDis = 0.25f;
+        float minDis = 2f;
 
         int amountOfTValues = 0;
 
@@ -453,7 +453,7 @@ public static class Bezier
 
         //From really quick testing, 10 seems good. Test more
         //After more testing, 5 is better
-        distance = distance / 10;
+        distance = distance / 5;
 
         if (distance < minDis)
         {

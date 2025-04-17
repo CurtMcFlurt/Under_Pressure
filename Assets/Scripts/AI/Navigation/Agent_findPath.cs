@@ -68,7 +68,7 @@ public class Agent_findPath : MonoBehaviour
         debugPath.Clear();
         Path.Clear();
         RaycastHit whatIHit;
-        if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(transform.position), 1.5f, (VectorFix.ReturnVector3WithGroundHeight(goal.transform.position) - VectorFix.ReturnVector3WithGroundHeight(transform.position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(goal.transform.position) - VectorFix.ReturnVector3WithGroundHeight(transform.position))).magnitude, LineOfSightLayers))
+        if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(transform.position), 1.25f, (VectorFix.ReturnVector3WithGroundHeight(goal.transform.position) - VectorFix.ReturnVector3WithGroundHeight(transform.position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(goal.transform.position) - VectorFix.ReturnVector3WithGroundHeight(transform.position))).magnitude, LineOfSightLayers))
         {
             Path = new Theta_Star().GeneratePathPhiStarNavMesh(VectorFix.ReturnVector3WithGroundHeight(transform.position), VectorFix.ReturnVector3WithGroundHeight(goal.transform.position), LineOfSightLayers, InstancedPoints);
 
@@ -80,10 +80,23 @@ public class Agent_findPath : MonoBehaviour
             Path.Add(VectorFix.ReturnVector3WithGroundHeight(goal.transform.position));
 
         }
+
         debugPath.AddRange(Path);
         List<Vector3> tempA = new List<Vector3>();
         tempA.AddRange(Path);
-        Path = Bezier.BezirPath(tempA, pathIntervalLeangth, BezierLayers, transform.localScale.x-.25f);
+        try
+        {
+
+            Path[0] = VectorFix.ReturnVector3WithGroundHeight(Path[0], 0);
+            Path[Path.Count - 1] = VectorFix.ReturnVector3WithGroundHeight(Path[Path.Count - 1], 0);
+            Path = Bezier.BezirPath(tempA, pathIntervalLeangth, BezierLayers, transform.localScale.x - .25f);
+
+        }
+        catch
+        {
+            RecalculatePath = true;
+        }
+
 
         PathSegment = 0;
     }
@@ -244,7 +257,7 @@ public class Agent_findPath : MonoBehaviour
         Gizmos.color = Color.blue;
         for (int i = 0; i < Path.Count - 1; i++)
         {
-           // Gizmos.DrawLine(Path[i] + Vector3.up * 1.5f, Path[i + 1] + Vector3.up * 1.5f);
+            Gizmos.DrawLine(Path[i] + Vector3.up * 1.5f, Path[i + 1] + Vector3.up * 1.5f);
         }
 
         Gizmos.color = Color.white;

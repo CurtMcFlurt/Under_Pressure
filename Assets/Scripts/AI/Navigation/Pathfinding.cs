@@ -16,7 +16,7 @@ public class Pathfinding
         Debug.Log(navMesh.vertices.Length + " Verticies");
         PosPoints.Clear();
 
-        NavMesh.SamplePosition(start, out curpos, 1, mask);
+        NavMesh.SamplePosition(start, out curpos, 0, mask);
 
         for (int i = 0; i < navMesh.areas.Length; i++)
         {

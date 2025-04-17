@@ -15,5 +15,5 @@ MonoBehaviour:
   tickrateDrowsy: 0.01
   tickrateHunger: 0.01
   tickrateAlert: 1
-  roamingMovementSpeed: 3
+  roamingMovementSpeed: 5
   roamingHearingRange: 4

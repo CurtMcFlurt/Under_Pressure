@@ -49,6 +49,6 @@ public class Pathfinding
 
     protected Vector3 triangleCenter(Vector3 p1, Vector3 p2, Vector3 p3)
     {
-        return VectorFix.ReturnVector3WithGroundHeight(new Vector3((p1.x + p2.x + p3.x) / 3, (p1.y + p2.y + p3.y) / 3, (p1.z + p2.z + p3.z) / 3),0);
+        return new Vector3((p1.x + p2.x + p3.x) / 3, (p1.y + p2.y + p3.y) / 3, (p1.z + p2.z + p3.z) / 3);
     }
 }

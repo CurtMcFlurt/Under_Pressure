@@ -41,7 +41,7 @@ public class PlayerMovement : NetworkBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
+        NetworkManager.SceneManager.OnSceneEvent += HandleSceneEvent;
         var playerInput = GetComponent<PlayerInput>();
         if (playerInput != null)
         {
@@ -65,6 +65,9 @@ public class PlayerMovement : NetworkBehaviour
             regularSound = walkSound.myHeat.sound;
             regularRange = walkSound.range;
         }
+
+        TrySpawnAtPoint();
+
     }
 
     private void OnDisable()
@@ -72,6 +75,10 @@ public class PlayerMovement : NetworkBehaviour
         moveAction?.Disable();
         lookAction?.Disable();
         throwAction?.Disable();
+        if (NetworkManager.Singleton != null)
+        {
+            NetworkManager.SceneManager.OnSceneEvent -= HandleSceneEvent;
+        }
     }
 
     private bool forcedCrouch;
@@ -200,6 +207,7 @@ public class PlayerMovement : NetworkBehaviour
        
         }
     }
+
     void RegenerateStamina()
     {
         if (stamina < 1f)
@@ -221,6 +229,30 @@ public class PlayerMovement : NetworkBehaviour
             Vector3 playerVelocity = rb.linearVelocity;
             glowStickRb.linearVelocity = playerVelocity; // Inherit player's velocity
             glowStickRb.AddForce(throwPoint.forward * throwForce, ForceMode.Impulse);
+        }
+    }
+    private void TrySpawnAtPoint()
+    {
+        var spawnPoints = GameObject.FindObjectsByType<SpawnPoint>(FindObjectsSortMode.None);
+
+        foreach (var spawn in spawnPoints)
+        {
+            if (!spawn.occupied)
+            {
+                spawn.Respawn(gameObject);
+                Debug.Log($"Player spawned at: {spawn.name}");
+                break;
+            }
+        }
+    }
+    private void HandleSceneEvent(SceneEvent sceneEvent)
+    {
+        // Only care about LoadComplete and only for our client
+        if (sceneEvent.SceneEventType == SceneEventType.LoadComplete &&
+            sceneEvent.ClientId == NetworkManager.LocalClientId)
+        {
+            Debug.Log($"Scene {sceneEvent.SceneName} loaded. Finding spawn point...");
+            TrySpawnAtPoint();
         }
     }
 }

@@ -51,7 +51,7 @@ public static class Bezier
     MidPointLoop:
 
 
-        if (panic >= 200)
+        if (panic >= 300)
         {
             Debug.LogError("panic");
             goto AfterMidPointLoop;
@@ -106,7 +106,7 @@ public static class Bezier
             {
                 //Right now phi-star makes sure that the path between the last point and the one before is fine, therefore it doesn't need to check here
             }
-            else if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j].Item1), playerThickness, (midPointsTuple[j + 1].Item1 - midPointsTuple[j].Item1).normalized, out sphereHitRay,
+            else if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j].Item1), playerThickness+0.15f, (midPointsTuple[j + 1].Item1 - midPointsTuple[j].Item1).normalized, out sphereHitRay,
 
                 Vector3.Distance(VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j + 1].Item1,0), VectorFix.ReturnVector3WithGroundHeight(midPointsTuple[j].Item1,0)),
 
@@ -138,7 +138,7 @@ public static class Bezier
 
                 Vector3 phantomPoint = new Vector3();
 
-                float distanceForNewPoint = .5f;
+                float distanceForNewPoint = 3.5f;
                 RaycastHit rayHit;
                 //Vector3 shouldMovePhantomPointInThisDirection = new Vector3();
 
@@ -146,7 +146,7 @@ public static class Bezier
                 //Start a tiny but away from .point
                 if (Physics.Raycast(sphereHitRay.point + (sphereHitRay.normal * 0.1f), (sphereHitRay.normal).normalized, out rayHit, distanceForNewPoint, layer))
                 {
-                    distanceForNewPoint = rayHit.distance * 0.5f;
+                    distanceForNewPoint = rayHit.distance;
                 }
                 Debug.DrawRay(sphereHitRay.point + (sphereHitRay.normal * 0.01f), (sphereHitRay.normal).normalized * distanceForNewPoint, Color.black, 10f);
 

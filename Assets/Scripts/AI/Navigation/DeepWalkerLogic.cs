@@ -289,7 +289,7 @@ public class DeepWalkerLogic : MonoBehaviour
         else timeLost = 0;
         if (timeLost >= losetime) { TrackingObject = null; timeLost = 0; Debug.Log("Lost");VictimPositionCertainty = 0; }
 
-        if (hex.hexCoords != oldTrackingHex.hexCoords || pathfinder.curentSpeed<5)
+        if (hex.hexCoords != oldTrackingHex.hexCoords || pathfinder.curentSpeed<3)
         {
             updateGoal(TrackingObject.transform.position);
             Debug.Log("getting Position");

@@ -98,8 +98,7 @@ public class RelayConnectionManager : MonoBehaviour
         if (m_NetworkManager.LocalClientId == clientId)
         {
             Debug.Log($"Client-{clientId} is connected and can spawn {nameof(NetworkObject)}s.");
-            throwAwayCamera.enabled = false;
-            uiPanel.gameObject.SetActive(false);
+            DisableUnecesaries();
         }
     }
 
@@ -109,9 +108,14 @@ public class RelayConnectionManager : MonoBehaviour
         if (m_NetworkManager.LocalClient.IsSessionOwner)
         {
             Debug.Log($"Client-{m_NetworkManager.LocalClientId} is the session owner!");
-            throwAwayCamera.enabled = false;
-
-            uiPanel.gameObject.SetActive(false);
+            DisableUnecesaries();
         }
+    }
+
+    public void DisableUnecesaries()
+    {
+        throwAwayCamera.enabled = false;
+
+        uiPanel.gameObject.SetActive(false);
     }
 }

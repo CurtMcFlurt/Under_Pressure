@@ -136,9 +136,9 @@ public class Agent_findPath : MonoBehaviour
         var curSpeed=Mathf.Lerp(FollowMaxSpeed,FollowMinSpeed,PredictiveMovement());
         curentSpeed=curSpeed;
         TValue += Time.deltaTime * curSpeed;
-        if (TValue > 1)
+        if (TValue >= 0.99)
         {
-            TValue -= 1;
+            TValue -= .99f;
             if (PathSegment < Path.Count-2)
             {
                 PathSegment++;
@@ -168,7 +168,7 @@ public class Agent_findPath : MonoBehaviour
         }
         Vector3 dir = (followObject.transform.position - transform.position);
         float tValie = Mathf.Clamp01(followDist / maxDist);
-        float streangth = Mathf.Lerp(minSpeed, maxSpeed,TValue);
+        float streangth = Mathf.Lerp(minSpeed, maxSpeed, tValie);
         dir *= streangth;
         Vector3 currentVelocity = rb3d.linearVelocity;
         dir = dir - currentVelocity;

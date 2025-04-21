@@ -4662,8 +4662,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2707572e8170584fb20c1b40099a0ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 25
-  cellSize: 3.47
+  range: 28
+  cellSize: 3
   hexcolor: {r: 0, g: 0, b: 0, a: 1}
   weightChangers:
   - {fileID: 1121432409670542375, guid: 305f00f4a734e55469042b0d069d5e67, type: 3}
@@ -4676,7 +4676,7 @@ MonoBehaviour:
   - {fileID: 1121432409670542375, guid: 305f00f4a734e55469042b0d069d5e67, type: 3}
   - {fileID: 5362888568949055970, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
   - {fileID: 1741881507}
-  walkables: 316
+  walkables: 291
   floorMask:
     serializedVersion: 2
     m_Bits: 4096
@@ -7287,7 +7287,7 @@ Transform:
   m_GameObject: {fileID: 571597237}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.1, y: 5.48, z: -29.5}
+  m_LocalPosition: {x: -31.7, y: 5.48, z: -67.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18820,7 +18820,7 @@ Transform:
   m_GameObject: {fileID: 1575278265}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2, y: 13.44, z: -148.3}
+  m_LocalPosition: {x: -60.3, y: 13.44, z: -124}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23708,11 +23708,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5603965737738574918, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
       propertyPath: FollowMaxSpeed
-      value: 7
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5603965737738574918, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
       propertyPath: FollowMinSpeed
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5603965737738574918, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
       propertyPath: BezierLayers.m_Bits

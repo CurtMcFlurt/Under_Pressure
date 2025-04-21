@@ -19,7 +19,7 @@ public class RelayConnectionManager : MonoBehaviour
 {
     public Camera throwAwayCamera;
     [SerializeField]
-    int m_MaxPlayers = 10;
+    int m_MaxPlayers = 4;
     [Header("UI References")]
     public TMP_InputField joinCodeInput;
     public TMP_InputField NameInput;
@@ -99,6 +99,7 @@ public class RelayConnectionManager : MonoBehaviour
         {
             Debug.Log($"Client-{clientId} is connected and can spawn {nameof(NetworkObject)}s.");
             throwAwayCamera.enabled = false;
+            uiPanel.gameObject.SetActive(false);
         }
     }
 
@@ -109,6 +110,8 @@ public class RelayConnectionManager : MonoBehaviour
         {
             Debug.Log($"Client-{m_NetworkManager.LocalClientId} is the session owner!");
             throwAwayCamera.enabled = false;
+
+            uiPanel.gameObject.SetActive(false);
         }
     }
 }

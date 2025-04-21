@@ -362,7 +362,7 @@ public class DeepWalkerLogic : MonoBehaviour
 
                 if (visited.Contains(neighborCoords)) continue;
 
-                if (WeightMap.walkableHexagons.TryGetValue(neighborCoords, out HexCell neighbor))
+                if (WeightMap.fullMapHexagons.TryGetValue(neighborCoords, out HexCell neighbor))
                 {
                     if (neighbor.weight.sound >= loudestReactHex.weight.sound)
                     {
@@ -531,7 +531,7 @@ public class DeepWalkerLogic : MonoBehaviour
                 cell.timeSinceChecked = 0;
 
                 // Fetch the latest live value
-                HexCell liveCell = WeightMap.walkableHexagons[key];
+                HexCell liveCell = WeightMap.fullMapHexagons[key];
 
             
 

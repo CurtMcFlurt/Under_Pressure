@@ -41,14 +41,15 @@ public class Hexagon_HeatmapManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        var hexDict = hexWeighter.walkableHexagons;
+        var hexDict = hexWeighter.fullMapHexagons;
+         var nearesthex = hexWeighter.walkableHexagons;
 
         // Apply active changers
         foreach (var changer in WeightChangers)
         {
             if (changer.isActiveAndEnabled)
             {
-                var nearest = HexMath.NearestHex(changer.transform.position, hexDict.Values.ToList(), hexWeighter.cellSize);
+                var nearest = HexMath.NearestHex(changer.transform.position, nearesthex.Values.ToList(), hexWeighter.cellSize);
                 changer.myHex = nearest;
                 ApplyHeatChange(nearest, changer.range, changer.myHeat, changer.falloff);
                 if (changer.OneOff)
@@ -74,7 +75,7 @@ public class Hexagon_HeatmapManager : MonoBehaviour
 
     public void ApplyHeatChange(HexCell centerHex, int range, HeatMapValues values, float falloff)
     {
-        var hexDict = hexWeighter.walkableHexagons;
+        var hexDict = hexWeighter.fullMapHexagons;
 
         foreach (var kvp in hexDict.ToList())
         {

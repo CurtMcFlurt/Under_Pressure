@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.PlayerSettings;
 [System.Serializable]
 public struct HexCell
 {
@@ -37,6 +36,7 @@ public class HexagonalWeight : MonoBehaviour
 
     // Changed from List to Dictionary
     public Dictionary<Vector3, HexCell> walkableHexagons = new Dictionary<Vector3, HexCell>();
+    public Dictionary<Vector3, HexCell> fullMapHexagons = new Dictionary<Vector3, HexCell>();
     public List<WeightChangers> weightChangers = new List<WeightChangers>();
     public List<WeightChangers> playerWeights = new List<WeightChangers>();
     public int walkables = 0;
@@ -84,6 +84,9 @@ public class HexagonalWeight : MonoBehaviour
     private void FindAllAccessibleHexes()
     {
         walkableHexagons.Clear();
+        fullMapHexagons.Clear();
+
+        HashSet<Vector3> addedToFullMap = new HashSet<Vector3>();
 
         foreach (var hexCoord in grid.hexvalue)
         {
@@ -94,66 +97,92 @@ public class HexagonalWeight : MonoBehaviour
 
             while (worldPos.y <= maxCheckHeight)
             {
-                if (NavMesh.SamplePosition(worldPos, out var hit, 3f, NavMesh.AllAreas))
+                if (NavMesh.SamplePosition(worldPos, out var hit, 1.35f, NavMesh.AllAreas))
                 {
                     float height = hit.position.y;
                     HexCell hexCell = new HexCell(hexCoord, height, stackLevel, true);
 
-                    // Insert into dictionary using hexCoord as key
                     walkableHexagons[hexCoord] = hexCell;
+                    fullMapHexagons[hexCoord] = hexCell;
+                    addedToFullMap.Add(hexCoord);
                     foundBase = true;
+                    break;
                 }
-
-                if (foundBase)
+                else if (Physics.Raycast(worldPos + Vector3.up * 0.5f, Vector3.down, out var rayHit, 5f, floorMask))
                 {
-                    if (Physics.Raycast(worldPos, Vector3.up, out RaycastHit levelHit, maxCheckHeight - worldPos.y, floorMask))
-                    {
-                        worldPos = levelHit.point + Vector3.up * 0.1f;
-                        stackLevel++;
-                        continue;
-                    }
-                    else break;
+                    float height = rayHit.point.y;
+                    HexCell hexCell = new HexCell(hexCoord, height, stackLevel, false);
+                    fullMapHexagons[hexCoord] = hexCell;
+                    addedToFullMap.Add(hexCoord);
+                    foundBase = true;
+                    break;
                 }
 
                 worldPos.y += cellSize;
+            }
+
+            // Add direct neighbors of valid hex, inherit height and stackLevel from base hex
+            if (foundBase)
+            {
+                float baseHeight = fullMapHexagons[hexCoord].height;
+                int baseStack = fullMapHexagons[hexCoord].stackLevel;
+
+                foreach (var direction in HexMath.cubeDirectionVectors)
+                {
+                    Vector3 neighborCoord = hexCoord + direction;
+
+                    if (!addedToFullMap.Contains(neighborCoord))
+                    {
+                        HexCell neighborHex = new HexCell(neighborCoord, baseHeight, baseStack, false);
+                        fullMapHexagons[neighborCoord] = neighborHex;
+                        addedToFullMap.Add(neighborCoord);
+                    }
+                }
             }
         }
     }
 
 
 
+
     public void OnDrawGizmos()
     {
-        foreach (var hex in walkableHexagons.Values)
+        foreach (var hex in fullMapHexagons.Values)
         {
-            // Calculate heat magnitude for cube size and color
-            var weightVec = new Vector3(hex.weight.food, hex.weight.safety, hex.weight.sound);
+            Vector3 weightVec = new Vector3(hex.weight.food, hex.weight.safety, hex.weight.sound);
             float magnitude = weightVec.magnitude;
             Vector3 basePos = grid.Axial2Pixel(hex.hexCoords);
 
-            // Set gizmo color based on heat values
-            Gizmos.color = new Color(hex.weight.food / 10f, hex.weight.safety / 10f, hex.weight.sound / 10f);
+            // Normalize weight values to create a target color
+            Color targetColor = new Color(hex.weight.food / 10f, hex.weight.safety / 10f, hex.weight.sound / 10f);
 
-            // Draw cube with height based on heat magnitude
+            // Lerp from white if walkable, black otherwise
+            if (walkableHexagons.ContainsKey(hex.hexCoords))
+            {
+                Gizmos.color = Color.Lerp(Color.white, targetColor, 0.8f); // 80% toward heat color
+            }
+            else
+            {
+                Gizmos.color = targetColor * 0.25f; // dim non-walkables (optional)
+            }
+
+            // Draw cube based on weight magnitude
             Gizmos.DrawCube(basePos + (hex.height + magnitude / 2f) * Vector3.up, new Vector3(1, magnitude, 1));
 
             // Draw hex outline
             corners = new Vector3[6];
             for (int i = 0; i < corners.Length; i++)
             {
-                corners[i] = HexCorners(basePos,hex.height, i);
+                corners[i] = HexCorners(basePos, hex.height, i);
             }
             for (int i = 0; i < 5; i++)
             {
-          
-                Gizmos.DrawLine(corners[i], corners[i+1]);
-           
-
+                Gizmos.DrawLine(corners[i], corners[i + 1]);
             }
             Gizmos.DrawLine(corners[5], corners[0]);
         }
 
-        
+
     }
 
 

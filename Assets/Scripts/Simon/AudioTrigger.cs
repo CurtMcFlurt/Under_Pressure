@@ -13,6 +13,7 @@ public class AudioTrigger : MonoBehaviour
         public string paramName;
         public float paramValue;
     }
+    public GameEvent audioEvent;
     
     [Header("General Settings")]
     public string colliderTag;
@@ -52,6 +53,7 @@ public class AudioTrigger : MonoBehaviour
                         break;
                 }
             }
+            audioEvent.Raise(this, audioSettings);
             
             if (destroyAfterUse == true)
             {

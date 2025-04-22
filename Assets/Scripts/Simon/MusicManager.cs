@@ -73,4 +73,17 @@ public class MusicManager : MonoBehaviour
         Debug.Log("Event chosen is: " + emitter);
         return emitter;
     }
+
+     public void UnPackData(Component sender, object data)
+    {
+        // Check if the data is a string before proceeding
+        if (data is AudioSettings settings)
+        {
+            
+        }
+        else
+        {
+            Debug.LogWarning("Data is not a valid scene name string.");
+        }
+    }
 }

@@ -9,12 +9,21 @@ public class BoidFollowTarget : MonoBehaviour
    private BoidManager boidManager;
     public int boidCounter;
     public GameObject huntTransform;
+    public int MaximumFishAround=75;
+    public float TimeTillDeath=3;
+    private float currentDeath = 0;
+    private PlayerDeath myDeath;
+
     private void OnDisable()
     {
         if (checkIfInside) {
           
             boidManager.targets.Remove(huntTransform);
         }
+    }
+    private void OnEnable()
+    {
+        myDeath = GetComponent<PlayerDeath>();
     }
     // Update is called once per frame
     void Update()
@@ -30,10 +39,10 @@ public class BoidFollowTarget : MonoBehaviour
             }
         }
 
-        if (fishBowlCollider != null)
+        if (fishBowlCollider != null && !myDeath.IsDead)
         {
             fishBowlCollider.gameObject.TryGetComponent<BoidManager>(out var M);
-            
+
             boidManager = M;
             if (fishBowlCollider.bounds.Contains(transform.position))
             {
@@ -41,24 +50,33 @@ public class BoidFollowTarget : MonoBehaviour
 
                 boidManager.targets.Add(huntTransform);
 
-                foreach(var c in boidManager.boids)
+                foreach (var c in boidManager.boids)
                 {
                     if ((c.position - transform.position).magnitude < sphereCheckRadius)
                     {
                         boidCounter++;
                     }
                 }
-
+                if (boidCounter > MaximumFishAround)
+                {
+                    currentDeath += Time.deltaTime;
+                }
+                if (currentDeath > TimeTillDeath)
+                {
+                    myDeath.Die();
+                }
             }
-            else if (checkIfInside) { 
-            
-            checkIfInside= false;
+            else if (checkIfInside)
+            {
+
+                checkIfInside = false;
                 Debug.LogWarning("Left The Box");
                 boidManager.targets.Remove(huntTransform);
-               
-                boidManager=null;
+
+                boidManager = null;
             }
 
         }
+        else if(currentDeath>0) currentDeath -= Time.deltaTime;
     }
 }

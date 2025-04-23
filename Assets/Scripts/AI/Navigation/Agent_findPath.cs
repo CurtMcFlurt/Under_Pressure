@@ -114,11 +114,16 @@ public class Agent_findPath : MonoBehaviour
     }
 
 
-
+    private float waitForTimer = 0;
 
     // Update is called once per frame
     void Update()
     {
+        if (waitForTimer > 0)
+        {
+            waitForTimer -= Time.deltaTime;
+            return;
+        }
         followDist = (transform.position - followObject.transform.position).magnitude;
         if (PathSegment < Path.Count-1 && followDist<maxDist) MoveAlongPath();
         if (RecalculatePath)
@@ -242,7 +247,10 @@ public class Agent_findPath : MonoBehaviour
     }
 
 
-
+    public void AddTimeToWait(float time)
+    {
+        waitForTimer = time;
+    }
 
 
     public void OnDrawGizmosSelected()

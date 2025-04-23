@@ -35,6 +35,7 @@ public class DebugMovement : MonoBehaviour
     private float originalHeight;
     public WeightChangers walkSound;
     private Vector3 originCamera;
+    private PlayerDeath myDeath;
     public void OnEnable()
     {
 
@@ -54,7 +55,7 @@ public class DebugMovement : MonoBehaviour
             lookAction.Enable();
             throwAction.Enable();
         }
-
+        myDeath = GetComponent<PlayerDeath>();
         myCollider = GetComponent<CapsuleCollider>();
         originalHeight = myCollider.height;
         originCamera = cameraPoint.transform.position - transform.position;
@@ -77,7 +78,7 @@ public class DebugMovement : MonoBehaviour
     private float increasingTvalue = 0;
     private void FixedUpdate()
     {
-
+        if (myDeath.IsDead) return;
         Vector2 moveInput = moveAction.ReadValue<Vector2>();
         Vector3 moveDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
         float crouchValue = crouchAction.ReadValue<float>();
@@ -152,7 +153,7 @@ public class DebugMovement : MonoBehaviour
     private bool runCD;
     private void Update()
     {
-
+        if (myDeath.IsDead) return;
         Vector2 lookInput = lookAction.ReadValue<Vector2>();
 
         float mouseX = lookInput.x * lookSpeed;

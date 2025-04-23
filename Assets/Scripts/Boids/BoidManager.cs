@@ -8,9 +8,12 @@ public class BoidManager : MonoBehaviour
     const int threadGroupSize = 1024;
 
     public BoidSettings settings;
+    private float CurrentTargetHunt;
+    
     public ComputeShader compute;
     public HashSet<GameObject> targets= new HashSet<GameObject>();
-
+    public float angerGain;
+    public float angerLoss;
     public List <Boids> boids;
     public Collider boundCollider;
     [System.Obsolete]
@@ -73,24 +76,30 @@ public class BoidManager : MonoBehaviour
                 if(targets.Count == 0)
                 {
                     boids[i].target = null;
+                    
+                    CurrentTargetHunt = Mathf.Clamp01(CurrentTargetHunt - Time.deltaTime/1000*angerLoss);
                 }
                 else
                 {
+                    CurrentTargetHunt = Mathf.Clamp01(CurrentTargetHunt + Time.deltaTime/ 1000 * angerGain);
+
                     foreach (var v in targets)
                     {
 
                         if (boids[i].target == null)
                         {
                             boids[i].target = v.transform;
-
+                       
                         }
                         else if ((boids[i].target.position - boids[i].position).magnitude < (boids[i].target.position-v.transform.position).magnitude)
                         {
                             boids[i].target = v.transform;
+           
                         }
                     }
                 }
-                if(boundCollider != null)
+                boids[i].angerValue = CurrentTargetHunt;
+                if (boundCollider != null)
                 {
                     if (!boundCollider.bounds.Contains(boids[i].position))
                     {

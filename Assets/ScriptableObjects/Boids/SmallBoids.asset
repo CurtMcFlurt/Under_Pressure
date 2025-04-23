@@ -20,7 +20,8 @@ MonoBehaviour:
   alignWeight: 0.99
   cohesionWeight: 0.89
   seperateWeight: 1.1
-  targetWeight: 8.13
+  MintargetWeight: 0
+  MaxtargetWeight: 10
   obstacleMask:
     serializedVersion: 2
     m_Bits: 897

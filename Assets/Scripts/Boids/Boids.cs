@@ -8,7 +8,7 @@ public class Boids : MonoBehaviour
     public Vector3 position;
     [HideInInspector]
     public Vector3 forward;
-
+    public float angerValue;
     private Vector3 velocity;
 
     [HideInInspector]
@@ -59,7 +59,7 @@ public class Boids : MonoBehaviour
         if (target != null)
         {
             Vector3 offsetToTarget = (target.position - position);
-            acceleration = SteerTowards(offsetToTarget) * BoidSettings.targetWeight;
+            acceleration = SteerTowards(offsetToTarget) * Mathf.Lerp(BoidSettings.MintargetWeight,BoidSettings.MaxtargetWeight,angerValue);
         }
 
         if (numPerceivedFlockmates != 0)

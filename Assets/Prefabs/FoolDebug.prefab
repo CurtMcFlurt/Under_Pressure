@@ -294,7 +294,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 130999
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -404,7 +404,7 @@ MonoBehaviour:
       colorBlindnessType: 0
       colorBlindnessStrength: 1
   m_Resources: {fileID: 0}
-  m_ShowToolkit: 0
+  m_ShowToolkit: 1
   m_ShowCustomSorter: 1
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
@@ -441,9 +441,10 @@ GameObject:
   - component: {fileID: 701796992560821224}
   - component: {fileID: 6748847938144502183}
   - component: {fileID: 412493808285010292}
+  - component: {fileID: 2719005309301395617}
   m_Layer: 9
   m_Name: FoolDebug
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -458,7 +459,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16.23007, y: 18.648014, z: 10.019043}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7678465585004245259}
@@ -592,7 +593,9 @@ MonoBehaviour:
   sphereCheckRadius: 5
   checkIfInside: 0
   boidCounter: 0
-  huntTransform: {fileID: 1722869070318551701}
+  huntTransform: {fileID: 4548797139965456346}
+  MaximumFishAround: 75
+  TimeTillDeath: 3
 --- !u!54 &701796992560821224
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -632,8 +635,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53d2b9076e791f548a6a9c176278151a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingSpeed: 5
-  runningSpeed: 11
+  walkingSpeed: 12
+  runningSpeed: 24
   sneakingSpeed: 2.5
   lookSpeed: 0.1
   stamina: 1
@@ -678,6 +681,22 @@ MonoBehaviour:
   aimIndicator: {fileID: 7590239975824024885}
   rayOffset: 0.5
   maxRayDistance: 25
+--- !u!114 &2719005309301395617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430420571820895200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48e5b8294fdda1243b05e3bc663a3624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugDie: 0
+  debugRespawn: 0
+  IsDead: 0
+  debugRespawnPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &4548797139965456346
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,7 +723,7 @@ Transform:
   m_GameObject: {fileID: 4548797139965456346}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

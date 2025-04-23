@@ -48,6 +48,7 @@ MonoBehaviour:
   BoidSettings: {fileID: 11400000, guid: 699555963c2989848a8021c22a8b98eb, type: 2}
   position: {x: 0, y: 0, z: 0}
   forward: {x: 0, y: 0, z: 0}
+  angerValue: 0
   avgFlockHeading: {x: 0, y: 0, z: 0}
   avgAvoidanceHeading: {x: 0, y: 0, z: 0}
   centreOfFlockmates: {x: 0, y: 0, z: 0}
@@ -93,7 +94,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1685769301615165949}
-  m_Mesh: {fileID: 3613567641014311022, guid: 8f012ee6ea7aa944b8aad4eeefc098dc, type: 3}
+  m_Mesh: {fileID: 3613567641014311022, guid: 79d105d72adca0348a0b3eb8003c1407, type: 3}
 --- !u!23 &1497747274509527958
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -61,6 +61,7 @@ public class DeepWalkerLogic : MonoBehaviour
     public float restTime=0;
     public float losetime = 3;
     public float minimumWaitToRecalculate=3;
+    public AttackOrbHandler myAttack;
     private float recalculateTime;
     public bool neutral = true;
     private float timeLost=0;
@@ -272,7 +273,7 @@ public class DeepWalkerLogic : MonoBehaviour
         var hex = HexMath.NearestHex(TrackingObject.transform.position, hexMap.Values.ToList(), WeightMap.cellSize);
     
 
-        if (myHex.hexCoords == hex.hexCoords || (transform.position - TrackingObject.transform.position).magnitude <= 4)
+        if (myAttack.KilledPlayer)
         {
             TrackingObject = null; timeLost = 0;
             VictimPositionCertainty = 0;

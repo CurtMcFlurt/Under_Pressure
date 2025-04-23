@@ -12,7 +12,8 @@ public class BoidSettings : ScriptableObject
     public float cohesionWeight = 1;
     public float seperateWeight = 1;
 
-    public float targetWeight = 1;
+    public float MintargetWeight = 1;
+    public float MaxtargetWeight = 1;
 
     [Header("Collisions")]
     public LayerMask obstacleMask;

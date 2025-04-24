@@ -780,6 +780,7 @@ GameObject:
   - component: {fileID: 8742399876282298572}
   - component: {fileID: 2598126861293947438}
   - component: {fileID: 3683952731704895292}
+  - component: {fileID: 854779756143240205}
   m_Layer: 0
   m_Name: Deepwalker
   m_TagString: Untagged
@@ -842,10 +843,29 @@ MonoBehaviour:
   logic: {fileID: 1102732122220055505}
   findPath: {fileID: 5603965737738574918}
   attack: {fileID: 3118193207729517987}
-  timeForAttack: 1
-  timeForScream: 1
-  timeForEat: 1
-  timeForListen: 1
+  timeForAttack: 2
+  timeForScream: 2
+  timeForEat: 4
+  timeForListen: 3
+  debugSceam: 0
+  debugAttack: 0
+  debugEat: 0
+  debugListen: 0
+--- !u!114 &854779756143240205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670300898263245131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 2598126861293947438}
 --- !u!1 &698429471520895745
 GameObject:
   m_ObjectHideFlags: 0
@@ -1930,7 +1950,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -61, y: 0, z: -7.2}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8742399876282298572}
@@ -1949,16 +1969,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad38663f177afa54f8c55117e3ccf125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 1
-  maxSpeed: 2
-  FollowMinSpeed: 2
-  FollowMaxSpeed: 4
+  minSpeed: 2
+  maxSpeed: 3
+  FollowMinSpeed: 8
+  FollowMaxSpeed: 10
   rb3d: {fileID: 3223803276596787714}
-  pathIntervalLeangth: 2.25
+  pathIntervalLeangth: 1.5
   Path: []
   followDist: 0
-  maxDist: 3
-  maxLookahead: 2
+  maxDist: 2.5
+  maxLookahead: 3
   goal: {fileID: 1296515915791838372}
   followObject: {fileID: 1592724232757780704}
   curentSpeed: 0
@@ -1971,6 +1991,7 @@ MonoBehaviour:
   debugPath: []
   RecalculatePath: 0
   PathSegment: 0
+  targetLeadDistance: 2
 --- !u!114 &1102732122220055505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3579,7 +3600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6732623521878096281
 Transform:
   m_ObjectHideFlags: 0
@@ -5014,7 +5035,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.85
+  m_Radius: 0.7
   m_Height: 3.333
   m_Direction: 1
   m_Center: {x: 0, y: 1.5, z: 0}

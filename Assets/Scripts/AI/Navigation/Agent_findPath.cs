@@ -156,26 +156,52 @@ public class Agent_findPath : MonoBehaviour
     }
     public int PathSegment;
     private float TValue=0;
+    [SerializeField] private float targetLeadDistance = 2.0f; // Desired distance ahead
     private void MoveAlongPath()
     {
-        var curSpeed=Mathf.Lerp(FollowMaxSpeed,FollowMinSpeed,PredictiveMovement());
-        curentSpeed=curSpeed;
+        float curSpeed = Mathf.Lerp(FollowMaxSpeed, FollowMinSpeed, PredictiveMovement());
+        curentSpeed = curSpeed;
         TValue += Time.deltaTime * curSpeed;
-        if (TValue >= 0.99)
+
+        // Loop forward until we're far enough ahead or out of path
+        while (PathSegment < Path.Count - 2)
         {
-            TValue -= .99f;
-            if (PathSegment < Path.Count-2)
+            Vector3 current = Path[PathSegment];
+            Vector3 next = Path[PathSegment + 1];
+
+            Vector3 lerpPos = Vector3.Lerp(current, next, TValue);
+            Vector3 projectedPos = new Vector3(lerpPos.x, transform.position.y, lerpPos.z);
+
+            float projectedDist = (projectedPos - transform.position).magnitude;
+
+            // If we're far enough ahead, stop
+            if (projectedDist >= targetLeadDistance)
             {
+                followObject.transform.position = projectedPos;
+                followDist = projectedDist;
+                return;
+            }
+
+            // Otherwise step forward
+            TValue += 0.01f; // Small increment to continue walking along the path
+
+            if (TValue >= 1f)
+            {
+                TValue = 0f;
                 PathSegment++;
-            }else TValue = 1;
+
+                if (PathSegment >= Path.Count - 2)
+                {
+                    PathSegment = Path.Count - 2;
+                    break;
+                }
+            }
         }
-       
-        Vector3 acvtiveInterval = Path[PathSegment];
-        Vector3 activeTarget = Path[PathSegment + 1];
-    
-        Vector3 lerpPos= Vector3.Lerp(acvtiveInterval, activeTarget, TValue);
-        followObject.transform.position =new Vector3(lerpPos.x, transform.position.y,lerpPos.z);
-        followDist=(followObject.transform.position-transform.position).magnitude;
+
+        // Final fallback position if we reached the end
+        Vector3 final = new Vector3(Path[PathSegment + 1].x, transform.position.y, Path[PathSegment + 1].z);
+        followObject.transform.position = final;
+        followDist = (final - transform.position).magnitude;
     }
 
     private void MoveTowardsFollow()

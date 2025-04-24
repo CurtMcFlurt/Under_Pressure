@@ -204,6 +204,9 @@ public class DebugMovement : MonoBehaviour
         }
     }
 
+    private float currentMoveX = 0f;
+    private float currentMoveZ = 0f;
+
     void GetAngle()
     {
         Vector3 moveDir = rb.linearVelocity;
@@ -217,11 +220,17 @@ public class DebugMovement : MonoBehaviour
         right.Normalize();
 
         // Convert movement direction to local-space values relative to camera
-        float moveX = Vector3.Dot(moveDir.normalized, forward);
-        float moveZ = Vector3.Dot(moveDir.normalized, right);
-        
-        myAnim.SetFloat("MoveX", moveX);
-        myAnim.SetFloat("MoveZ", moveZ);
+        float targetMoveX = Vector3.Dot(moveDir.normalized, forward);
+        float targetMoveZ = Vector3.Dot(moveDir.normalized, right);
+
+        // Smoothly interpolate current values toward the target
+        float lerpSpeed = 10f; // Adjust as needed
+        currentMoveX = Mathf.Lerp(currentMoveX, targetMoveX, Time.deltaTime * lerpSpeed);
+        currentMoveZ = Mathf.Lerp(currentMoveZ, targetMoveZ, Time.deltaTime * lerpSpeed);
+
+        // Apply to animator
+        myAnim.SetFloat("MoveX", currentMoveX);
+        myAnim.SetFloat("MoveZ", currentMoveZ);
         myAnim.SetFloat("Speed", rb.linearVelocity.magnitude);
     }
     void RegenerateStamina()

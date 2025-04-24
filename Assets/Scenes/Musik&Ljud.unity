@@ -972,7 +972,8 @@ Transform:
   m_LocalPosition: {x: 38.65848, y: -11.33, z: 13.9879}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 732257933}
   m_Father: {fileID: 1787766399}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &49697683
@@ -6746,6 +6747,69 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &732257932
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 732257933}
+  - component: {fileID: 732257934}
+  m_Layer: 0
+  m_Name: Ambience Emitter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &732257933
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732257932}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.713814, y: -2.0033102, z: 16.480198}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 44686601}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &732257934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732257932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1558637697
+      Data2: 1178959278
+      Data3: -1434153283
+      Data4: -541266048
+    Path: event:/Music/Ambience Drone
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!43 &736789390
 Mesh:
   m_ObjectHideFlags: 0
@@ -12503,7 +12567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1661a14adf2047e46832dca919f1a6d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicManager: {fileID: 0}
+  musicManager: {fileID: 1455448765}
   gameOverStinger:
     Guid:
       Data1: 0
@@ -12511,6 +12575,53 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+--- !u!1 &1455448763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1455448764}
+  - component: {fileID: 1455448765}
+  m_Layer: 0
+  m_Name: Music Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1455448764
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455448763}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 50.372295, y: -13.33331, z: 30.468098}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1787766399}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1455448765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455448763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 052a9d3bc44315341854037451dd35ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgm1: {fileID: 732257934}
+  bgm2: {fileID: 0}
+  bgmChase: {fileID: 0}
 --- !u!43 &1495093326
 Mesh:
   m_ObjectHideFlags: 0
@@ -12871,12 +12982,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd9c0ed877efccb4fb380c4a39fd0130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioEvent: {fileID: 0}
-  colliderTag: 
+  colliderTag: Player
   destroyAfterUse: 1
   audioSettings:
   - Action: 3
-    eventEmitterName: 
+    eventEmitterName: bgm1
     paramName: Detection
     paramValue: 0
 --- !u!65 &1501278649
@@ -15090,6 +15200,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1431876425}
+  - {fileID: 1455448764}
   - {fileID: 2058678499}
   - {fileID: 44686601}
   - {fileID: 949941379}
@@ -17261,12 +17372,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd9c0ed877efccb4fb380c4a39fd0130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioEvent: {fileID: 0}
-  colliderTag: 
+  colliderTag: Player
   destroyAfterUse: 1
   audioSettings:
   - Action: 3
-    eventEmitterName: 
+    eventEmitterName: bgm1
     paramName: Detection
     paramValue: 1
 --- !u!65 &2018638366
@@ -17351,8 +17461,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSettings:
   - Action: 1
-    eventEmitterName: 
-    paramName: Detection
+    eventEmitterName: bgm1
+    paramName: 
     paramValue: 0
 --- !u!43 &2082008794
 Mesh:

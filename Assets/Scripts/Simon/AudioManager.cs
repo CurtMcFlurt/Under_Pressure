@@ -8,7 +8,8 @@ public enum TriggerAction
     None,
     Play,
     Stop,
-    SetParameter
+    SetParameter,
+    OneShot
 }
 public class AudioManager : MonoBehaviour
 {

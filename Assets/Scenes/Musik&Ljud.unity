@@ -5016,6 +5016,69 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &419330254
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 419330255}
+  - component: {fileID: 419330256}
+  m_Layer: 0
+  m_Name: Deep Walker Listening
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &419330255
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419330254}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 949941379}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &419330256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419330254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1217647901
+      Data2: 1102774723
+      Data3: 1473884344
+      Data4: 2029006527
+    Path: event:/Sound/Monster/Monster Listen
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 150
 --- !u!43 &419941862
 Mesh:
   m_ObjectHideFlags: 0
@@ -5707,6 +5770,107 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1001 &539439001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1102732122220055505, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2905840010080583124, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683952731704895292, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: debugListen
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683952731704895292, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: attackSound.isOneshot
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683952731704895292, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: attackSound.paramName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683952731704895292, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: listeningSound.Action
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683952731704895292, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: attackSound.paramValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683952731704895292, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: attackSound.eventEmitterName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683952731704895292, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: listeningSound.eventEmitterName
+      value: dwListening
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603965737738574918, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6518846684610546650, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_Name
+      value: DeepWalkerParent
+      objectReference: {fileID: 0}
+    - target: {fileID: 6518846684610546650, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6732623521878096281, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -66.32879
+      objectReference: {fileID: 0}
+    - target: {fileID: 6732623521878096281, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6.385358
+      objectReference: {fileID: 0}
+    - target: {fileID: 6732623521878096281, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.252675
+      objectReference: {fileID: 0}
+    - target: {fileID: 6732623521878096281, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6732623521878096281, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6732623521878096281, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6732623521878096281, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6732623521878096281, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6732623521878096281, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6732623521878096281, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e5861dc1986c6c54b9955df447df5e4b, type: 3}
 --- !u!1 &554971343 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1722869070318551701, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
@@ -6758,7 +6922,7 @@ GameObject:
   - component: {fileID: 732257933}
   - component: {fileID: 732257934}
   m_Layer: 0
-  m_Name: Ambience Emitter
+  m_Name: Ambience Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7919,7 +8083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4266378872136830948, guid: 2f69def0e6bdc1c4790f253e5d232369, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.1
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 4266378872136830948, guid: 2f69def0e6bdc1c4790f253e5d232369, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9148,7 +9312,9 @@ Transform:
   m_LocalPosition: {x: 38.65848, y: -11.33, z: 13.9879}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2058737740}
+  - {fileID: 419330255}
   m_Father: {fileID: 1787766399}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &960246736
@@ -12585,6 +12751,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1455448764}
   - component: {fileID: 1455448765}
+  - component: {fileID: 1455448766}
   m_Layer: 0
   m_Name: Music Manager
   m_TagString: Untagged
@@ -12620,8 +12787,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgm1: {fileID: 732257934}
-  bgm2: {fileID: 0}
-  bgmChase: {fileID: 0}
+  bgm2: {fileID: 2058737741}
+  dwListening: {fileID: 419330256}
+--- !u!114 &1455448766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455448763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ef898bd3ce1d343ae1426e703d04cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 0335b9a3c5a1e7543b93359491f2f597, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1455448765}
+        m_TargetAssemblyTypeName: MusicManager, Assembly-CSharp
+        m_MethodName: UnPackData
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!43 &1495093326
 Mesh:
   m_ObjectHideFlags: 0
@@ -12989,6 +13184,7 @@ MonoBehaviour:
     eventEmitterName: bgm1
     paramName: Detection
     paramValue: 0
+    position: {x: 0, y: 0, z: 0}
 --- !u!65 &1501278649
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17375,10 +17571,11 @@ MonoBehaviour:
   colliderTag: Player
   destroyAfterUse: 1
   audioSettings:
-  - Action: 3
+  - Action: 2
     eventEmitterName: bgm1
     paramName: Detection
     paramValue: 1
+    position: {x: 0, y: 0, z: 0}
 --- !u!65 &2018638366
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17464,10 +17661,75 @@ MonoBehaviour:
     eventEmitterName: bgm1
     paramName: 
     paramValue: 0
+    position: {x: 0, y: 0, z: 0}
   - Action: 1
-    eventEmitterName: bgm1
+    eventEmitterName: bgm2
     paramName: 
     paramValue: 0
+    position: {x: 0, y: 0, z: 0}
+--- !u!1 &2058737739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2058737740}
+  - component: {fileID: 2058737741}
+  m_Layer: 0
+  m_Name: Ambience Sound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2058737740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058737739}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 949941379}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2058737741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058737739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 895144404
+      Data2: 1233689354
+      Data3: -1749363806
+      Data4: -1283647006
+    Path: event:/Sound/Ambiance/Ambience Sound
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!43 &2082008794
 Mesh:
   m_ObjectHideFlags: 0
@@ -18136,3 +18398,4 @@ SceneRoots:
   - {fileID: 1865351160}
   - {fileID: 760732757}
   - {fileID: 1787766399}
+  - {fileID: 539439001}

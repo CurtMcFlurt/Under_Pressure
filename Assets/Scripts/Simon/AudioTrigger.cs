@@ -2,17 +2,17 @@ using System;
 using UnityEngine;
 using FMODUnity;
 
-
+[System.Serializable]
+public struct AudioSettings
+{
+    public TriggerAction Action;
+    public string eventEmitterName;
+    public string paramName;
+    public float paramValue;
+    public Vector3 position;
+}
 public class AudioTrigger : MonoBehaviour
 {
-    [System.Serializable]
-    public struct AudioSettings
-    {
-        public TriggerAction Action;
-        public string eventEmitterName;
-        public string paramName;
-        public float paramValue;
-    }
     
     [Header("General Settings")]
     public string colliderTag;
@@ -40,9 +40,9 @@ public class AudioTrigger : MonoBehaviour
                     case TriggerAction.None: 
                         Debug.Log("You haven't entered a valid Trigger Action"); 
                         break;
-                    case TriggerAction.Play: 
+                    case TriggerAction.Play:
                         Debug.Log("Activating Play"); 
-                        mManager.PlayMusic(aS.eventEmitterName); 
+                        mManager.PlayMusic(aS.eventEmitterName,aS.position); 
                         break;
                     case TriggerAction.Stop: 
                         mManager.StopMusic(aS.eventEmitterName); 
@@ -50,6 +50,9 @@ public class AudioTrigger : MonoBehaviour
                     case TriggerAction.SetParameter: 
                         mManager.SetParameter(aS.eventEmitterName, aS.paramName, aS.paramValue); 
                         Debug.Log(aS.paramName + " is = " + aS.paramValue);
+                        break;
+                    case TriggerAction.OneShot:
+                        mManager.PlayOneShot(aS.eventEmitterName,aS.position);
                         break;
                 }
             }

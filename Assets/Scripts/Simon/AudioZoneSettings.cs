@@ -2,15 +2,6 @@ using UnityEngine;
 using FMODUnity;
 public class AudioZoneSettings : MonoBehaviour
 {
-    [System.Serializable]
-    public struct AudioSettings
-    {
-        public TriggerAction Action;
-        public string eventEmitterName;
-        public string paramName;
-        public float paramValue;
-    }
-    
     [Header("AudioSettings")]
     public AudioSettings[] audioSettings;
 
@@ -33,7 +24,7 @@ public class AudioZoneSettings : MonoBehaviour
                     break;
                 case TriggerAction.Play: 
                     Debug.Log("Activating Play"); 
-                    mManager.PlayMusic(aS.eventEmitterName); 
+                    mManager.PlayMusic(aS.eventEmitterName,aS.position); 
                     break;
                 case TriggerAction.Stop: 
                     mManager.StopMusic(aS.eventEmitterName); 

@@ -843,14 +843,23 @@ MonoBehaviour:
   logic: {fileID: 1102732122220055505}
   findPath: {fileID: 5603965737738574918}
   attack: {fileID: 3118193207729517987}
+<<<<<<< Updated upstream
   timeForAttack: 2
   timeForScream: 2
   timeForEat: 4
   timeForListen: 3
+=======
+  audioEvent: {fileID: 11400000, guid: 0335b9a3c5a1e7543b93359491f2f597, type: 2}
+  timeForAttack: 1
+  timeForScream: 1
+  timeForEat: 1
+  timeForListen: 1
+>>>>>>> Stashed changes
   debugSceam: 0
   debugAttack: 0
   debugEat: 0
   debugListen: 0
+<<<<<<< Updated upstream
 --- !u!114 &854779756143240205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -866,6 +875,13 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   TransitionStateInfoList: []
   m_Animator: {fileID: 2598126861293947438}
+=======
+  attackSound:
+    Action: 1
+    eventEmitterName: as
+    paramName: AS
+    paramValue: 0.48
+>>>>>>> Stashed changes
 --- !u!1 &698429471520895745
 GameObject:
   m_ObjectHideFlags: 0

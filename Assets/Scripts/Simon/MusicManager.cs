@@ -1,9 +1,12 @@
+using FMOD;
 using UnityEngine;
 using FMODUnity;
+using Debug = UnityEngine.Debug;
 
 public class MusicManager : MonoBehaviour
 {
-    public StudioEventEmitter bgm1, bgm2, bgmChase;
+    public StudioEventEmitter bgm1, bgm2, dwListening;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,12 +20,13 @@ public class MusicManager : MonoBehaviour
 
     }
 
-    public void PlayMusic(string eventName)
+    public void PlayMusic(string eventName,Vector3 pos)
     {
         Debug.Log("Entering playMusic");
         StudioEventEmitter playEvent = ChooseEvent(eventName);
         Debug.Log("Play event is " + playEvent);
-
+        playEvent.transform.position = pos;
+        
         if (playEvent.IsActive == false)
         {
             Debug.Log("Play event is active? " + playEvent.IsActive);
@@ -48,6 +52,18 @@ public class MusicManager : MonoBehaviour
         paramEvent.SetParameter(parameterName, parameterValue);
     }
 
+    public void PlayOneShot(string eventName, Vector3 pos)
+    {
+        StudioEventEmitter oneshotEvent = ChooseEvent(eventName);
+        
+        oneshotEvent.transform.position = pos;
+        
+        if (oneshotEvent.IsActive == true)
+        {
+            RuntimeManager.PlayOneShot(eventName);
+        }
+    }
+
     private StudioEventEmitter ChooseEvent(string eventName)
     {
         Debug.Log("Choosing event...");
@@ -61,8 +77,9 @@ public class MusicManager : MonoBehaviour
             case "bgm2": 
                 emitter = bgm2; 
                 break;
-            case "bgmCase": 
-                emitter = bgmChase; 
+            case "dwListening": 
+                Debug.Log("listening");
+                emitter = dwListening; 
                 break;
             default: 
                 Debug.Log("You have typed an invalid eventName"); 
@@ -77,9 +94,25 @@ public class MusicManager : MonoBehaviour
      public void UnPackData(Component sender, object data)
     {
         // Check if the data is a string before proceeding
-        if (data is AudioSettings settings)
+        if (data is AudioSettings aS)
         {
-            
+            switch (aS.Action)
+            {
+                case TriggerAction.None: 
+                    Debug.Log("You haven't entered a valid Trigger Action"); 
+                    break;
+                case TriggerAction.Play: 
+                    Debug.Log("Activating Play"); 
+                    PlayMusic(aS.eventEmitterName,aS.position); 
+                    break;
+                case TriggerAction.Stop: 
+                    StopMusic(aS.eventEmitterName); 
+                    break;
+                case TriggerAction.SetParameter: 
+                    SetParameter(aS.eventEmitterName, aS.paramName, aS.paramValue); 
+                    Debug.Log(aS.paramName + " is = " + aS.paramValue);
+                    break;
+            }
         }
         else
         {

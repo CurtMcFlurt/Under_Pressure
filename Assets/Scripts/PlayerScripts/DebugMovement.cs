@@ -113,6 +113,7 @@ public class DebugMovement : MonoBehaviour
             RegenerateStamina();
             if (walkSound != null) { walkSound.myHeat.sound = regularSound; walkSound.range = regularRange; }
         }
+        myAnim.SetBool("Running", isSprinting);
         if (moveInput.magnitude > 0.1 && !isCrouching)
         {
             walkSound.enabled = true;
@@ -127,7 +128,7 @@ public class DebugMovement : MonoBehaviour
             hunchCharacter(true);
         }
         else hunchCharacter(false);
-
+        myAnim.SetBool("Crouching", Hunched);
         if (Hunched || forcedCrouch)
         {
             if (increasingTvalue < 1)

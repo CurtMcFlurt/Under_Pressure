@@ -1650,6 +1650,7 @@ MonoBehaviour:
     m_Bits: 16384
   walkSound: {fileID: 5362888568949055970}
   currentAngle: 0
+  myAnim: {fileID: 7554098173543971090}
 --- !u!114 &412493808285010292
 MonoBehaviour:
   m_ObjectHideFlags: 0

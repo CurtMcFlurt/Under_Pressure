@@ -1,24 +1,12 @@
 using FMOD;
 using UnityEngine;
 using FMODUnity;
+using FMOD.Studio;
 using Debug = UnityEngine.Debug;
 
 public class MusicManager : MonoBehaviour
 {
-    public StudioEventEmitter bgm1, bgm2, dwListening;
-    
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    public StudioEventEmitter bgm1, bgm2, dwListening, dwHunting, dwFoundYou;
 
     public void PlayMusic(string eventName,Vector3 pos)
     {
@@ -90,6 +78,7 @@ public class MusicManager : MonoBehaviour
         Debug.Log("Event chosen is: " + emitter);
         return emitter;
     }
+    
 
      public void UnPackData(Component sender, object data)
     {

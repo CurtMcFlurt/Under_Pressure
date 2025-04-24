@@ -6411,6 +6411,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4430420571820895200, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1121262339}
+    - targetCorrespondingSourceObject: {fileID: 4430420571820895200, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1121262340}
     - targetCorrespondingSourceObject: {fileID: 1722869070318551701, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
       insertIndex: -1
       addedObject: {fileID: 554971345}
@@ -21130,7 +21133,7 @@ MonoBehaviour:
       Data2: 1178959278
       Data3: -1434153283
       Data4: -541266048
-    Path: event:/Music/Ambience Drone
+    Path: event:/Music/Ambience Music
   Event: 
   EventPlayTrigger: 0
   EventStopTrigger: 0
@@ -32342,6 +32345,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nonRigidbodyVelocity: 0
   attenuationObject: {fileID: 1121262330}
+--- !u!114 &1121262340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121262330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0fbe091af601a49ab02589003599a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerfootsteps:
+    Guid:
+      Data1: -2070121768
+      Data2: 1130752704
+      Data3: 235695021
+      Data4: 853788823
+    Path: event:/Sound/Player/Footsteps
+  walkingspeed: 0
 --- !u!43 &1124551208
 Mesh:
   m_ObjectHideFlags: 0
@@ -40683,6 +40706,8 @@ MonoBehaviour:
   bgm1: {fileID: 732257934}
   bgm2: {fileID: 2058737741}
   dwListening: {fileID: 419330256}
+  dwHunting: {fileID: 0}
+  dwFoundYou: {fileID: 0}
 --- !u!114 &1455448766
 MonoBehaviour:
   m_ObjectHideFlags: 0

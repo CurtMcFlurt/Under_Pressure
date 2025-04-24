@@ -128,10 +128,30 @@ public class Agent_findPath : MonoBehaviour
         if (PathSegment < Path.Count-1 && followDist<maxDist) MoveAlongPath();
         if (RecalculatePath)
         {
-            RecalculatePath=false;
+            RecalculatePath = false;
+
+            // Cache current path and segment
+            var cachedPath = Path;
+            int cachedSegment = PathSegment;
+
             GeneratePath();
+
+            // If new path is valid and not dramatically worse:
+            if (Path != null && Path.Count > 1)
+            {
+                // Optionally: check if first few segments match, then resume from last position
+                // Otherwise: reset segment
+                PathSegment = 0;
+                TValue = 0;
+            }
+            else
+            {
+                // If new path fails, fallback to old
+                Path = cachedPath;
+                PathSegment = cachedSegment;
+            }
         }
-        if(followDist>.6f) MoveTowardsFollow();
+        if (followDist>.1f) MoveTowardsFollow();
         if (followDist > maxDist - 1 && rb3d.linearVelocity.magnitude < .25f) breakMovementToReach();
     }
     public int PathSegment;
@@ -165,7 +185,7 @@ public class Agent_findPath : MonoBehaviour
         if (targetDirection != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection.normalized);
-            float rotationSpeed = 25f; // Adjust to control rotation speed
+            float rotationSpeed = 12.5f; // Adjust to control rotation speed
 
             // SmoothStep over time
             float t = Mathf.SmoothStep(0, 1, Time.deltaTime * rotationSpeed);

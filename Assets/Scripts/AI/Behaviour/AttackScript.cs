@@ -5,6 +5,7 @@ public class AttackScript : MonoBehaviour
     public SphereCollider hitPlayerCol;
     public GameObject playerMurderSphere;
     public float attackTimer;
+    public bool isAttacking;
     private DeepWalkerLogic logic;
     private Agent_findPath pather;
     public void OnEnable()
@@ -19,11 +20,11 @@ public class AttackScript : MonoBehaviour
        
         if (logic.TrackingObject != null && hitPlayerCol.bounds.Contains(logic.TrackingObject.transform.position))
         {
-            pather.AddTimeToWait(attackTimer);
+            isAttacking = true;
             playerMurderSphere.SetActive(true);
             return;
         }
-        
+        isAttacking = false;
     }
 
     public void OnTriggerEnter(Collider other)

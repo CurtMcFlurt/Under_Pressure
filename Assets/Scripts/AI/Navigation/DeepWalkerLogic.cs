@@ -241,7 +241,7 @@ public class DeepWalkerLogic : MonoBehaviour
 
         }
 
-        if (mood.alertness > 0)
+        if (mood.alertness > 0 && inHexRange.Keys.Contains(probableVictimPosition.hexCoords))
         {
             mood.alertness -= Time.deltaTime / 10;
         }
@@ -290,10 +290,12 @@ public class DeepWalkerLogic : MonoBehaviour
         else timeLost = 0;
         if (timeLost >= losetime) { TrackingObject = null; timeLost = 0; Debug.Log("Lost");VictimPositionCertainty = 0; }
 
-        if (hex.hexCoords != oldTrackingHex.hexCoords || pathfinder.curentSpeed<3)
+        if (hex.hexCoords != oldTrackingHex.hexCoords || pathfinder.curentSpeed < 3)
         {
-            updateGoal(TrackingObject.transform.position);
-            Debug.Log("getting Position");
+            if (recalculateTime <= 0)
+            {
+                updateGoal(TrackingObject.transform.position);
+            }
         }
 
         Debug.Log(hex.hexCoords + " " + HexMath.HexDistance(hex.hexCoords, myHex.hexCoords) + " hex distances"+ oldTrackingHex.hexCoords+"old positions ");

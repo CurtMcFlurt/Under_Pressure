@@ -779,6 +779,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8742399876282298572}
   - component: {fileID: 2598126861293947438}
+  - component: {fileID: 3683952731704895292}
   m_Layer: 0
   m_Name: Deepwalker
   m_TagString: Untagged
@@ -825,6 +826,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3683952731704895292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670300898263245131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b99e4b32419f5842bd5bc28fca26f2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 2598126861293947438}
+  logic: {fileID: 1102732122220055505}
+  findPath: {fileID: 5603965737738574918}
+  attack: {fileID: 3118193207729517987}
+  timeForAttack: 1
+  timeForScream: 1
+  timeForEat: 1
+  timeForListen: 1
 --- !u!1 &698429471520895745
 GameObject:
   m_ObjectHideFlags: 0
@@ -1898,7 +1919,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7316719599339142153
 Transform:
   m_ObjectHideFlags: 0
@@ -1929,14 +1950,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minSpeed: 1
-  maxSpeed: 5
-  FollowMinSpeed: 6
-  FollowMaxSpeed: 12
+  maxSpeed: 2
+  FollowMinSpeed: 2
+  FollowMaxSpeed: 4
   rb3d: {fileID: 3223803276596787714}
   pathIntervalLeangth: 2.25
   Path: []
   followDist: 0
-  maxDist: 4
+  maxDist: 3
   maxLookahead: 2
   goal: {fileID: 1296515915791838372}
   followObject: {fileID: 1592724232757780704}
@@ -5033,3 +5054,4 @@ MonoBehaviour:
   hitPlayerCol: {fileID: 4239454051845028639}
   playerMurderSphere: {fileID: 73427362744374832}
   attackTimer: 0
+  isAttacking: 0

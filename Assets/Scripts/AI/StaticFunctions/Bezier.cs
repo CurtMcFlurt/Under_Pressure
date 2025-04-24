@@ -53,7 +53,7 @@ public static class Bezier
 
         if (panic >= 300)
         {
-            Debug.LogError("panic");
+            Debug.LogWarning("panic");
             goto AfterMidPointLoop;
         }
         panic++;

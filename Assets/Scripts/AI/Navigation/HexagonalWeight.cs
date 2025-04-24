@@ -69,6 +69,7 @@ public class HexagonalWeight : MonoBehaviour
 
     private void SetUpHexes()
     {
+        if (cellSize < .1f) cellSize = .1f;
         grid = new HexGridScript(range, cellSize);
         oldCell = cellSize;
         oldRange = range;

@@ -1,0 +1,334 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4183677010128149851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2306280586022161600}
+  - component: {fileID: 843785447362276492}
+  m_Layer: 0
+  m_Name: Feeding Place
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2306280586022161600
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4183677010128149851}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -31.7, y: 5.48, z: -67.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8833864915463415164}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &843785447362276492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4183677010128149851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bdf55ef606672e4880826d04a88b657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  falloff: 0.16
+  range: 5
+  myHeat:
+    food: 0.74
+    sound: 0
+    safety: 0
+    soundMemory: 0
+  OneOff: 0
+  Player: 0
+  myHex:
+    hexCoords: {x: 0, y: 0, z: 0}
+    height: 0
+    stackLevel: 0
+    isWalkable: 0
+    weight:
+      food: 0
+      sound: 0
+      safety: 0
+      soundMemory: 0
+    timeSinceChecked: 0
+--- !u!1 &5217598437526408301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8833864915463415164}
+  m_Layer: 0
+  m_Name: WeightChangers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8833864915463415164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5217598437526408301}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2306280586022161600}
+  - {fileID: 5251657098421878674}
+  - {fileID: 380754541594191476}
+  m_Father: {fileID: 1777182133237919452}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6087572166967535379
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 380754541594191476}
+  - component: {fileID: 8185179561078110063}
+  m_Layer: 0
+  m_Name: Hunting Place
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &380754541594191476
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087572166967535379}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 63.5, y: 10.35, z: 53.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8833864915463415164}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8185179561078110063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087572166967535379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bdf55ef606672e4880826d04a88b657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  falloff: 0
+  range: 3
+  myHeat:
+    food: 0
+    sound: 12
+    safety: 0
+    soundMemory: 0
+  OneOff: 1
+  Player: 0
+  myHex:
+    hexCoords: {x: 0, y: 0, z: 0}
+    height: 0
+    stackLevel: 0
+    isWalkable: 0
+    weight:
+      food: 0
+      sound: 0
+      safety: 0
+      soundMemory: 0
+    timeSinceChecked: 0
+--- !u!1 &7392998147334779305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1777182133237919452}
+  - component: {fileID: 6323636067957571031}
+  - component: {fileID: 4109338447763813305}
+  - component: {fileID: 1107755994861065676}
+  m_Layer: 0
+  m_Name: HexGridStuff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1777182133237919452
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7392998147334779305}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.4794289, y: 0, z: 87.35676}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8833864915463415164}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6323636067957571031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7392998147334779305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2707572e8170584fb20c1b40099a0ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 28
+  cellSize: 3
+  hexcolor: {r: 0, g: 0, b: 0, a: 1}
+  weightChangers:
+  - {fileID: 0}
+  - {fileID: 1121432409670542375, guid: 305f00f4a734e55469042b0d069d5e67, type: 3}
+  - {fileID: 5362888568949055970, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
+  - {fileID: 843785447362276492}
+  - {fileID: 8185179561078110063}
+  - {fileID: 8436230226153657620}
+  - {fileID: 0}
+  playerWeights:
+  - {fileID: 0}
+  - {fileID: 1121432409670542375, guid: 305f00f4a734e55469042b0d069d5e67, type: 3}
+  - {fileID: 5362888568949055970, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
+  - {fileID: 0}
+  walkables: 0
+  floorMask:
+    serializedVersion: 2
+    m_Bits: 4096
+--- !u!114 &4109338447763813305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7392998147334779305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 442e61c4a49449447bf8134d8d02061a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PosPoints: []
+--- !u!114 &1107755994861065676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7392998147334779305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dba53825c5d2a5d45a098c335fa00b3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hexWeighter: {fileID: 6323636067957571031}
+  WeightChangers:
+  - {fileID: 0}
+  - {fileID: 1121432409670542375, guid: 305f00f4a734e55469042b0d069d5e67, type: 3}
+  - {fileID: 5362888568949055970, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
+  - {fileID: 843785447362276492}
+  - {fileID: 8185179561078110063}
+  - {fileID: 8436230226153657620}
+  - {fileID: 0}
+  heatcooling:
+    food: 1
+    sound: 15
+    safety: 1
+    soundMemory: 0.1
+--- !u!1 &8966135956895777636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5251657098421878674}
+  - component: {fileID: 8436230226153657620}
+  m_Layer: 0
+  m_Name: Sleeping Place
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5251657098421878674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8966135956895777636}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -60.3, y: 13.44, z: -124}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8833864915463415164}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8436230226153657620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8966135956895777636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bdf55ef606672e4880826d04a88b657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  falloff: 0.33
+  range: 6
+  myHeat:
+    food: 0
+    sound: 0
+    safety: 1
+    soundMemory: 0
+  OneOff: 0
+  Player: 0
+  myHex:
+    hexCoords: {x: 0, y: 0, z: 0}
+    height: 0
+    stackLevel: 0
+    isWalkable: 0
+    weight:
+      food: 0
+      sound: 0
+      safety: 0
+      soundMemory: 0
+    timeSinceChecked: 0

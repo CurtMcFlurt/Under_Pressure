@@ -22,6 +22,7 @@ public class AttackScript : MonoBehaviour
         {
             isAttacking = true;
             playerMurderSphere.SetActive(true);
+            pather.ApplyRotation(logic.TrackingObject.transform.position - transform.position, 25);
             return;
         }
         isAttacking = false;

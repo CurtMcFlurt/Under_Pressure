@@ -207,16 +207,7 @@ public class Agent_findPath : MonoBehaviour
     private void MoveTowardsFollow()
     {
         Vector3 targetDirection = followObject.transform.position - transform.position;
-        targetDirection.y = 0; // Ignore vertical for flat rotation
-        if (targetDirection != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(targetDirection.normalized);
-            float rotationSpeed = 12.5f; // Adjust to control rotation speed
-
-            // SmoothStep over time
-            float t = Mathf.SmoothStep(0, 1, Time.deltaTime * rotationSpeed);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, t);
-        }
+        ApplyRotation(targetDirection, 8);
         Vector3 dir = (followObject.transform.position - transform.position);
         float tValie = Mathf.Clamp01(followDist / maxDist);
         float streangth = Mathf.Lerp(minSpeed, maxSpeed, tValie);
@@ -232,6 +223,22 @@ public class Agent_findPath : MonoBehaviour
 
         transform.position = Vector3.Lerp(transform.position, followObject.transform.position, Time.deltaTime);
     }
+
+    public void ApplyRotation(Vector3 targetDirection,float rotationAmmount)
+    {
+        targetDirection.y = 0; // Ignore vertical for flat rotation
+        if (targetDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection.normalized);
+            float rotationSpeed = rotationAmmount; // Adjust to control rotation speed
+
+            // SmoothStep over time
+            float t = Mathf.SmoothStep(0, 1, Time.deltaTime * rotationSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, t);
+        }
+    }
+
+
 
     private float PredictiveMovement()
     {

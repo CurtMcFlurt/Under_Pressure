@@ -471,6 +471,7 @@ public class DeepWalkerLogic : MonoBehaviour
                 {
 
                     myBehaviour = ActiveBehaviour.hunting;
+       
                     //hunting behaviour
                     //hunting means locked in on a player
                 }
@@ -603,15 +604,24 @@ public class DeepWalkerLogic : MonoBehaviour
             Gizmos.color = new Color(hex.Value.weight.food / 10, hex.Value.weight.soundMemory / 10, hex.Value.weight.sound / 10);
             Gizmos.DrawSphere(HexMath.Axial2World(hex.Value, WeightMap.cellSize)+Vector3.up*hex.Value.timeSinceChecked, .25f);
         }
+        try
+        {
+            Gizmos.color = Color.green;
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(HexMath.Axial2World(optimalSafety, WeightMap.cellSize) + Vector3.up * 3, .5f);
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(HexMath.Axial2World(optimalFood, WeightMap.cellSize) + Vector3.up * 3, .5f); 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(HexMath.Axial2World(optimalRoaming, WeightMap.cellSize) + Vector3.up * 3, .5f);
-        Gizmos.color = Color.white;
-        Gizmos.DrawSphere(HexMath.Axial2World(optimalTracking, WeightMap.cellSize) + Vector3.up * 3, .5f);
+            Gizmos.DrawSphere(HexMath.Axial2World(optimalSafety, WeightMap.cellSize) + Vector3.up * 3, .5f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(HexMath.Axial2World(optimalFood, WeightMap.cellSize) + Vector3.up * 3, .5f);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawSphere(HexMath.Axial2World(optimalRoaming, WeightMap.cellSize) + Vector3.up * 3, .5f);
+            Gizmos.color = Color.white;
+            Gizmos.DrawSphere(HexMath.Axial2World(optimalTracking, WeightMap.cellSize) + Vector3.up * 3, .5f);
+
+
+        } catch 
+        { 
+        
+        
+        }
 
 
     }

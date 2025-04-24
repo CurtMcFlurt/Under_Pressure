@@ -36,6 +36,8 @@ public class DebugMovement : MonoBehaviour
     public WeightChangers walkSound;
     private Vector3 originCamera;
     private PlayerDeath myDeath;
+    public float currentAngle;
+    public Animator myAnim;
     public void OnEnable()
     {
 
@@ -164,7 +166,7 @@ public class DebugMovement : MonoBehaviour
 
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
-
+        GetAngle();
         if (throwAction.WasPressedThisFrame())
         {
             ThrowGlowStick();
@@ -199,6 +201,27 @@ public class DebugMovement : MonoBehaviour
 
 
         }
+    }
+
+    void GetAngle()
+    {
+        Vector3 moveDir = rb.linearVelocity;
+        moveDir.y = 0;
+
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+        forward.y = right.y = 0;
+
+        forward.Normalize();
+        right.Normalize();
+
+        // Convert movement direction to local-space values relative to camera
+        float moveX = Vector3.Dot(moveDir.normalized, forward);
+        float moveZ = Vector3.Dot(moveDir.normalized, right);
+        
+        myAnim.SetFloat("MoveX", moveX);
+        myAnim.SetFloat("MoveZ", moveZ);
+        myAnim.SetFloat("Speed", rb.linearVelocity.magnitude);
     }
     void RegenerateStamina()
     {

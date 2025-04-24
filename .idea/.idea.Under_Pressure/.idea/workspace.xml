@@ -6,8 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="a028df7e-7bea-4c2f-be23-a01b24dc68c7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Under_Pressure/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Under_Pressure/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Banks/Desktop/Master.bank" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Banks/Desktop/Master.bank.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Banks/Desktop/Master.strings.bank" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Banks/Desktop/Master.strings.bank.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Resources/FMODStudioSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/Resources/FMODStudioSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Musik&amp;Ljud.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Musik&amp;Ljud.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Simon/AudioTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Simon/AudioTrigger.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +98,7 @@
       <workItem from="1745422967912" duration="147000" />
       <workItem from="1745423692979" duration="509000" />
       <workItem from="1745482600068" duration="1565000" />
+      <workItem from="1745493797897" duration="599000" />
     </task>
     <servers />
   </component>

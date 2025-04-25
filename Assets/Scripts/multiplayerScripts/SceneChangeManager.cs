@@ -9,21 +9,13 @@ public class SceneChangeManager : NetworkBehaviour
     [Tooltip("Optional: Automatically switch to this scene on call")]
     public string sceneToLoad;
 
-    [Tooltip("Invoked when a scene change is requested (client-side only)")]
-    public UnityEvent onSceneChangeRequested;
+ 
 
     /// <summary>
     /// Called by a UI Button or event system to request a scene load.
     /// Can be passed a specific scene name OR uses the default one.
     /// </summary>
-    private void Awake()
-    {
-        if (!IsSpawned && !NetworkManager.Singleton.ShutdownInProgress)
-        {
-            DontDestroyOnLoad(gameObject);
-            NetworkObject.Spawn();
-        }
-    }
+    
     public void RequestSceneChange(string sceneName = null)
     {
         if (string.IsNullOrEmpty(sceneName))

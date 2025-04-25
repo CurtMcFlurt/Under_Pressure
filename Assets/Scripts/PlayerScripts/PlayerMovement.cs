@@ -35,6 +35,11 @@ public class PlayerMovement : NetworkBehaviour
     private float originalHeight;
     public WeightChangers walkSound;
     private Vector3 originCamera;
+    private PlayerDeath myDeath;
+    public float currentAngle;
+    public Animator myAnim;
+    public GameObject playerVisualRoot;
+
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) { cameraTransform.GetComponent<Camera>().enabled = false; return; }
@@ -55,7 +60,7 @@ public class PlayerMovement : NetworkBehaviour
             lookAction.Enable();
             throwAction.Enable();
         }
-
+        myDeath = GetComponent<PlayerDeath>();
         myCollider = GetComponent<CapsuleCollider>();
         originalHeight = myCollider.height;
         originCamera = cameraPoint.transform.position - transform.position;
@@ -65,11 +70,30 @@ public class PlayerMovement : NetworkBehaviour
             regularSound = walkSound.myHeat.sound;
             regularRange = walkSound.range;
         }
-
-        TrySpawnAtPoint();
+        if (IsOwner)
+        {
+            SetLayerRecursively(playerVisualRoot, 17);
+        }else
+        {
+            SetLayerRecursively(playerVisualRoot, 9);
+        }
+            TrySpawnAtPoint();
 
     }
+    void SetLayerRecursively(GameObject obj, int newLayer)
+    {
+        if (obj == null) return;
 
+        obj.layer = newLayer;
+
+        foreach (Transform child in obj.transform)
+        {
+            if (child != null)
+            {
+                SetLayerRecursively(child.gameObject, newLayer);
+            }
+        }
+    }
     private void OnDisable()
     {
         moveAction?.Disable();
@@ -86,7 +110,11 @@ public class PlayerMovement : NetworkBehaviour
     private void FixedUpdate()
     {
 
-        if (!IsOwner) return;
+        if (!IsOwner || myDeath.IsDead) { 
+            
+            return; 
+        
+        }
         Vector2 moveInput = moveAction.ReadValue<Vector2>();
         Vector3 moveDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
         float crouchValue = crouchAction.ReadValue<float>();
@@ -119,7 +147,8 @@ public class PlayerMovement : NetworkBehaviour
             RegenerateStamina();
             if (walkSound != null) { walkSound.myHeat.sound = regularSound; walkSound.range = regularRange; }
         }
-        if(moveInput.magnitude>0.1 && !isCrouching)
+        myAnim.SetBool("Running", isSprinting);
+        if (moveInput.magnitude>0.1 && !isCrouching)
         {
             walkSound.enabled = true;
         }
@@ -133,8 +162,9 @@ public class PlayerMovement : NetworkBehaviour
             hunchCharacter(true);
         }
         else hunchCharacter(false);
-        
-        if(Hunched || forcedCrouch)
+
+        myAnim.SetBool("Crouching", Hunched);
+        if (Hunched || forcedCrouch)
         {
             if (increasingTvalue < 1)
             {
@@ -157,6 +187,8 @@ public class PlayerMovement : NetworkBehaviour
         rb.linearVelocity = new Vector3(moveDirection.x * moveSpeed, rb.linearVelocity.y, moveDirection.z * moveSpeed);
     }
     private bool runCD;
+    private int maxGlow = 2;
+    private int currentGlow = 0;
     private void Update()
     {
 
@@ -171,9 +203,10 @@ public class PlayerMovement : NetworkBehaviour
 
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
-
-        if (throwAction.WasPressedThisFrame())
+        GetAngle();
+        if (throwAction.WasPressedThisFrame() && currentGlow<=maxGlow)
         {
+            currentGlow++;
             ThrowGlowStick();
         }
 
@@ -207,7 +240,34 @@ public class PlayerMovement : NetworkBehaviour
        
         }
     }
+    private float currentMoveX = 0f;
+    private float currentMoveZ = 0f;
+    void GetAngle()
+    {
+        Vector3 moveDir = rb.linearVelocity;
+        moveDir.y = 0;
 
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+        forward.y = right.y = 0;
+
+        forward.Normalize();
+        right.Normalize();
+
+        // Convert movement direction to local-space values relative to camera
+        float targetMoveX = Vector3.Dot(moveDir.normalized, forward);
+        float targetMoveZ = Vector3.Dot(moveDir.normalized, right);
+
+        // Smoothly interpolate current values toward the target
+        float lerpSpeed = 10f; // Adjust as needed
+        currentMoveX = Mathf.Lerp(currentMoveX, targetMoveX, Time.deltaTime * lerpSpeed);
+        currentMoveZ = Mathf.Lerp(currentMoveZ, targetMoveZ, Time.deltaTime * lerpSpeed);
+
+        // Apply to animator
+        myAnim.SetFloat("MoveX", currentMoveX);
+        myAnim.SetFloat("MoveZ", currentMoveZ);
+        myAnim.SetFloat("Speed", rb.linearVelocity.magnitude);
+    }
     void RegenerateStamina()
     {
         if (stamina < 1f)

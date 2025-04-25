@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CoopTestScene.unity
     guid: a92c5edddb6c6a24ab1eec709f188f0d
+  - enabled: 1
+    path: Assets/Scenes/Speltest_1.unity
+    guid: d53d1b7f625b6c24d859986c01b21ef9
+  - enabled: 1
+    path: Assets/Scenes/CoopEndScene.unity
+    guid: b8ca1ba3a406aa140875555a14425cff
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

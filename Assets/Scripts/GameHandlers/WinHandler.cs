@@ -10,8 +10,16 @@ public class WinHandler : MonoBehaviour
     public List<String> keys = new List<String>();
     public string sceneChangeName;
     public GameEvent sceneChange;
+    public bool debugWin;
 
-   
+    public void Update()
+    {
+        if (debugWin)
+        {
+            sceneChange.Raise(this, sceneChangeName);
+        }
+    }
+
 
     public void UnPackData(Component sender, object data)
     {

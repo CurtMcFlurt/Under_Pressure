@@ -47,7 +47,7 @@ public class Hexagon_HeatmapManager : MonoBehaviour
         // Apply active changers
         foreach (var changer in WeightChangers)
         {
-            if (changer.isActiveAndEnabled)
+            if (changer !=null)
             {
                 var nearest = HexMath.NearestHex(changer.transform.position, nearesthex.Values.ToList(), hexWeighter.cellSize);
                 changer.myHex = nearest;

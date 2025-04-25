@@ -29,6 +29,9 @@ public class PlayerDeath : MonoBehaviour
             debugRespawn = false;
             Revive(debugRespawnPoint);
         }
+      
+            GetComponent<BoidFollowTarget>().enabled = !IsDead;
+        
     }
     public void Die()
     {

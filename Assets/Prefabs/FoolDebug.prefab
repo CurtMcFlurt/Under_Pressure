@@ -39,7 +39,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 15324243238542526}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2bdf55ef606672e4880826d04a88b657, type: 3}
   m_Name: 
@@ -54,16 +54,16 @@ MonoBehaviour:
   OneOff: 1
   Player: 1
   myHex:
-    hexCoords: {x: 0, y: 0, z: 0}
-    height: 0
+    hexCoords: {x: 5, y: 0, z: -5}
+    height: 0.18239498
     stackLevel: 0
-    isWalkable: 0
+    isWalkable: 1
     weight:
       food: 0
       sound: 0
       safety: 0
       soundMemory: 0
-    timeSinceChecked: 0
+    timeSinceChecked: 0.007149398
 --- !u!1 &195375868931506769
 GameObject:
   m_ObjectHideFlags: 0

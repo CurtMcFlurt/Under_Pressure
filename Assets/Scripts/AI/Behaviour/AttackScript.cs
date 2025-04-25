@@ -12,7 +12,7 @@ public class AttackScript : MonoBehaviour
     public int maxAttacks=7;
     private int currentAttacks;
     private float timer = 0;
-    private float waitfor = 3;
+    private float waitfor = 30;
     public void OnEnable()
     {
         logic = GetComponent<DeepWalkerLogic>();
@@ -33,6 +33,8 @@ public class AttackScript : MonoBehaviour
             {
                 logic.TrackingObject = null;
                 hitPlayerCol.enabled = false;
+                logic.mood.anger = 0;
+
             }
             return;
         }

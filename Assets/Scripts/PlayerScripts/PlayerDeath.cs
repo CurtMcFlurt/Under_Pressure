@@ -9,6 +9,8 @@ public class PlayerDeath : MonoBehaviour
     public Vector3 debugRespawnPoint;
     private CapsuleCollider myCollider;
     private float originalHeight;
+    private  float myTimer;
+    public float deathTimer;
     public void OnEnable()
     {
         debugRespawnPoint = transform.position;
@@ -31,6 +33,14 @@ public class PlayerDeath : MonoBehaviour
         }
       
             GetComponent<BoidFollowTarget>().enabled = !IsDead;
+        if (IsDead)
+        {
+            myTimer += Time.deltaTime;
+            if (myTimer > deathTimer)
+            {
+                Revive(debugRespawnPoint);
+            }
+        }
         
     }
     public void Die()

@@ -1693,6 +1693,7 @@ MonoBehaviour:
   debugRespawn: 0
   IsDead: 0
   debugRespawnPoint: {x: 0, y: 0, z: 0}
+  deathTimer: 12
 --- !u!1 &4477570092408050920
 GameObject:
   m_ObjectHideFlags: 0

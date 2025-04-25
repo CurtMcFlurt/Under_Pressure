@@ -49,13 +49,17 @@ public class Hexagon_HeatmapManager : MonoBehaviour
         {
             if (changer !=null)
             {
-                var nearest = HexMath.NearestHex(changer.transform.position, nearesthex.Values.ToList(), hexWeighter.cellSize);
-                changer.myHex = nearest;
-                ApplyHeatChange(nearest, changer.range, changer.myHeat, changer.falloff);
-                if (changer.OneOff)
+                if (changer.isActiveAndEnabled)
                 {
-                    changer.enabled = false;
+                    var nearest = HexMath.NearestHex(changer.transform.position, nearesthex.Values.ToList(), hexWeighter.cellSize);
+                    changer.myHex = nearest;
+                    ApplyHeatChange(nearest, changer.range, changer.myHeat, changer.falloff);
+                    if (changer.OneOff)
+                    {
+                        changer.enabled = false;
+                    }
                 }
+                
             }
         }
 

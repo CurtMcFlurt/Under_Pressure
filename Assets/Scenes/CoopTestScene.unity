@@ -1834,6 +1834,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4198352647434501067, guid: 4873ef2d71f28b947a10cc9c768b2404, type: 3}
+      propertyPath: m_MaxPlayers
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4198352647434501067, guid: 4873ef2d71f28b947a10cc9c768b2404, type: 3}
       propertyPath: throwAwayCamera
       value: 
       objectReference: {fileID: 1505032156}

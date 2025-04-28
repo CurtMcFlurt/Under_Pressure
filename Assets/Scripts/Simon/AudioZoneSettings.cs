@@ -2,14 +2,28 @@ using UnityEngine;
 using FMODUnity;
 public class AudioZoneSettings : MonoBehaviour
 {
+    [System.Serializable]
+    
+    public struct AudioSettings
+    {
+        public TriggerAction Action;
+        public BackgroundMusicEvents bgmEvent;
+        public string paramName;
+        public float paramValue;
+        public bool paramIsGlobal;
+        public bool IgnoreFadeOut;
+        public bool IgnoreSeek;
+        public Vector3 position;
+    }
+    
     [Header("AudioSettings")]
     public AudioSettings[] audioSettings;
 
-    private MusicManager mManager;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private AudioManager aM;
+    
     void Start()
     {
-        mManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>().musicManager;
+        aM = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         GenerateAudioSettings();
     }
 
@@ -18,21 +32,21 @@ public class AudioZoneSettings : MonoBehaviour
         foreach (AudioSettings aS in audioSettings)
         {
             switch (aS.Action)
-            { 
+            {
                 case TriggerAction.None: 
                     Debug.Log("You haven't entered a valid Trigger Action"); 
                     break;
-                case TriggerAction.Play: 
+                case TriggerAction.Play:
                     Debug.Log("Activating Play"); 
-                    mManager.PlayMusic(aS.eventEmitterName,aS.position); 
+                    aM.PlayMusic(aS.bgmEvent, aS.position); 
                     break;
                 case TriggerAction.Stop: 
-                    mManager.StopMusic(aS.eventEmitterName); 
+                    aM.StopMusic(aS.bgmEvent, aS.IgnoreFadeOut); 
                     break;
                 case TriggerAction.SetParameter: 
-                    mManager.SetParameter(aS.eventEmitterName, aS.paramName, aS.paramValue); 
+                    aM.SetParameter(aS.bgmEvent, aS.paramName, aS.paramValue, aS.IgnoreSeek, aS.paramIsGlobal); 
+                    Debug.Log(aS.paramName + " is = " + aS.paramValue);
                     break;
-                
             }
         }
     }

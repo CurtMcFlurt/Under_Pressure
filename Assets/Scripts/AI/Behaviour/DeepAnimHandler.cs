@@ -62,7 +62,8 @@ public class DeepAnimHandler : MonoBehaviour
         audioEvent.Raise(this,attackSound);
         anim.SetTrigger("Attack");
         findPath.AddTimeToWait(timeForAttack);
-    }private void Screaming()
+    }
+    private void Screaming()
     {
 
         anim.SetTrigger("FoundFool");

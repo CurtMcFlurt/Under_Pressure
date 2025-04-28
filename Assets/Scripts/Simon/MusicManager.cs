@@ -80,7 +80,7 @@ public class MusicManager : MonoBehaviour
     }
     
 
-     public void UnPackData(Component sender, object data)
+     /*public void UnPackData(Component sender, object data)
     {
         // Check if the data is a string before proceeding
         if (data is AudioSettings aS)
@@ -90,15 +90,15 @@ public class MusicManager : MonoBehaviour
                 case TriggerAction.None: 
                     Debug.Log("You haven't entered a valid Trigger Action"); 
                     break;
-                case TriggerAction.Play: 
+                case TriggerAction.Play:
                     Debug.Log("Activating Play"); 
-                    PlayMusic(aS.eventEmitterName,aS.position); 
+                    aM.PlayMusic(aS.bgmEvent, aS.position); 
                     break;
                 case TriggerAction.Stop: 
-                    StopMusic(aS.eventEmitterName); 
+                    aM.StopMusic(aS.bgmEvent, aS.IgnoreFadeOut); 
                     break;
                 case TriggerAction.SetParameter: 
-                    SetParameter(aS.eventEmitterName, aS.paramName, aS.paramValue); 
+                    aM.SetParameter(aS.bgmEvent, aS.paramName, aS.paramValue, aS.IgnoreSeek, aS.paramIsGlobal); 
                     Debug.Log(aS.paramName + " is = " + aS.paramValue);
                     break;
             }
@@ -107,5 +107,5 @@ public class MusicManager : MonoBehaviour
         {
             Debug.LogWarning("Data is not a valid scene name string.");
         }
-    }
+    }*/
 }

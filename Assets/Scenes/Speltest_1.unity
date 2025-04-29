@@ -21271,7 +21271,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1661a14adf2047e46832dca919f1a6d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicManager: {fileID: 236128427}
+  bgmReferences:
+  - Guid:
+      Data1: -1558637697
+      Data2: 1178959278
+      Data3: -1434153283
+      Data4: -541266048
+    Path: event:/Music/Ambience Music
+  - Guid:
+      Data1: 895144404
+      Data2: 1233689354
+      Data3: -1749363806
+      Data4: -1283647006
+    Path: event:/Sound/Ambiance/Ambience Sound
   gameOverStinger:
     Guid:
       Data1: 0
@@ -27160,6 +27172,37 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 0
   OverrideMaxDistance: 150
+--- !u!114 &858693733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858693723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1017185905
+      Data2: 1323468089
+      Data3: -107743852
+      Data4: -1363654101
+    Path: event:/Music/Monster Proximity
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!43 &878625016
 Mesh:
   m_ObjectHideFlags: 0
@@ -38785,7 +38828,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1182936061}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2bdf55ef606672e4880826d04a88b657, type: 3}
   m_Name: 
@@ -51424,14 +51467,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSettings:
   - Action: 1
-    eventEmitterName: bgm1
+    bgmEvent: 1
     paramName: 
     paramValue: 0
+    paramIsGlobal: 0
+    IgnoreFadeOut: 0
+    IgnoreSeek: 0
     position: {x: 0, y: 0, z: 0}
   - Action: 1
-    eventEmitterName: bgm2
+    bgmEvent: 2
     paramName: 
     paramValue: 0
+    paramIsGlobal: 0
+    IgnoreFadeOut: 0
+    IgnoreSeek: 0
     position: {x: 0, y: 0, z: 0}
 --- !u!43 &1636628119
 Mesh:
@@ -54117,7 +54166,7 @@ PrefabInstance:
     - target: {fileID: 9186322199415211668, guid: 99a8f87fa9be2a5439ac0cbed6af90d4, type: 3}
       propertyPath: audioEvent
       value: 
-      objectReference: {fileID: 11400000, guid: 0335b9a3c5a1e7543b93359491f2f597, type: 2}
+      objectReference: {fileID: 11400000, guid: 6690cfc70da92204ca14adf9f7daf35d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -54125,6 +54174,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8967216179495398985, guid: 99a8f87fa9be2a5439ac0cbed6af90d4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 858693732}
+    - targetCorrespondingSourceObject: {fileID: 8967216179495398985, guid: 99a8f87fa9be2a5439ac0cbed6af90d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 858693733}
   m_SourcePrefab: {fileID: 100100000, guid: 99a8f87fa9be2a5439ac0cbed6af90d4, type: 3}
 --- !u!43 &1772621290
 Mesh:

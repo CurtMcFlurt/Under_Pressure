@@ -16,5 +16,5 @@ MonoBehaviour:
   tickrateHunger: 0.01
   tickrateAlert: 0.5
   restTime: 5
-  sleepingMovementSpeed: 2
+  sleepingMovementSpeed: 1.5
   sleepingHearingRange: 2

@@ -42,6 +42,7 @@ public class DeepWalkerLogic : MonoBehaviour
     public Vector3 currentTarget;
     public float minimumSound = 1.5f;
     public Dictionary<Vector3, HexCell> hexMap = new();
+    public Dictionary<Vector3, HexCell> AllHexes = new();
     public Dictionary<Vector3, HexCell> inHexRange = new();
     public Dictionary<Vector3, HexCell> outHexRange = new();
     public HexCell myHex;
@@ -76,7 +77,7 @@ public class DeepWalkerLogic : MonoBehaviour
         mood = new DeepWalkerMood(0, 0, 0, 0);
         loudestReactHex=new HexCell();
         loudestReactHex.weight.sound = 1;
-        AwakenTheBeast(WeightMap.walkableHexagons);
+        AwakenTheBeast(WeightMap.fullMapHexagons);
         foreach (var hex in hexMap.Values)
         {
             float dist = (VectorFix.returnVector3With0Y(HexMath.Axial2World(hex, WeightMap.cellSize)) -
@@ -409,6 +410,7 @@ public class DeepWalkerLogic : MonoBehaviour
             float weightSum = 0;
             int count = 0;
 
+            if (!WeightMap.walkableHexagons.Keys.Contains(hex.hexCoords)) continue;
             foreach (var subHex in hexMap.Values)
             {
                 if (HexMath.HexDistance(hex.hexCoords, subHex.hexCoords) > areaSizes)

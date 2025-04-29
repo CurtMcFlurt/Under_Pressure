@@ -3379,6 +3379,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5627503931495405805}
   - component: {fileID: 2598205218884179140}
+  - component: {fileID: 4958552446158834126}
   m_Layer: 0
   m_Name: DeepWalkerObject
   m_TagString: Untagged
@@ -3419,6 +3420,31 @@ MonoBehaviour:
   deeper: {fileID: 8967216179495398985}
   currentWeight: {fileID: 0}
   waitForSeconds: 1
+--- !u!114 &4958552446158834126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6457804745135815214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2575605358
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &6559635015741998411
 GameObject:
   m_ObjectHideFlags: 0
@@ -4109,7 +4135,6 @@ GameObject:
   - component: {fileID: 1124015854583490048}
   - component: {fileID: 2880015292015617296}
   - component: {fileID: 7595237285284799515}
-  - component: {fileID: 2708989211328814493}
   m_Layer: 10
   m_Name: DeepWalker
   m_TagString: Untagged
@@ -4556,31 +4581,6 @@ MonoBehaviour:
   attackTimer: 0
   isAttacking: 0
   maxAttacks: 7
---- !u!114 &2708989211328814493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8967216179495398985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 390174745
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!1 &9005462695272193043
 GameObject:
   m_ObjectHideFlags: 0

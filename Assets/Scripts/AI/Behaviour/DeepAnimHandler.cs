@@ -79,7 +79,7 @@ public class DeepAnimHandler : MonoBehaviour
     {
         
         Debug.Log("Listening");
-        listeningSound.position = transform.position;
+        //listeningSound.position = transform.position;
         audioEvent.Raise(this, listeningSound);
         anim.SetTrigger("HeardSound");
         findPath.AddTimeToWait(timeForListen);

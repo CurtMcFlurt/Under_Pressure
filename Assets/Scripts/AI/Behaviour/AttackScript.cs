@@ -13,12 +13,13 @@ public class AttackScript : MonoBehaviour
     private int currentAttacks;
     private float timer = 0;
     private float waitfor = 30;
+    private AttackOrbHandler attackOrbHandler;
     public void OnEnable()
     {
         logic = GetComponent<DeepWalkerLogic>();
         pather = GetComponent<Agent_findPath>();
-        var hand = GetComponent<AttackOrbHandler>();
-        attackTimer = hand.timeAttackIsActive + hand.timeToDeployAttack;
+        attackOrbHandler =playerMurderSphere.GetComponent<AttackOrbHandler>();
+        attackTimer = attackOrbHandler.timeAttackIsActive + attackOrbHandler.timeToDeployAttack;
     }
     public void FixedUpdate()
     {

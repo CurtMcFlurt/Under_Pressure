@@ -207,12 +207,7 @@ public class DeepWalkerLogic : MonoBehaviour
             currentTarget = currentHexTarget.hexCoords;
         }
   
-        if (myBehaviour == ActiveBehaviour.roaming && pathfinder.followDist < .5f)
-        {
-            roamingBreakCounter += Time.deltaTime;
-            Debug.LogWarning("roaming break");
-        }
-        else { roamingBreakCounter = 0; }
+     
         if (debugRoamFinder || roamingBreakCounter > roamingBreak)
         {
             debugRoamFinder = false;

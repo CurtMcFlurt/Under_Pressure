@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -42,7 +43,6 @@ public class Agent_findPath : MonoBehaviour
     public float maxDist = 5;
     public int maxLookahead;
     public GameObject goal;
-    public GameObject followObject;
     public float curentSpeed;
     public LayerMask LineOfSightLayers;
     public LayerMask BezierLayers;
@@ -51,7 +51,6 @@ public class Agent_findPath : MonoBehaviour
     void OnEnable()
     {
         rb3d = GetComponent<Rigidbody>();
-        followObject.transform.position = transform.position;
         GenerateNavdata();
         GeneratePath();
     }
@@ -67,36 +66,54 @@ public class Agent_findPath : MonoBehaviour
     {
         debugPath.Clear();
         Path.Clear();
-        RaycastHit whatIHit;
-        if (Physics.SphereCast(VectorFix.ReturnVector3WithGroundHeight(transform.position), 1.25f, (VectorFix.ReturnVector3WithGroundHeight(goal.transform.position) - VectorFix.ReturnVector3WithGroundHeight(transform.position)).normalized, out whatIHit, ((VectorFix.ReturnVector3WithGroundHeight(goal.transform.position) - VectorFix.ReturnVector3WithGroundHeight(transform.position))).magnitude, LineOfSightLayers))
-        {
-            Path = new Theta_Star().GeneratePathPhiStarNavMesh(VectorFix.ReturnVector3WithGroundHeight(transform.position), VectorFix.ReturnVector3WithGroundHeight(goal.transform.position), LineOfSightLayers, InstancedPoints);
 
+        // Sample both the start and goal positions to ensure they're on the NavMesh
+        Vector3 rawStartPos = VectorFix.ReturnVector3WithGroundHeight(transform.position);
+        Vector3 rawGoalPos = VectorFix.ReturnVector3WithGroundHeight(goal.transform.position);
+
+        if (!NavMesh.SamplePosition(rawStartPos, out NavMeshHit startHit, 2f, NavMesh.AllAreas))
+        {
+            Debug.LogWarning("Start position is not on NavMesh.");
+            RecalculatePath = true;
+            return;
+        }
+
+        if (!NavMesh.SamplePosition(rawGoalPos, out NavMeshHit goalHit, 2f, NavMesh.AllAreas))
+        {
+            Debug.LogWarning("Goal position is not on NavMesh.");
+            RecalculatePath = true;
+            return;
+        }
+
+        Vector3 validStartPos = startHit.position;
+        Vector3 validGoalPos = goalHit.position;
+
+        // Use spherecast for line of sight check
+        if (Physics.SphereCast(validStartPos, 1.25f, (validGoalPos - validStartPos).normalized,
+            out RaycastHit whatIHit, (validGoalPos - validStartPos).magnitude, LineOfSightLayers))
+        {
+            Path = new Theta_Star().GeneratePathPhiStarNavMesh(validStartPos, validGoalPos, LineOfSightLayers, InstancedPoints);
         }
         else
         {
-
-            Path.Add(VectorFix.ReturnVector3WithGroundHeight(transform.position));
-            Path.Add(VectorFix.ReturnVector3WithGroundHeight(goal.transform.position));
-
+            Path.Add(validStartPos);
+            Path.Add(validGoalPos);
         }
 
         debugPath.AddRange(Path);
-        List<Vector3> tempA = new List<Vector3>();
-        tempA.AddRange(Path);
+
         try
         {
-
+            List<Vector3> tempA = new List<Vector3>(Path);
             Path[0] = VectorFix.ReturnVector3WithGroundHeight(Path[0], 0);
             Path[Path.Count - 1] = VectorFix.ReturnVector3WithGroundHeight(Path[Path.Count - 1], 0);
-            Path = Bezier.BezirPath(tempA, pathIntervalLeangth, BezierLayers, transform.localScale.x - .25f);
-
+            Path = Bezier.BezirPath(tempA, pathIntervalLeangth, BezierLayers, transform.localScale.x - 0.25f);
         }
         catch
         {
+            Debug.LogWarning("Path smoothing failed.");
             RecalculatePath = true;
         }
-
 
         PathSegment = 0;
     }
@@ -119,22 +136,30 @@ public class Agent_findPath : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (waitForTimer > 0)
         {
             waitForTimer -= Time.deltaTime;
             return;
         }
-        followDist = (transform.position - followObject.transform.position).magnitude;
-        if (PathSegment < Path.Count-1 && followDist<maxDist) MoveAlongPath();
+      
+        if (PathSegment < Path.Count-1 && followDist<maxDist && Path.Count!=0) MoveAlongPath();
         if (RecalculatePath)
         {
-            RecalculatePath = false;
-
-            // Cache current path and segment
             var cachedPath = Path;
             int cachedSegment = PathSegment;
 
             GeneratePath();
+            if (Path.Count == 0)
+            {
+                NudgeAwayFromWall(8, 1f);
+                Debug.Log("nudge");
+                return;
+            }
+            RecalculatePath = false;
+
+            // Cache current path and segment
+           
 
             // If new path is valid and not dramatically worse:
             if (Path != null && Path.Count > 1)
@@ -149,41 +174,34 @@ public class Agent_findPath : MonoBehaviour
                 // If new path fails, fallback to old
                 Path = cachedPath;
                 PathSegment = cachedSegment;
+               
             }
+
+            
         }
-        if (followDist>.1f) MoveTowardsFollow();
-        if (followDist > maxDist - 1 && rb3d.linearVelocity.magnitude < .25f) breakMovementToReach();
     }
     public int PathSegment;
     private float TValue=0;
     [SerializeField] private float targetLeadDistance = 2.0f; // Desired distance ahead
     private void MoveAlongPath()
     {
-        float curSpeed = Mathf.Lerp(FollowMaxSpeed, FollowMinSpeed, PredictiveMovement());
+        float curSpeed = Mathf.Lerp(maxSpeed, minSpeed, PredictiveMovement());
         curentSpeed = curSpeed;
         TValue += Time.deltaTime * curSpeed;
 
         // Loop forward until we're far enough ahead or out of path
-        while (PathSegment < Path.Count - 2)
-        {
+      
             Vector3 current = Path[PathSegment];
             Vector3 next = Path[PathSegment + 1];
 
             Vector3 lerpPos = Vector3.Lerp(current, next, TValue);
             Vector3 projectedPos = new Vector3(lerpPos.x, transform.position.y, lerpPos.z);
 
-            float projectedDist = (projectedPos - transform.position).magnitude;
-
             // If we're far enough ahead, stop
-            if (projectedDist >= targetLeadDistance)
-            {
-                followObject.transform.position = projectedPos;
-                followDist = projectedDist;
-                return;
-            }
-
-            // Otherwise step forward
-            TValue += 0.01f; // Small increment to continue walking along the path
+    
+           
+                transform.position = projectedPos;
+        ApplyRotation((next - transform.position), 8);
 
             if (TValue >= 1f)
             {
@@ -193,36 +211,30 @@ public class Agent_findPath : MonoBehaviour
                 if (PathSegment >= Path.Count - 2)
                 {
                     PathSegment = Path.Count - 2;
-                    break;
+               
                 }
             }
-        }
-
-        // Final fallback position if we reached the end
-        Vector3 final = new Vector3(Path[PathSegment + 1].x, transform.position.y, Path[PathSegment + 1].z);
-        followObject.transform.position = final;
-        followDist = (final - transform.position).magnitude;
     }
 
-    private void MoveTowardsFollow()
-    {
-        Vector3 targetDirection = followObject.transform.position - transform.position;
-        ApplyRotation(targetDirection, 8);
-        Vector3 dir = (followObject.transform.position - transform.position);
-        float tValie = Mathf.Clamp01(followDist / maxDist);
-        float streangth = Mathf.Lerp(minSpeed, maxSpeed, tValie);
-        dir *= streangth;
-        Vector3 currentVelocity = rb3d.linearVelocity;
-        dir = dir - currentVelocity;
-        dir = VectorFix.returnVector3With0Y(dir).normalized;
-        rb3d.AddForce(dir * streangth*20000 * Time.deltaTime);
-    }
-    private void breakMovementToReach()
-    {
-        Debug.Log("breakMove");
+    //private void MoveTowardsFollow()
+    //{
+    //    Vector3 targetDirection = followObject.transform.position - transform.position;
+    //    ApplyRotation(targetDirection, 8);
+    //    Vector3 dir = (followObject.transform.position - transform.position);
+    //    float tValie = Mathf.Clamp01(followDist / maxDist);
+    //    float streangth = Mathf.Lerp(minSpeed, maxSpeed, tValie);
+    //    dir *= streangth;
+    //    Vector3 currentVelocity = rb3d.linearVelocity;
+    //    dir = dir - currentVelocity;
+    //    dir = VectorFix.returnVector3With0Y(dir).normalized;
+    //    rb3d.AddForce(dir * streangth*20000 * Time.deltaTime);
+    //}
+    //private void breakMovementToReach()
+    //{
+    //    Debug.Log("breakMove");
 
-        transform.position = Vector3.Lerp(transform.position, followObject.transform.position, Time.deltaTime);
-    }
+    //    transform.position = Vector3.Lerp(transform.position, followObject.transform.position, Time.deltaTime);
+    //}
 
     public void ApplyRotation(Vector3 targetDirection,float rotationAmmount)
     {
@@ -298,7 +310,35 @@ public class Agent_findPath : MonoBehaviour
 
         return totalAngle;
     }
+    public void NudgeAwayFromWall(float checkRadius = 0.5f, float nudgeDistance = 0.2f)
+    {
+        //Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius, LineOfSightLayers);
 
+        //if (hits.Length > 0)
+        //{
+        //    Collider closest = hits
+        //        .Where(c => c is BoxCollider || c is SphereCollider || c is CapsuleCollider || (c is MeshCollider mc && mc.convex))
+        //        .OrderBy(h => Vector3.Distance(transform.position, h.ClosestPoint(transform.position)))
+        //        .FirstOrDefault();
+
+        //    if (closest != null)
+        //    {
+        //        Vector3 closestPoint = closest.ClosestPoint(transform.position);
+        //        Vector3 away = (transform.position - closestPoint).normalized;
+
+        //        Debug.DrawLine(transform.position, transform.position + away * nudgeDistance, Color.red, 1f);
+        //        Debug.LogWarning("Nudging: " + transform.position + " → " + (transform.position + away * nudgeDistance));
+
+        //        transform.position += away * nudgeDistance;
+        //        return;
+        //    }
+        //}
+
+        //// No valid collider found, apply small random nudge
+        //transform.position += Random.onUnitSphere * nudgeDistance;
+        //Debug.LogWarning("Nudging randomly - no close wall.");
+        transform.position = transform.position+Vector3.up * nudgeDistance;
+    }
 
     public void AddTimeToWait(float time)
     {
@@ -323,7 +363,8 @@ public class Agent_findPath : MonoBehaviour
 
         Gizmos.color = Color.white;
 
-        Gizmos.DrawCube(followObject.transform.position, new Vector3(1, 2, 1));
+     //   Gizmos.DrawCube(followObject.transform.position, new Vector3(1, 2, 1));
+   
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position+ rb3d.linearVelocity);
     }

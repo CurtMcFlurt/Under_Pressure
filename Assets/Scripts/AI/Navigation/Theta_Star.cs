@@ -113,7 +113,7 @@ public class Theta_Star : Pathfinding
         points = InstancedPoints;
         try
         {
-            points.Add(VectorFix.ReturnVector3WithGroundHeight(startPosition), AddPos(startPosition, InstancedPoints, raycastLayer));
+            points.Add(startPosition, AddPos(startPosition, InstancedPoints, raycastLayer));
         }
         catch
         {
@@ -121,7 +121,7 @@ public class Theta_Star : Pathfinding
         }
         try
         {
-            points= AddEnd(VectorFix.ReturnVector3WithGroundHeight(endPosition), points, raycastLayer);
+            points= AddEnd(endPosition, points, raycastLayer);
         }
         catch
         {
@@ -164,7 +164,7 @@ public class Theta_Star : Pathfinding
 
                 while (active != startPosition)
                 {
-                    if (panic2 > 100)
+                    if (panic2 > 300)
                     {
                         Debug.LogError("panic");
                         break;

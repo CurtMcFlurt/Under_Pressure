@@ -59,7 +59,7 @@ public class DeepAnimHandler : MonoBehaviour
     private void AttackIng()
     {
    
-        audioEvent.Raise(this,attackSound);
+        //audioEvent.Raise(this,attackSound);
         anim.SetTrigger("Attack");
         findPath.AddTimeToWait(timeForAttack);
     }
@@ -81,7 +81,7 @@ public class DeepAnimHandler : MonoBehaviour
         Debug.Log("Listening");
         //listeningSound.position = transform.position;
         audioEvent.Raise(this, listeningSound);
-        anim.SetTrigger("HeardSound");
+        //anim.SetTrigger("HeardSound");
         findPath.AddTimeToWait(timeForListen);
     }
 

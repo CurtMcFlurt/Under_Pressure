@@ -131,7 +131,7 @@ Material:
     - _debugInt: 1
     - _fogFalloff: 3.23
     - _fogOffset: 3
-    - _totalLights: 1
+    - _totalLights: 2
     - _visionMaxDistance: 4.1
     - _visionMinDistance: 4.13
     m_Colors:

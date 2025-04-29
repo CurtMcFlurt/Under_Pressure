@@ -2858,6 +2858,7 @@ MonoBehaviour:
   logic: {fileID: 1764648571716203408}
   findPath: {fileID: 5720279256816429870}
   attack: {fileID: 7595237285284799515}
+  audioEvent: {fileID: 0}
   timeForAttack: 2
   timeForScream: 2
   timeForEat: 4
@@ -4147,7 +4148,7 @@ Transform:
   m_GameObject: {fileID: 8967216179495398985}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -61, y: 0, z: -7.2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4167,8 +4168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad38663f177afa54f8c55117e3ccf125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 2
-  maxSpeed: 3
+  minSpeed: 25
+  maxSpeed: 2
   FollowMinSpeed: 8
   FollowMaxSpeed: 10
   rb3d: {fileID: 2139208753604295367}
@@ -4178,7 +4179,6 @@ MonoBehaviour:
   maxDist: 2.5
   maxLookahead: 3
   goal: {fileID: 6885547822839990318}
-  followObject: {fileID: 8569754185483232376}
   curentSpeed: 0
   LineOfSightLayers:
     serializedVersion: 2
@@ -4537,7 +4537,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.7
-  m_Height: 3.333
+  m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!135 &2880015292015617296
@@ -4559,8 +4559,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.8
-  m_Center: {x: 0, y: 1.5, z: 1.14}
+  m_Radius: 1.75
+  m_Center: {x: 0, y: 1.5, z: 0.57}
 --- !u!114 &7595237285284799515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4577,6 +4577,7 @@ MonoBehaviour:
   playerMurderSphere: {fileID: 1560504852797158141}
   attackTimer: 0
   isAttacking: 0
+  maxAttacks: 7
 --- !u!1 &9005462695272193043
 GameObject:
   m_ObjectHideFlags: 0

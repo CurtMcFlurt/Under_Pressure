@@ -6,7 +6,7 @@ public class DeepAnimHandler : MonoBehaviour
     public DeepWalkerLogic logic;
     public Agent_findPath findPath;
     public AttackScript attack;
-    public GameEvent audioEvent;
+    public MonsterOneShots audioEvent;
     public float timeForAttack;
     public float timeForScream;
     public float timeForEat;
@@ -54,34 +54,37 @@ public class DeepAnimHandler : MonoBehaviour
         anim.SetFloat("CurrentSpeed", findPath.curentSpeed);
     }
 
-    public AudioSettings attackSound;
-    public AudioSettings listeningSound;
     private void AttackIng()
     {
    
         //audioEvent.Raise(this,attackSound);
         anim.SetTrigger("Attack");
+
+        audioEvent.MonsterListeningPlay(gameObject);
         findPath.AddTimeToWait(timeForAttack);
     }
     private void Screaming()
     {
 
         anim.SetTrigger("FoundFool");
+
+        audioEvent.MonsterFoundYouPlay(gameObject);
         findPath.AddTimeToWait(timeForScream);
     }
     private void Eating()
     {
 
-        anim.SetTrigger("HeardSound");
+        anim.SetTrigger("IsEating");
+
+        audioEvent.MonsterHuntingPlay(gameObject);
         findPath.AddTimeToWait(timeForEat);
     }
     private void Listening()
     {
         
         Debug.Log("Listening");
-        //listeningSound.position = transform.position;
-        audioEvent.Raise(this, listeningSound);
-        //anim.SetTrigger("HeardSound");
+        anim.SetTrigger("HeardSound");
+        audioEvent.MonsterListeningPlay(gameObject);
         findPath.AddTimeToWait(timeForListen);
     }
 

@@ -21,6 +21,7 @@ public class Agent_findPath : MonoBehaviour
     [Tooltip("Movement spped of the Path object, default 1000")]
     private float FollowMaxSpeed;
 
+    private Vector3 startPos;
 
     [SerializeField]
     [Tooltip("Reference to own rigidbody")]
@@ -53,6 +54,7 @@ public class Agent_findPath : MonoBehaviour
         rb3d = GetComponent<Rigidbody>();
         GenerateNavdata();
         GeneratePath();
+        startPos = transform.position;
     }
 
     public void GenerateNavdata()
@@ -132,7 +134,7 @@ public class Agent_findPath : MonoBehaviour
 
 
     private float waitForTimer = 0;
-
+    private int nudge;
     // Update is called once per frame
     void Update()
     {
@@ -148,14 +150,17 @@ public class Agent_findPath : MonoBehaviour
         {
             var cachedPath = Path;
             int cachedSegment = PathSegment;
-
+            
             GeneratePath();
             if (Path.Count == 0)
             {
-                NudgeAwayFromWall(8, 1f);
+
+                NudgeAwayFromWall(nudge, .5f);
+                nudge++;
                 Debug.Log("nudge");
                 return;
             }
+            else nudge = 0;
             RecalculatePath = false;
 
             // Cache current path and segment
@@ -310,7 +315,7 @@ public class Agent_findPath : MonoBehaviour
 
         return totalAngle;
     }
-    public void NudgeAwayFromWall(float checkRadius = 0.5f, float nudgeDistance = 0.2f)
+    public void NudgeAwayFromWall(int wichNudge, float nudgeDistance = 0.2f)
     {
         //Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius, LineOfSightLayers);
 
@@ -337,7 +342,44 @@ public class Agent_findPath : MonoBehaviour
         //// No valid collider found, apply small random nudge
         //transform.position += Random.onUnitSphere * nudgeDistance;
         //Debug.LogWarning("Nudging randomly - no close wall.");
-        transform.position = transform.position+Vector3.up * nudgeDistance;
+        switch (wichNudge)
+        {
+            case 0:
+                {
+
+                    transform.position = transform.position + Vector3.up * nudgeDistance;
+                    break;
+                }case 1:
+                {
+
+                    transform.position = transform.position + Vector3.forward * nudgeDistance;
+                    break;
+                }case 2:
+                {
+
+                    transform.position = transform.position + Vector3.back*2 * nudgeDistance;
+                    break;
+                }case 3:
+                {
+
+                    transform.position = transform.position + Vector3.left * nudgeDistance;
+                    break;
+                }case 4:
+                {
+
+                    transform.position = transform.position + Vector3.right*2 * nudgeDistance;
+                    break;
+                }case 5:
+                {
+
+                    transform.position = startPos;
+                    Debug.LogWarning("resetPos");
+                    break;
+                }
+        }
+
+
+
     }
 
     public void AddTimeToWait(float time)

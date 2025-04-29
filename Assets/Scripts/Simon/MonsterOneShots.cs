@@ -10,18 +10,18 @@ public class MonsterOneShots : ScriptableObject
     public EventReference deepWalkerHuntingEvent;
     public EventReference deepWalkerFoundYouEvent;
 
-    public void MonsterListeningPlay()
+    public void MonsterListeningPlay(GameObject sender)
     {
-        RuntimeManager.PlayOneShot(deepWalkerListenEvent);
+        RuntimeManager.PlayOneShotAttached(deepWalkerListenEvent,sender);
     }
 
-    public void MonsterHuntingPlay()
+    public void MonsterHuntingPlay(GameObject sender)
     {
-        RuntimeManager.PlayOneShot(deepWalkerHuntingEvent);
+        RuntimeManager.PlayOneShotAttached(deepWalkerHuntingEvent,sender);
     }
 
-    public void MonsterFoundYouPlay()
+    public void MonsterFoundYouPlay(GameObject sender)
     {
-        RuntimeManager.PlayOneShot(deepWalkerFoundYouEvent);
+        RuntimeManager.PlayOneShotAttached(deepWalkerFoundYouEvent,sender);
     }
 }

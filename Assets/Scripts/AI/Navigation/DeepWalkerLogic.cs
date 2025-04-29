@@ -128,6 +128,7 @@ public class DeepWalkerLogic : MonoBehaviour
             Debug.Log("Hunting");
             return;
         }
+        
         UpdateMoodTicks();
         //reacting to sound happens when the AI isnt activly hunting a person
         if (reactToSound)
@@ -239,7 +240,7 @@ public class DeepWalkerLogic : MonoBehaviour
 
         if (mood.alertness > 0 && inHexRange.Keys.Contains(probableVictimPosition.hexCoords))
         {
-            mood.alertness -= Time.deltaTime / 10;
+            mood.alertness -= Time.deltaTime/2;
         }
        
         
@@ -571,9 +572,12 @@ public class DeepWalkerLogic : MonoBehaviour
                 {
                     TrackingObject = phex.transform.parent.gameObject;
                     VictimPositionCertainty += .25f;
+                    return;
                 }
+             
             }
         }
+        VictimPositionCertainty -= Time.deltaTime;
     }
 
     // Mood modifiers
@@ -587,7 +591,7 @@ public class DeepWalkerLogic : MonoBehaviour
         Gizmos.color = Color.yellow;
         if (probableVictimPosition.weight.sound > 1)
         {
-            Gizmos.DrawCube(HexMath.Axial2World(probableVictimPosition,WeightMap.cellSize), new Vector3(.125f, .125f, .125f));
+            Gizmos.DrawCube(HexMath.Axial2World(probableVictimPosition,WeightMap.cellSize)+Vector3.up, new Vector3(.125f, .25f, .125f));
         }
       
         foreach(var hex in inHexRange)

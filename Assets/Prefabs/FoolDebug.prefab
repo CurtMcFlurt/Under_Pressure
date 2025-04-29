@@ -129,6 +129,38 @@ Transform:
   - {fileID: 6595688857774696919}
   m_Father: {fileID: 1170165779826405352}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &252717946368176921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4150382297492190589}
+  m_Layer: 9
+  m_Name: CameraParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4150382297492190589
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252717946368176921}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5980002, z: 0.060999554}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5492989341831895997}
+  m_Father: {fileID: 3150287386691142819}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &328667951416641879
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,12 +752,12 @@ Transform:
   m_GameObject: {fileID: 1722869070318551701}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.598, z: 0.061}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.9811, y: 1.9811, z: 1.9811}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 717424379641847564}
-  m_Father: {fileID: 3150287386691142819}
+  m_Father: {fileID: 4150382297492190589}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &6610752257042559279
 Camera:
@@ -1509,7 +1541,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7678465585004245259}
-  - {fileID: 5492989341831895997}
+  - {fileID: 4150382297492190589}
   - {fileID: 7636453276164407749}
   - {fileID: 5936831012798698553}
   - {fileID: 4667297176065333384}
@@ -1672,8 +1704,7 @@ MonoBehaviour:
     m_Bits: 120337
   minTimeBetweenInteraction: 0.25
   raySize: 3
-  minScale: 0.05
-  maxScale: 0.15
+  fixedScale: 0.005
   aimIndicator: {fileID: 7590239975824024885}
   rayOffset: 0.5
   maxRayDistance: 25

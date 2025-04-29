@@ -78,9 +78,10 @@ public class DebugMovement : MonoBehaviour
 
     private bool forcedCrouch;
     private float increasingTvalue = 0;
+    public bool StopMoving;
     private void FixedUpdate()
     {
-        if (myDeath.IsDead) return;
+        if (myDeath.IsDead||StopMoving) return;
         Vector2 moveInput = moveAction.ReadValue<Vector2>();
         Vector3 moveDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
         float crouchValue = crouchAction.ReadValue<float>();

@@ -61798,6 +61798,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeepWalkerObject
       objectReference: {fileID: 0}
+    - target: {fileID: 8967216179495398985, guid: 99a8f87fa9be2a5439ac0cbed6af90d4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9186322199415211668, guid: 99a8f87fa9be2a5439ac0cbed6af90d4, type: 3}
+      propertyPath: audioEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 0335b9a3c5a1e7543b93359491f2f597, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

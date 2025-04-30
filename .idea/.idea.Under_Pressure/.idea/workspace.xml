@@ -6,9 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="a028df7e-7bea-4c2f-be23-a01b24dc68c7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Under_Pressure/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Under_Pressure/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1CrouchWalkBackANI.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1CrouchWalkBackANI.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1CrouchWalkLeftANI.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1CrouchWalkLeftANI.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1CrouchWalkRightANI.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1CrouchWalkRightANI.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1CrouchwalkANI.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1CrouchwalkANI.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1RunForwardANI.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1RunForwardANI.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1RunLeftANI.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1RunLeftANI.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1RunRightANI.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1RunRightANI.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1WalkBackANI.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1WalkBackANI.fbx.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1WalkForwardANI.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1WalkForwardANI.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/PlayerAnimController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/PlayerAnimController.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/FullScreenVolumetric.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/FullScreenVolumetric.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1WalkLeftANI.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1WalkLeftANI.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1WalkRightANI.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PlayerStuff/Player1WalkRightANI.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Banks/Desktop/Master.bank" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/Banks/Desktop/Master.bank" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Banks/Desktop/Master.strings.bank" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/Banks/Desktop/Master.strings.bank" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Musik&amp;Ljud.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Musik&amp;Ljud.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Simon/PlayerAudio.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Simon/PlayerAudio.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +31,10 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Simon/FoolFootStep.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Simon/MonsterOneShots.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Simon/PlayerAudio.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox/Editor/VivoxApiClient.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -113,6 +126,8 @@
       <workItem from="1745932260217" duration="789000" />
       <workItem from="1746003059473" duration="77000" />
       <workItem from="1746003184954" duration="3158000" />
+      <workItem from="1746011933665" duration="4960000" />
+      <workItem from="1746021534173" duration="423000" />
     </task>
     <servers />
   </component>

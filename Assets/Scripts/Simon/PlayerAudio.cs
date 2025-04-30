@@ -7,7 +7,7 @@ public class PlayerAudio : ScriptableObject
     [SerializeField]
     private EventReference playerFootstepEvent;
 
-    private void PlayerFootstepAudio(GameObject sender)
+    public void PlayerFootstepWalking(GameObject sender)
     {
         RuntimeManager.PlayOneShotAttached(playerFootstepEvent, sender);
  
@@ -17,4 +17,6 @@ public class PlayerAudio : ScriptableObject
     {
         Debug.Log("Happens");
     }
+    
+    
 }

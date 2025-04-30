@@ -55,10 +55,17 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.50828546
-        functionName: TestINGAnim
+      - time: 0
+        functionName: FoolWalking
         data: 
-        objectReferenceParameter: {fileID: 11400000, guid: 54b7cc778ed281d43b148f659acacf81, type: 2}
+        objectReferenceParameter: {fileID: 11500000, guid: ffcbf29dbc8df0d49aacd0e348b65110, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.4772777
+        functionName: FoolWalking
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ffcbf29dbc8df0d49aacd0e348b65110, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

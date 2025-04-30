@@ -1,5 +1,5 @@
 using UnityEngine;
-
+[ExecuteAlways]
 public class Cog : MonoBehaviour
 {
     public GameObject ActiveSocket;
@@ -7,7 +7,8 @@ public class Cog : MonoBehaviour
     public LayerMask socketLayer;
     private Rigidbody rigid;
     public SocketInteracting mySocket;
-   
+    [Range(1, 100)]
+    public float Size=25;
     void OnEnable()
     {
         rigid = GetComponent<Rigidbody>();
@@ -22,6 +23,14 @@ public class Cog : MonoBehaviour
             rigid.useGravity = false;
         }
         else rigid.useGravity = true;
+
+
+
+    }
+    private void Update()
+    {
+
+        transform.localScale = new Vector3(Size / 100, transform.localScale.y, Size / 100);
     }
 
     public void Reset()

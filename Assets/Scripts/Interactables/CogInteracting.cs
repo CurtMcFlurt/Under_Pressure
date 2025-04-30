@@ -24,6 +24,7 @@ public class CogInteracting : Interactable
             
             intermid = inter;
             taken = true;
+            inter.IsHolding = true;
             if(cog.mySocket != null)
             {
                 cog.mySocket.activeCog = null;
@@ -43,7 +44,9 @@ public class CogInteracting : Interactable
             Debug.Log("retract");
             cog.ActiveSocket = null;
             taken = false;
+            intermid.IsHolding = false;
             intermid = null;
+
             return;
         }
         if (intermid.intearct && waitToInteract<currentWait)
@@ -57,6 +60,7 @@ public class CogInteracting : Interactable
                 {
                     currentWait = 0;
                     taken = false;
+                    intermid.IsHolding = false;
                     intermid = null;
                     cog.mySocket.activeCog = cog;
                     cog.ActiveSocket = cog.mySocket.gameObject;

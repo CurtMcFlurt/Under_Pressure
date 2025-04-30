@@ -12,39 +12,28 @@ public class TakeTheCamera : MonoBehaviour
     public GameObject DebugObject;
     public bool Stolen;
     public Interactable activeStealer;
-    public void OnEnable()
+    void OnEnable()
     {
         // Get components
         inting = GetComponent<InteractWithInteractable>();
         myMovement = GetComponent<DebugMovement>();
 
-        // Initialize and enable input actions
-        escapeAction = new InputAction("Escape");
-        backAction = new InputAction("Back");
+        // Get actions from PlayerInput component
+        var playerInput = GetComponent<PlayerInput>();
+        if (playerInput != null)
+        {
+            backAction = playerInput.actions.FindAction("Back");
+            escapeAction = playerInput.actions.FindAction("Escape");
 
-        escapeAction.Enable();
-        backAction.Enable();
+            backAction?.Enable();
+            escapeAction?.Enable();
 
-        // Optional: Add callbacks
-        escapeAction.performed += OnEscapePressed;
-        backAction.performed += OnBackPressed;
+        
+        }
+
     }
 
-    // Optional input handlers
-    private void OnEscapePressed(InputAction.CallbackContext context)
-    {
-        // Your escape logic
-        Debug.Log("Escape");
-    }
-
-    private void OnBackPressed(InputAction.CallbackContext context)
-    {
-        // Your back button logic
-
-        Debug.Log("Back");
-    }
-
-    public void OnDisable()
+    void OnDisable()
     {
         escapeAction?.Disable();
         backAction?.Disable();

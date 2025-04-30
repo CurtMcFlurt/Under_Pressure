@@ -20,8 +20,11 @@ public class InteractWithInteractable : MonoBehaviour
     [SerializeField] public GameObject aimIndicator; // Assign a sphere in the inspector
     [SerializeField] private float rayOffset = 0.5f;
     [SerializeField] private float maxRayDistance = 10f;
+    private float waitTostop = 1.5f;
+    private float currentWait=0;
     public bool intearct;
     public bool retract;
+    public bool IsHolding;
     void OnEnable()
     {
         var playerInput = GetComponent<PlayerInput>();
@@ -54,6 +57,14 @@ public class InteractWithInteractable : MonoBehaviour
         if (aimIndicator != null) { UpdateAimIndicator(); }
         float retractValue = backAction.ReadValue<float>();
         retract = retractValue > .5f;
+        float escapeValue = escapeAction.ReadValue<float>();
+        var esc = escapeValue > .5f;
+        if (IsHolding) { currentWait = 0; } else if(currentWait<waitTostop) currentWait += Time.deltaTime;
+        if(retract && currentWait > waitTostop ||esc)
+        {
+            Debug.Log("escape puzzle");
+            currentWait = 0;
+        }
     }
 
     private void CheckInteractRay()
@@ -71,18 +82,7 @@ public class InteractWithInteractable : MonoBehaviour
             }
         }
     }
-    private void OnEscapePressed(InputAction.CallbackContext context)
-    {
-        // Your escape logic
-        Debug.Log("Escape");
-    }
-
-    private void OnBackPressed(InputAction.CallbackContext context)
-    {
-        // Your back button logic
-
-        Debug.Log("Back");
-    }
+   
     private void UpdateAimIndicator()
     {
         Vector3 origin = lookatPoint.position + lookatPoint.forward * rayOffset;

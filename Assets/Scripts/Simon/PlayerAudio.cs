@@ -6,4 +6,15 @@ public class PlayerAudio : ScriptableObject
 {
     [SerializeField]
     private EventReference playerFootstepEvent;
+
+    private void PlayerFootstepAudio(GameObject sender)
+    {
+        RuntimeManager.PlayOneShotAttached(playerFootstepEvent, sender);
+ 
+    }
+
+    public void TestINGAnim()
+    {
+        Debug.Log("Happens");
+    }
 }

@@ -54,7 +54,7 @@ public class TakeTheCamera : MonoBehaviour
     {
         if(DebugObject != null && !Stolen)StealThecamera(DebugObject);
         if(DebugObject == null &&  Stolen)ResetPoint();
-        if (!activeStealer.taken) { ResetPoint(); }
+        if (activeStealer!=null && !activeStealer.taken) { ResetPoint(); }
         myMovement.StopMoving = Stolen;
     }
 

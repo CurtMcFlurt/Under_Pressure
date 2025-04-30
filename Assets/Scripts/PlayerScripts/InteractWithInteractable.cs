@@ -10,23 +10,31 @@ public class InteractWithInteractable : MonoBehaviour
     public float raySize=3;
     private InputAction interactAction;
     private float timeSinceInteract;
+    private InputAction escapeAction;
+    private InputAction backAction;
     //[SerializeField] private float minScale = 0.05f;
     // [SerializeField] private float maxScale = 0.15f;
 
-     [SerializeField] private float fixedScale = 0.005f;
+    [SerializeField] private float fixedScale = 0.005f;
 
     [SerializeField] public GameObject aimIndicator; // Assign a sphere in the inspector
     [SerializeField] private float rayOffset = 0.5f;
     [SerializeField] private float maxRayDistance = 10f;
+    public bool intearct;
+    public bool retract;
     void OnEnable()
     {
         var playerInput = GetComponent<PlayerInput>();
         if (playerInput != null)
         {
             interactAction = playerInput.actions.FindAction("Attack");
+            backAction = playerInput.actions.FindAction("Back");
+            escapeAction = playerInput.actions.FindAction("Escape");
         }
 
             if (lookatPoint == null) lookatPoint = transform;
+       
+
     }
     private void OnDisable()
     {
@@ -36,7 +44,7 @@ public class InteractWithInteractable : MonoBehaviour
     void Update()
     {
         float interactValue = interactAction.ReadValue<float>();
-        bool intearct = interactValue > .5f;
+        intearct = interactValue > .5f;
         if (intearct && timeSinceInteract < minTimeBetweenInteraction)
         {
             timeSinceInteract = minTimeBetweenInteraction;
@@ -44,7 +52,8 @@ public class InteractWithInteractable : MonoBehaviour
 
         } else if (timeSinceInteract > 0) timeSinceInteract -= Time.deltaTime;
         if (aimIndicator != null) { UpdateAimIndicator(); }
-
+        float retractValue = backAction.ReadValue<float>();
+        retract = retractValue > .5f;
     }
 
     private void CheckInteractRay()
@@ -62,7 +71,18 @@ public class InteractWithInteractable : MonoBehaviour
             }
         }
     }
+    private void OnEscapePressed(InputAction.CallbackContext context)
+    {
+        // Your escape logic
+        Debug.Log("Escape");
+    }
 
+    private void OnBackPressed(InputAction.CallbackContext context)
+    {
+        // Your back button logic
+
+        Debug.Log("Back");
+    }
     private void UpdateAimIndicator()
     {
         Vector3 origin = lookatPoint.position + lookatPoint.forward * rayOffset;

@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class SocketInteracting : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public Cog activeCog;
+    public float CorrectSize;
     void Start()
     {
         

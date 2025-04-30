@@ -12,6 +12,7 @@ public class Cog : MonoBehaviour
     void OnEnable()
     {
         rigid = GetComponent<Rigidbody>();
+        SpawnLocation = transform.position;
     }
 
     // Update is called once per frame
@@ -31,6 +32,7 @@ public class Cog : MonoBehaviour
     {
 
         transform.localScale = new Vector3(Size / 100, transform.localScale.y, Size / 100);
+
     }
 
     public void Reset()

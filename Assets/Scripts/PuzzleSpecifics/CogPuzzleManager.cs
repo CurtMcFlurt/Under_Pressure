@@ -29,6 +29,7 @@ public class CogPuzzleManager : MonoBehaviour
             if (!myCollider.bounds.Contains(cog.transform.position))
             {
                 cog.Reset();
+                Debug.Log("getMyCog");
             }
         }
     }

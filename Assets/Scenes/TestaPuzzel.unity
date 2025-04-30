@@ -420,6 +420,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1337290312 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8182665340975377965, guid: 99f185e94214a16438c276afb10a2d2e, type: 3}
+  m_PrefabInstance: {fileID: 1428834192055356352}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6a9868f3fd60324fa37506247931b06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1902568880 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4430420571820895200, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
@@ -455,6 +466,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3752343519796221866, guid: 99f185e94214a16438c276afb10a2d2e, type: 3}
+      propertyPath: myCogs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3752343519796221866, guid: 99f185e94214a16438c276afb10a2d2e, type: 3}
+      propertyPath: 'myCogs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1337290312}
+    - target: {fileID: 7196478983353642676, guid: 99f185e94214a16438c276afb10a2d2e, type: 3}
+      propertyPath: CorrectSize
+      value: 9.3
+      objectReference: {fileID: 0}
     - target: {fileID: 7250924042381282941, guid: 99f185e94214a16438c276afb10a2d2e, type: 3}
       propertyPath: m_Name
       value: PuzzelInteractionTest
@@ -498,6 +521,18 @@ PrefabInstance:
     - target: {fileID: 7923755408109513146, guid: 99f185e94214a16438c276afb10a2d2e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8182665340975377965, guid: 99f185e94214a16438c276afb10a2d2e, type: 3}
+      propertyPath: Size
+      value: 9.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328020131793158470, guid: 99f185e94214a16438c276afb10a2d2e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.093
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328020131793158470, guid: 99f185e94214a16438c276afb10a2d2e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.093
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

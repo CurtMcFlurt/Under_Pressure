@@ -455,6 +455,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2807005651280843882}
   - component: {fileID: 7554098173543971090}
+  - component: {fileID: 7409969286339345455}
   m_Layer: 17
   m_Name: Model
   m_TagString: Untagged
@@ -501,6 +502,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7409969286339345455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913229769753040629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffcbf29dbc8df0d49aacd0e348b65110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSteppingEvent:
+    Guid:
+      Data1: -2070121768
+      Data2: 1130752704
+      Data3: 235695021
+      Data4: 853788823
+    Path: event:/Sound/Player/Footsteps
 --- !u!1 &944521857970211691
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,6 +756,7 @@ GameObject:
   - component: {fileID: 1351852112735325803}
   - component: {fileID: 6003992560538225204}
   - component: {fileID: 1685724255404630574}
+  - component: {fileID: 6427456961469107361}
   m_Layer: 9
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -915,6 +936,20 @@ MonoBehaviour:
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
 --- !u!114 &1685724255404630574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722869070318551701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
+--- !u!114 &6427456961469107361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1520,6 +1555,8 @@ GameObject:
   - component: {fileID: 6748847938144502183}
   - component: {fileID: 412493808285010292}
   - component: {fileID: 2719005309301395617}
+  - component: {fileID: 7489466732729526346}
+  - component: {fileID: 1689566551250020220}
   m_Layer: 9
   m_Name: FoolDebug
   m_TagString: Player
@@ -1537,7 +1574,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16.23007, y: 18.648014, z: 10.019043}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7678465585004245259}
@@ -1568,9 +1605,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5000001
-  m_Height: 2
+  m_Height: 1.5
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0.000000059604645, y: 0.08, z: -0.00000008940697}
 --- !u!114 &5999715998628353676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1683,6 +1720,7 @@ MonoBehaviour:
   walkSound: {fileID: 5362888568949055970}
   currentAngle: 0
   myAnim: {fileID: 7554098173543971090}
+  StopMoving: 0
 --- !u!114 &412493808285010292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1704,10 +1742,13 @@ MonoBehaviour:
     m_Bits: 120337
   minTimeBetweenInteraction: 0.25
   raySize: 3
-  fixedScale: 0.005
+  fixedScale: 0.09
   aimIndicator: {fileID: 7590239975824024885}
   rayOffset: 0.5
   maxRayDistance: 25
+  intearct: 0
+  retract: 0
+  IsHolding: 0
 --- !u!114 &2719005309301395617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1725,6 +1766,38 @@ MonoBehaviour:
   IsDead: 0
   debugRespawnPoint: {x: 0, y: 0, z: 0}
   deathTimer: 12
+--- !u!114 &7489466732729526346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430420571820895200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1bc5f036ff0e3408dc9a2231b3f8d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 3150287386691142819}
+  OriginObject: {fileID: 0}
+  DebugObject: {fileID: 0}
+  Stolen: 0
+  Debuging: 0
+  activeStealer: {fileID: 0}
+--- !u!114 &1689566551250020220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430420571820895200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 4430420571820895200}
 --- !u!1 &4477570092408050920
 GameObject:
   m_ObjectHideFlags: 0

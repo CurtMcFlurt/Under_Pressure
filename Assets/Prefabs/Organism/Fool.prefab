@@ -1339,6 +1339,7 @@ GameObject:
   - component: {fileID: 5155631251265589830}
   - component: {fileID: 6338221338650350762}
   - component: {fileID: 1848772153272343955}
+  - component: {fileID: 3054373178530537104}
   m_Layer: 9
   m_Name: Fool
   m_TagString: Player
@@ -1356,7 +1357,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.23, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.9, y: 1.9, z: 1.9}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6815916663698623574}
@@ -1429,13 +1430,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3923962205
+  GlobalObjectIdHash: 2502365407
   InScenePlacedSourceGlobalObjectIdHash: 2502365407
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
+  ActiveSceneSynchronization: 1
   SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
@@ -1455,8 +1456,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  walkingSpeed: 2
-  runningSpeed: 5
+  walkingSpeed: 4
+  runningSpeed: 7
   sneakingSpeed: 1
   lookSpeed: 0.1
   stamina: 1
@@ -1499,11 +1500,13 @@ MonoBehaviour:
     m_Bits: 102913
   minTimeBetweenInteraction: 0.25
   raySize: 3
-  minScale: 0.05
-  maxScale: 0.15
+  fixedScale: 0.005
   aimIndicator: {fileID: 2800148742923031153}
   rayOffset: 0.5
   maxRayDistance: 10
+  intearct: 0
+  retract: 0
+  IsHolding: 0
 --- !u!114 &8979354530499879030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1634,6 +1637,21 @@ MonoBehaviour:
   debugRespawn: 0
   IsDead: 0
   debugRespawnPoint: {x: 0, y: 0, z: 0}
+  deathTimer: 0
+--- !u!114 &3054373178530537104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3853958961406216230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 3853958961406216230}
 --- !u!1 &3992917765594039046
 GameObject:
   m_ObjectHideFlags: 0
@@ -2023,6 +2041,7 @@ GameObject:
   - component: {fileID: 7467158558412525928}
   - component: {fileID: 2048456973754545902}
   - component: {fileID: 5829043333223472738}
+  - component: {fileID: 5813366363835259158}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -2084,6 +2103,25 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   TransitionStateInfoList: []
   m_Animator: {fileID: 2048456973754545902}
+--- !u!114 &5813366363835259158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4569192355711735197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffcbf29dbc8df0d49aacd0e348b65110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSteppingEvent:
+    Guid:
+      Data1: -2070121768
+      Data2: 1130752704
+      Data3: 235695021
+      Data4: 853788823
+    Path: event:/Sound/Player/Footsteps
 --- !u!1 &4575407754557345141
 GameObject:
   m_ObjectHideFlags: 0

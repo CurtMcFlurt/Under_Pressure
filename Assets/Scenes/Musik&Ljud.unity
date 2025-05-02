@@ -6774,16 +6774,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4430420571820895200, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1121262339}
-    - targetCorrespondingSourceObject: {fileID: 4430420571820895200, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1121262340}
-    - targetCorrespondingSourceObject: {fileID: 1722869070318551701, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 554971345}
-    - targetCorrespondingSourceObject: {fileID: 913229769753040629, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 699977911}
   m_SourcePrefab: {fileID: 100100000, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
 --- !u!43 &115585326
 Mesh:
@@ -17376,25 +17367,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &554971343 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1722869070318551701, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
-  m_PrefabInstance: {fileID: 109426215}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &554971345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 554971343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nonRigidbodyVelocity: 0
-  attenuationObject: {fileID: 0}
 --- !u!43 &561739037
 Mesh:
   m_ObjectHideFlags: 0
@@ -20561,30 +20533,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &699977908 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 913229769753040629, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
-  m_PrefabInstance: {fileID: 109426215}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &699977911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 699977908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffcbf29dbc8df0d49aacd0e348b65110, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSteppingEvent:
-    Guid:
-      Data1: -2070121768
-      Data2: 1130752704
-      Data3: 235695021
-      Data4: 853788823
-    Path: event:/Sound/Player/Footsteps
 --- !u!43 &710296723
 Mesh:
   m_ObjectHideFlags: 0
@@ -32725,20 +32673,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4430420571820895200, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
   m_PrefabInstance: {fileID: 109426215}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1121262339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1121262330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nonRigidbodyVelocity: 0
-  attenuationObject: {fileID: 1121262330}
 --- !u!114 &1121262340
 MonoBehaviour:
   m_ObjectHideFlags: 0

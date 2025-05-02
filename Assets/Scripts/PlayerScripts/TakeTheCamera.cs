@@ -10,7 +10,7 @@ public class TakeTheCamera : MonoBehaviour
     private InputAction backAction;
     private DebugMovement myMovement;
     public GameObject DebugObject;
-    public bool Stolen;
+    public bool Stolen,Debuging;
     public Interactable activeStealer;
     void OnEnable()
     {
@@ -41,25 +41,29 @@ public class TakeTheCamera : MonoBehaviour
 
     public void Update()
     {
-        if(DebugObject != null && !Stolen)StealThecamera(DebugObject);
-        if(DebugObject == null &&  Stolen)ResetPoint();
+        if(DebugObject != null && !Stolen && Debuging)StealThecamera(DebugObject);
+        if(DebugObject == null &&  Stolen && Debuging)ResetPoint();
         if (activeStealer!=null && !activeStealer.taken) { ResetPoint(); }
         myMovement.StopMoving = Stolen;
     }
 
     public void StealThecamera(GameObject Point)
     {
-        cameraTransform.parent = Point.transform;
-        cameraTransform.position=Point.transform.position;
+        
+        cameraTransform.position=new Vector3(Point.transform.position.x,cameraTransform.position.y,Point.transform.position.z);
         Stolen = true;
         Debug.Log("Stolen");
     }
 
     public void ResetPoint()
     {
-        cameraTransform.parent = null;
         Stolen = false;
-        Debug.Log("Back");
+        if (activeStealer != null)
+        {
+            activeStealer.taken = false;
+            activeStealer = null;
+            Debug.Log("Back");
+        }
     }
 
 }

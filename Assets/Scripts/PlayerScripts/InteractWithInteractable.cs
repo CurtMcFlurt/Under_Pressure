@@ -12,6 +12,7 @@ public class InteractWithInteractable : MonoBehaviour
     private float timeSinceInteract;
     private InputAction escapeAction;
     private InputAction backAction;
+    private TakeTheCamera cameraTaker;
     //[SerializeField] private float minScale = 0.05f;
     // [SerializeField] private float maxScale = 0.15f;
 
@@ -34,7 +35,7 @@ public class InteractWithInteractable : MonoBehaviour
             backAction = playerInput.actions.FindAction("Back");
             escapeAction = playerInput.actions.FindAction("Escape");
         }
-
+        cameraTaker = GetComponent<TakeTheCamera>();
             if (lookatPoint == null) lookatPoint = transform;
        
 
@@ -63,6 +64,8 @@ public class InteractWithInteractable : MonoBehaviour
         if(retract && currentWait > waitTostop ||esc)
         {
             Debug.Log("escape puzzle");
+            cameraTaker.ResetPoint();
+
             currentWait = 0;
         }
     }

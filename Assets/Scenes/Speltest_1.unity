@@ -4063,6 +4063,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2061727886}
+    - target: {fileID: 6183172905606872656, guid: 0547bb80b7f9c7b4b849fba5cb4610f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6187051915038348526, guid: 0547bb80b7f9c7b4b849fba5cb4610f9, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -38492,7 +38496,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4430420571820895200, guid: 1117d00ef5b58e646b345e361601d979, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -58446,6 +58450,14 @@ PrefabInstance:
     - target: {fileID: 2880015292015617296, guid: 99a8f87fa9be2a5439ac0cbed6af90d4, type: 3}
       propertyPath: m_Center.z
       value: 0.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 4958552446158834126, guid: 99a8f87fa9be2a5439ac0cbed6af90d4, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 109611367
+      objectReference: {fileID: 0}
+    - target: {fileID: 4958552446158834126, guid: 99a8f87fa9be2a5439ac0cbed6af90d4, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 4120116987
       objectReference: {fileID: 0}
     - target: {fileID: 5627503931495405805, guid: 99a8f87fa9be2a5439ac0cbed6af90d4, type: 3}
       propertyPath: m_LocalPosition.x

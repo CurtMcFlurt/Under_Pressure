@@ -4,7 +4,6 @@ public class DeepAnimHandler : MonoBehaviour
 {
     public Animator anim;
     public DeepWalkerLogic logic;
-    public Agent_findPath findPath;
     public AttackScript attack;
     public MonsterOneShots audioEvent;
     public float timeForAttack;
@@ -51,7 +50,7 @@ public class DeepAnimHandler : MonoBehaviour
             debugEat = false;
             Eating();
         }
-        anim.SetFloat("CurrentSpeed", findPath.curentSpeed);
+        anim.SetFloat("CurrentSpeed", logic.pathfinder.curentSpeed);
     }
 
     private void AttackIng()
@@ -61,7 +60,7 @@ public class DeepAnimHandler : MonoBehaviour
         anim.SetTrigger("Attack");
 
         audioEvent.MonsterListeningPlay(gameObject);
-        findPath.AddTimeToWait(timeForAttack);
+        logic.pathfinder.AddTimeToWait(timeForAttack);
     }
     private void Screaming()
     {
@@ -69,7 +68,7 @@ public class DeepAnimHandler : MonoBehaviour
         anim.SetTrigger("FoundFool");
 
         audioEvent.MonsterFoundYouPlay(gameObject);
-        findPath.AddTimeToWait(timeForScream);
+        logic.pathfinder.AddTimeToWait(timeForScream);
     }
     private void Eating()
     {
@@ -77,7 +76,7 @@ public class DeepAnimHandler : MonoBehaviour
         anim.SetTrigger("IsEating");
 
         audioEvent.MonsterHuntingPlay(gameObject);
-        findPath.AddTimeToWait(timeForEat);
+        logic.pathfinder.AddTimeToWait(timeForEat);
     }
     private void Listening()
     {
@@ -85,7 +84,7 @@ public class DeepAnimHandler : MonoBehaviour
         Debug.Log("Listening");
         anim.SetTrigger("HeardSound");
         audioEvent.MonsterListeningPlay(gameObject);
-        findPath.AddTimeToWait(timeForListen);
+        logic.pathfinder.AddTimeToWait(timeForListen);
     }
 
 

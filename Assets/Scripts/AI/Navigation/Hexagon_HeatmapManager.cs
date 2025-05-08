@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 [System.Serializable]
 public struct HeatMapValues
@@ -17,8 +18,7 @@ public struct HeatMapValues
         this.soundMemory = 0;
     }
 }
-[ExecuteAlways]
-public class Hexagon_HeatmapManager : MonoBehaviour
+public class Hexagon_HeatmapManager : NetworkBehaviour
 {
     public HexagonalWeight hexWeighter;
     public List<WeightChangers> WeightChangers = new List<WeightChangers>();
@@ -53,11 +53,14 @@ public class Hexagon_HeatmapManager : MonoBehaviour
                 {
                     var nearest = HexMath.NearestHex(changer.transform.position, nearesthex.Values.ToList(), hexWeighter.cellSize);
                     changer.myHex = nearest;
-                    ApplyHeatChange(nearest, changer.range, changer.myHeat, changer.falloff);
+        
                     if (changer.OneOff)
                     {
+
                         changer.enabled = false;
+                     
                     }
+                    ApplyHeatChange(nearest, changer.range, changer.myHeat, changer.falloff);
                 }
                 
             }
@@ -76,6 +79,8 @@ public class Hexagon_HeatmapManager : MonoBehaviour
             hexDict[key] = hex; // Store modified back
         }
     }
+
+   
 
     public void ApplyHeatChange(HexCell centerHex, int range, HeatMapValues values, float falloff)
     {
@@ -97,4 +102,9 @@ public class Hexagon_HeatmapManager : MonoBehaviour
             }
         }
     }
+
+
+
+
+
 }

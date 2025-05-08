@@ -855,6 +855,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6735085778067252751}
   - component: {fileID: 1121432409670542375}
+  - component: {fileID: 6258653680040962207}
   m_Layer: 9
   m_Name: PersonalWeight
   m_TagString: Untagged
@@ -909,6 +910,24 @@ MonoBehaviour:
       safety: 0
       soundMemory: 0
     timeSinceChecked: 0.007149398
+--- !u!114 &6258653680040962207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2836616349415142813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 672390a4810129446a8f64590103dfef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  walkSound: {fileID: 1121432409670542375}
+  regularSound: 1
+  regularRange: 1
+  extraRunningSound: 0.5
+  extraRunningRange: 1
 --- !u!1 &3001032004343317950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1340,6 +1359,7 @@ GameObject:
   - component: {fileID: 6338221338650350762}
   - component: {fileID: 1848772153272343955}
   - component: {fileID: 3054373178530537104}
+  - component: {fileID: 4919837966510297474}
   m_Layer: 9
   m_Name: Fool
   m_TagString: Player
@@ -1457,12 +1477,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   walkingSpeed: 4
-  runningSpeed: 7
+  runningSpeed: 9
   sneakingSpeed: 1
   lookSpeed: 0.1
   stamina: 1
-  exhaust: 1
-  regenerate: 1
+  exhaust: 0.61
+  regenerate: 1.25
   crouchHeigtDivision: 2
   extraRunningSound: 4
   extraRunningRange: 3
@@ -1479,6 +1499,9 @@ MonoBehaviour:
   currentAngle: 0
   myAnim: {fileID: 2048456973754545902}
   playerVisualRoot: {fileID: 4569192355711735197}
+  StopMoving: 0
+  mySprint: 0
+  myMove: 0
 --- !u!114 &6429379723393718855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1652,6 +1675,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nonRigidbodyVelocity: 0
   attenuationObject: {fileID: 3853958961406216230}
+--- !u!114 &4919837966510297474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3853958961406216230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1bc5f036ff0e3408dc9a2231b3f8d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 9027510292019023371}
+  OriginObject: {fileID: 0}
+  DebugObject: {fileID: 0}
+  Stolen: 0
+  Debuging: 0
+  activeStealer: {fileID: 0}
 --- !u!1 &3992917765594039046
 GameObject:
   m_ObjectHideFlags: 0

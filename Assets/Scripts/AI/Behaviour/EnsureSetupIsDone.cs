@@ -1,24 +1,38 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class EnsureSetupIsDone : MonoBehaviour
+public class EnsureSetupIsDone : NetworkBehaviour
 {
-    public GameObject deeper;
+    public GameObject deeperPrefab; // Prefab with NetworkObject attached
     public HexagonalWeight currentWeight;
     public float waitForSeconds = 1;
     private float seconds;
-    // Update is called once per frame
+    public bool spawned;
     void Update()
     {
-        if (currentWeight.walkableHexagons.Count != 0 && seconds > waitForSeconds)
+        if (!HasAuthority)
         {
-            deeper.SetActive(true);
+
+            return;
+        }
+        if ((seconds > waitForSeconds) && !spawned)
+        {
+            SpawnDeeper();
+            spawned = true;
 
         }
         else
         {
-            deeper.SetActive(false);
+
             seconds += Time.deltaTime;
-            
         }
+    }
+
+    private void SpawnDeeper()
+    {
+        GameObject deeperInstance = Instantiate(deeperPrefab, transform.position, Quaternion.identity);
+        deeperInstance.GetComponent<NetworkObject>().Spawn(); // Spawns for all clients
+        spawned = true;
+        Debug.Log("Spawned deeper object");
     }
 }

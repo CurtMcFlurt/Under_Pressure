@@ -6,8 +6,7 @@ public class ScriptableBehaviour : ScriptableObject
     public float tickrateHunger=1;
     public float tickrateAlert=1;
 
-    public virtual void Behave(DeepWalkerLogic logic)
-    {
+    public virtual void Behave(DeepWalkerLogic logic) { }
 
-    }
+    public virtual void Behave(DeepWalkerNetwork network) { }
 }

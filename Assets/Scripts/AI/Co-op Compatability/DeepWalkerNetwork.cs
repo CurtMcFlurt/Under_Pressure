@@ -1,27 +1,10 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
-using Object = UnityEngine.Object;
-[System.Serializable]
-public struct DeepWalkerMood
-{
-    public float anger;
-    public float hunger;
-    public float drowsy;
-    public float alertness;
 
-    public DeepWalkerMood(float anger=0,float hunger=0,float drowsy=0,float alertness=0)
-    {
-        this.alertness = alertness;
-        this.drowsy = drowsy;
-        this.hunger = hunger;
-        this.anger = anger;
-    }
-}
-public class DeepWalkerLogic : NetworkBehaviour
+public class DeepWalkerNetwork : NetworkBehaviour
 {
     public HexagonalWeight WeightMap;
     public DeepWalkerMood mood;
@@ -60,27 +43,23 @@ public class DeepWalkerLogic : NetworkBehaviour
     public bool readyForSleep;
     public bool readyForEating;
     public bool debugRoamFinder;
-    public float restTime=0;
+    public float restTime = 0;
     public float losetime = 3;
-    public float minimumWaitToRecalculate=3;
+    public float minimumWaitToRecalculate = 3;
     public AttackOrbHandler myAttack;
     private float recalculateTime;
     public bool neutral = true;
-    private float timeLost=0;
+    private float timeLost = 0;
     private float maxDistance = 0f;
     public float feedTime = 0;
     public float sleepTime = 0;
-    public override void OnNetworkSpawn()
+    void OnEnable()
     {
-        if (!HasAuthority)
-        {
-            return;
-        }
-        if (WeightMap == null)WeightMap = Object.FindObjectsByType<HexagonalWeight>(FindObjectsSortMode.None)[0];
+        if (WeightMap == null) WeightMap = Object.FindObjectsByType<HexagonalWeight>(FindObjectsSortMode.None)[0];
         if (behaveHandle == null) behaveHandle = GetComponent<BehaviourHandler>();
-        if(pathfinder==null)pathfinder = GetComponent<Agent_findPath>();
+        if (pathfinder == null) pathfinder = GetComponent<Agent_findPath>();
         mood = new DeepWalkerMood(0, 0, 0, 0);
-        loudestReactHex=new HexCell();
+        loudestReactHex = new HexCell();
         loudestReactHex.weight.sound = 1;
         AwakenTheBeast(WeightMap.fullMapHexagons);
         foreach (var hex in hexMap.Values)
@@ -90,16 +69,9 @@ public class DeepWalkerLogic : NetworkBehaviour
             if (dist > maxDistance) maxDistance = dist;
         }
         oldTrackingHex = myHex;
-        base.OnNetworkSpawn();
     }
     public void AwakenTheBeast(Dictionary<Vector3, HexCell> mapMemory)
     {
-
-        if (TrackingObject != null && myBehaviour != ActiveBehaviour.hunting) { TrackingObject = null; }
-        if (!IsSpawned || !HasAuthority)
-        {
-            return;
-        }
         hexMap = new Dictionary<Vector3, HexCell>();
 
         foreach (var kvp in mapMemory)
@@ -127,21 +99,20 @@ public class DeepWalkerLogic : NetworkBehaviour
     }
 
 
-    private float roamingBreak=5;
+    private float roamingBreak = 5;
     private float roamingBreakCounter;
     private float timeSinceLastSound = 0;
     void Update()
     {
-        if (!HasAuthority) return;
         UpdateVision();
-     
-        if (TrackingObject != null && myBehaviour==ActiveBehaviour.hunting)
+
+        if (TrackingObject != null && myBehaviour == ActiveBehaviour.hunting)
         {
             huntThePerson();
             Debug.Log("Hunting");
             return;
         }
-        
+
         UpdateMoodTicks();
         //reacting to sound happens when the AI isnt activly hunting a person
         if (reactToSound)
@@ -151,22 +122,22 @@ public class DeepWalkerLogic : NetworkBehaviour
             probableVictimPosition = FindSoundOrigin(loudestReactHex);
             AlertnessInfluence(Time.deltaTime * 20);
             timeSinceLastSound = 0;
-            
+
             loudestReactHex = new HexCell();
         }
-     
-        
+
+
         DecideLogic();
         LogicBasedAction();
 
 
 
 
-        if(readyForEating && myHex.hexCoords == optimalFood.hexCoords)
+        if (readyForEating && myHex.hexCoords == optimalFood.hexCoords)
         {
             TimeToEat();
-        }  
-        if(readyForSleep && myHex.hexCoords == optimalSafety.hexCoords)
+        }
+        if (readyForSleep && myHex.hexCoords == optimalSafety.hexCoords)
         {
             TimeToSleep();
         }
@@ -174,8 +145,6 @@ public class DeepWalkerLogic : NetworkBehaviour
 
     private void FixedUpdate()
     {
-
-        if (!HasAuthority) return;
         var keys = hexMap.Keys.ToList(); // Copy keys to avoid modifying collection while iterating
         foreach (var key in keys)
         {
@@ -183,14 +152,14 @@ public class DeepWalkerLogic : NetworkBehaviour
             if (inHexRange.Keys.Contains(key))
             {
 
-                hex.weight.soundMemory = Mathf.Lerp(hex.weight.soundMemory, 1f, 3*Time.fixedDeltaTime);
+                hex.weight.soundMemory = Mathf.Lerp(hex.weight.soundMemory, 1f, 3 * Time.fixedDeltaTime);
             }
             else hex.weight.soundMemory = Mathf.Lerp(hex.weight.soundMemory, 1f, .5f * Time.fixedDeltaTime);
 
             hexMap[key] = hex; // Store modified back
         }
         timeSinceLastSound += Time.fixedDeltaTime;
-        if (recalculateTime > 0) recalculateTime -= Time.fixedDeltaTime*4;
+        if (recalculateTime > 0) recalculateTime -= Time.fixedDeltaTime * 4;
     }
     private void LogicBasedAction()
     {
@@ -199,12 +168,13 @@ public class DeepWalkerLogic : NetworkBehaviour
 
             if (timeSinceLastSound < 5)
             {
-               
-                    GuessPlayerPosition(probableVictimPosition);
-               
+
+                GuessPlayerPosition(probableVictimPosition);
+
                 currentHexTarget = probableVictimPosition;
 
-            }else currentHexTarget = FindOptimalHex(3);
+            }
+            else currentHexTarget = FindOptimalHex(3);
         }
         if (myBehaviour != oldBehaviour || myHex.hexCoords == currentHexTarget.hexCoords && myBehaviour == ActiveBehaviour.roaming)
         {
@@ -223,8 +193,8 @@ public class DeepWalkerLogic : NetworkBehaviour
             updateGoal(HexMath.Axial2World(currentHexTarget, WeightMap.cellSize));
             currentTarget = currentHexTarget.hexCoords;
         }
-  
-     
+
+
         if (debugRoamFinder || roamingBreakCounter > roamingBreak)
         {
             debugRoamFinder = false;
@@ -238,16 +208,16 @@ public class DeepWalkerLogic : NetworkBehaviour
     {
         if (mood.drowsy < 1)
         {
-            DrowsyInfluence((Time.deltaTime * activeLogic.tickrateDrowsy)/100);
+            DrowsyInfluence((Time.deltaTime * activeLogic.tickrateDrowsy) / 100);
         }
         else mood.drowsy = 1;
         if (mood.hunger < 1)
         {
-            HungerInfluence((Time.deltaTime * activeLogic.tickrateHunger)/100);
+            HungerInfluence((Time.deltaTime * activeLogic.tickrateHunger) / 100);
         }
         else mood.hunger = 1;
-      
-        if (mood.alertness > .5f && mood.anger<1)
+
+        if (mood.alertness > .5f && mood.anger < 1)
         {
             AngerInfluence(Time.deltaTime / 10);
 
@@ -255,13 +225,13 @@ public class DeepWalkerLogic : NetworkBehaviour
 
         if (mood.alertness > 0 && inHexRange.Keys.Contains(probableVictimPosition.hexCoords))
         {
-            mood.alertness -= Time.deltaTime/2;
+            mood.alertness -= Time.deltaTime / 2;
         }
-       
-        
+
+
 
     }
-    
+
     private void TimeToEat()
     {
         feedTime -= Time.deltaTime;
@@ -283,7 +253,7 @@ public class DeepWalkerLogic : NetworkBehaviour
     private void huntThePerson()
     {
         var hex = HexMath.NearestHex(TrackingObject.transform.position, hexMap.Values.ToList(), WeightMap.cellSize);
-    
+
 
         if (myAttack.KilledPlayer)
         {
@@ -291,9 +261,8 @@ public class DeepWalkerLogic : NetworkBehaviour
             VictimPositionCertainty = 0;
             Debug.Log("Caught");
             mood.anger = 0;
-            myAttack.KilledPlayer = false;
             return;
-            
+
         }
 
         if (HexMath.HexDistance(hex.hexCoords, myHex.hexCoords) > hearingRange)
@@ -301,7 +270,7 @@ public class DeepWalkerLogic : NetworkBehaviour
             timeLost += Time.deltaTime;
         }
         else timeLost = 0;
-        if (timeLost >= losetime) { TrackingObject = null; timeLost = 0; Debug.Log("Lost");VictimPositionCertainty = 0; }
+        if (timeLost >= losetime) { TrackingObject = null; timeLost = 0; Debug.Log("Lost"); VictimPositionCertainty = 0; }
 
         if (hex.hexCoords != oldTrackingHex.hexCoords || pathfinder.curentSpeed < 3)
         {
@@ -311,7 +280,7 @@ public class DeepWalkerLogic : NetworkBehaviour
             }
         }
 
-        Debug.Log(hex.hexCoords + " " + HexMath.HexDistance(hex.hexCoords, myHex.hexCoords) + " hex distances"+ oldTrackingHex.hexCoords+"old positions ");
+        Debug.Log(hex.hexCoords + " " + HexMath.HexDistance(hex.hexCoords, myHex.hexCoords) + " hex distances" + oldTrackingHex.hexCoords + "old positions ");
         oldTrackingHex = hex;
     }
 
@@ -319,19 +288,19 @@ public class DeepWalkerLogic : NetworkBehaviour
 
     public void updateGoal(Vector3 position)
     {
-        if (position == previousGoal || recalculateTime>0) return;
+        if (position == previousGoal || recalculateTime > 0) return;
         NavMeshHit hit;
         if (NavMesh.SamplePosition(position, out hit, WeightMap.cellSize, pathfinder.BezierLayers))
         {
             pathfinder.goal.transform.position = hit.position;
         }
-        else if (NavMesh.SamplePosition(position, out hit, WeightMap.cellSize*3, pathfinder.BezierLayers))
+        else if (NavMesh.SamplePosition(position, out hit, WeightMap.cellSize * 3, pathfinder.BezierLayers))
         {
 
             pathfinder.goal.transform.position = hit.position;
         }
 
-            pathfinder.RecalculatePath=true;
+        pathfinder.RecalculatePath = true;
         previousGoal = position;
         recalculateTime = minimumWaitToRecalculate;
         //RaycastHit sphereHitRay;
@@ -405,7 +374,7 @@ public class DeepWalkerLogic : NetworkBehaviour
             {
 
                 memoryNeighbor.weight.soundMemory = Mathf.Max(5, memoryNeighbor.weight.soundMemory); // Slightly lower influence for neighbors
-               
+
                 HexMath.UpdateWeights(ref memoryNeighbor, liveNeighbor);
 
                 hexMap[neighborCoords] = memoryNeighbor;
@@ -413,7 +382,7 @@ public class DeepWalkerLogic : NetworkBehaviour
             }
         }
         return loudestReactHex;
-      
+
     }
 
 
@@ -453,12 +422,12 @@ public class DeepWalkerLogic : NetworkBehaviour
 
             if (type == 2)
             {
-                
+
                 float distance = (VectorFix.returnVector3With0Y(HexMath.Axial2World(hex, WeightMap.cellSize)) -
                                   VectorFix.returnVector3With0Y(HexMath.Axial2World(myHex, WeightMap.cellSize))).magnitude;
 
                 float normalizedDistance = maxDistance > 0 ? distance / maxDistance : 0;
-                weightSum += normalizedDistance/20; // Encourages exploration
+                weightSum += normalizedDistance / 20; // Encourages exploration
             }
 
             if (weightSum > bestValue)
@@ -485,7 +454,7 @@ public class DeepWalkerLogic : NetworkBehaviour
                 {
 
                     myBehaviour = ActiveBehaviour.hunting;
-       
+
                     //hunting behaviour
                     //hunting means locked in on a player
                 }
@@ -502,31 +471,32 @@ public class DeepWalkerLogic : NetworkBehaviour
             return;
         }
 
-        if (compareCurves(Roaming, eating, mood.hunger)) 
+        if (compareCurves(Roaming, eating, mood.hunger))
         {
 
             myBehaviour = ActiveBehaviour.feeding;
             // goto place where food is
             return;
-        
+
         }
-        if (compareCurves(Roaming, sleeping, mood.drowsy)) {
+        if (compareCurves(Roaming, sleeping, mood.drowsy))
+        {
 
 
             myBehaviour = ActiveBehaviour.sleeping;
             //goto place where its safe
-            
-            return; 
-        
-        
-        
+
+            return;
+
+
+
         }
 
         myBehaviour = ActiveBehaviour.roaming;
         // walking around aimlesly to the areas where it has not been for a while that is far away
         // Roaming behavior
     }
-  
+
     public bool compareCurves(AnimationCurve neutral, AnimationCurve superceding, float value)
     {
         return neutral.Evaluate(value) < superceding.Evaluate(value);
@@ -551,11 +521,11 @@ public class DeepWalkerLogic : NetworkBehaviour
                 // Fetch the latest live value
                 HexCell liveCell = WeightMap.fullMapHexagons[key];
 
-            
+
 
                 if (
                     cell.weight.sound < liveCell.weight.sound && // it's new
-                   // liveCell.weight.sound > loudestReactHex.weight.sound && // louder than anything before
+                                                                 // liveCell.weight.sound > loudestReactHex.weight.sound && // louder than anything before
                     liveCell.weight.sound > minimumSound && // above threshold
                     key != loudestReactHex.hexCoords // not the same hex already reacting to
                 )
@@ -582,7 +552,7 @@ public class DeepWalkerLogic : NetworkBehaviour
     {
         if (inHexRange.Values.Contains(probablePlayerPosition))
         {
-           foreach(var phex in WeightMap.playerWeights)
+            foreach (var phex in WeightMap.playerWeights)
             {
                 if (phex.myHex.hexCoords == probablePlayerPosition.hexCoords)
                 {
@@ -590,7 +560,7 @@ public class DeepWalkerLogic : NetworkBehaviour
                     VictimPositionCertainty += .25f;
                     return;
                 }
-             
+
             }
         }
         VictimPositionCertainty -= Time.deltaTime;
@@ -601,25 +571,25 @@ public class DeepWalkerLogic : NetworkBehaviour
     public void AlertnessInfluence(float alertChange) => mood.alertness = Mathf.Clamp01(mood.alertness + alertChange);
     public void HungerInfluence(float hungerChange) => mood.hunger = Mathf.Clamp01(mood.hunger + hungerChange);
     public void DrowsyInfluence(float drowsyChange) => mood.drowsy = Mathf.Clamp01(mood.drowsy + drowsyChange);
-    
+
     public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         if (probableVictimPosition.weight.sound > 1)
         {
-            Gizmos.DrawCube(HexMath.Axial2World(probableVictimPosition,WeightMap.cellSize)+Vector3.up, new Vector3(.125f, .25f, .125f));
+            Gizmos.DrawCube(HexMath.Axial2World(probableVictimPosition, WeightMap.cellSize) + Vector3.up, new Vector3(.125f, .25f, .125f));
         }
-      
-        foreach(var hex in inHexRange)
+
+        foreach (var hex in inHexRange)
         {
-            Gizmos.color = new Color(hex.Value.weight.food/10, hex.Value.weight.safety/10, hex.Value.weight.sound / 10);
-            Gizmos.DrawCube(HexMath.Axial2World(hex.Value,WeightMap.cellSize), new Vector3(.5f, .5f, .5f));
+            Gizmos.color = new Color(hex.Value.weight.food / 10, hex.Value.weight.safety / 10, hex.Value.weight.sound / 10);
+            Gizmos.DrawCube(HexMath.Axial2World(hex.Value, WeightMap.cellSize), new Vector3(.5f, .5f, .5f));
         }
 
         foreach (var hex in outHexRange)
         {
             Gizmos.color = new Color(hex.Value.weight.food / 10, hex.Value.weight.soundMemory / 10, hex.Value.weight.sound / 10);
-            Gizmos.DrawSphere(HexMath.Axial2World(hex.Value, WeightMap.cellSize)+Vector3.up*hex.Value.timeSinceChecked, .25f);
+            Gizmos.DrawSphere(HexMath.Axial2World(hex.Value, WeightMap.cellSize) + Vector3.up * hex.Value.timeSinceChecked, .25f);
         }
         try
         {
@@ -634,12 +604,14 @@ public class DeepWalkerLogic : NetworkBehaviour
             Gizmos.DrawSphere(HexMath.Axial2World(optimalTracking, WeightMap.cellSize) + Vector3.up * 3, .5f);
 
 
-        } catch 
-        { 
-        
-        
+        }
+        catch
+        {
+
+
         }
 
 
     }
+
 }

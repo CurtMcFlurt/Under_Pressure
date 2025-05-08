@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
 [System.Serializable]
@@ -24,7 +25,7 @@ public struct HexCell
 }
 
 [ExecuteAlways]
-public class HexagonalWeight : MonoBehaviour
+public class HexagonalWeight : NetworkBehaviour
 {
     public int range = 5;
     public float cellSize = 1;
@@ -44,13 +45,14 @@ public class HexagonalWeight : MonoBehaviour
 
     private void OnEnable()
     {
-        
+
         SetUpHexes();
         playerWeights.Clear();
     }
 
     private void Update()
     {
+        if(grid == null)SetUpHexes();
         foreach (var coord in grid.coordinate)
         {
             // You could draw gizmos here if needed

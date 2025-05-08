@@ -9,6 +9,7 @@ public class TakeTheCamera : MonoBehaviour
     private InputAction escapeAction;
     private InputAction backAction;
     private DebugMovement myMovement;
+    private PlayerMovement PlayerMovement;
     public GameObject DebugObject;
     public bool Stolen,Debuging;
     public Interactable activeStealer;
@@ -17,7 +18,7 @@ public class TakeTheCamera : MonoBehaviour
         // Get components
         inting = GetComponent<InteractWithInteractable>();
         myMovement = GetComponent<DebugMovement>();
-
+        if (myMovement == null) GetComponent<PlayerMovement>();
         // Get actions from PlayerInput component
         var playerInput = GetComponent<PlayerInput>();
         if (playerInput != null)
@@ -44,7 +45,10 @@ public class TakeTheCamera : MonoBehaviour
         if(DebugObject != null && !Stolen && Debuging)StealThecamera(DebugObject);
         if(DebugObject == null &&  Stolen && Debuging)ResetPoint();
         if (activeStealer!=null && !activeStealer.taken) { ResetPoint(); }
-        myMovement.StopMoving = Stolen;
+        if (myMovement != null) { myMovement.StopMoving = Stolen; } else if (PlayerMovement != null)
+        {
+            PlayerMovement.StopMoving = Stolen;
+        }
     }
 
     public void StealThecamera(GameObject Point)

@@ -1,4 +1,5 @@
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -107,11 +108,17 @@ public class PlayerMovement : NetworkBehaviour
 
     private bool forcedCrouch;
     private float increasingTvalue=0;
+    public bool StopMoving;
+
+    public bool mySprint;
+    public bool myMove;
     private void FixedUpdate()
     {
 
-        if (!IsOwner || myDeath.IsDead) { 
-            
+        if (!IsOwner || myDeath.IsDead || StopMoving) {
+
+          
+
             return; 
         
         }
@@ -121,7 +128,8 @@ public class PlayerMovement : NetworkBehaviour
         float sprintValue = sprintAction.ReadValue<float>();
         bool isCrouching = crouchValue > 0.5f;
         bool isSprinting = sprintValue > 0.5f && !runCD;
-
+        mySprint = isSprinting;
+       
         bool Hunched = false;
         if (isCrouching || forcedCrouch)
         {
@@ -139,19 +147,28 @@ public class PlayerMovement : NetworkBehaviour
                 stamina = 0f;
                 runCD = true;
             }
-            if (walkSound != null) {walkSound.myHeat.sound = regularSound + extraRunningSound; walkSound.range = regularRange + extraRunningRange; }
         }
         else
         {
             moveSpeed = walkingSpeed;
             RegenerateStamina();
-            if (walkSound != null) { walkSound.myHeat.sound = regularSound; walkSound.range = regularRange; }
         }
         myAnim.SetBool("Running", isSprinting);
+
+        var sound = GetComponentInChildren<PlayerWeightSyncer>();
         if (moveInput.magnitude>0.1 && !isCrouching)
         {
-            walkSound.enabled = true;
+            myMove = true;
+            if (!isSprinting)
+            {
+                sound.SetMovementState(true, false);
+            }
+            else
+            {
+                sound.SetMovementState(true, true);
+            }
         }
+        else sound.SetMovementState(false,false);
         if (stamina >= 1f)
         {
             stamina = 1f;
@@ -305,6 +322,37 @@ public class PlayerMovement : NetworkBehaviour
             }
         }
     }
+
+    //[ServerRpc]
+    //private void OnWalkServerRpc()
+    //{
+    //    Debug.Log("ServerRPC WALk");
+    //    CreateSound();
+    //}  
+    //[ServerRpc]
+    //private void OnRunServerRpc()
+    //{
+
+    //    Debug.Log("ServerRPC Run");
+    //    CreateSoundRun();
+    //}
+
+
+    //private void CreateSound()
+    //{
+
+    //    Debug.Log("Sound NOrm");
+    //    if (walkSound != null) { walkSound.myHeat.sound = regularSound; walkSound.range = regularRange; }
+    //    walkSound.enabled = true;
+    //}  
+    //private void CreateSoundRun()
+    //{
+
+    //    Debug.Log("Sound ");
+    //    if (walkSound != null) { walkSound.myHeat.sound = regularSound + extraRunningSound; walkSound.range = regularRange + extraRunningRange; }
+    //    walkSound.enabled = true;
+    //}
+
     private void HandleSceneEvent(SceneEvent sceneEvent)
     {
         // Only care about LoadComplete and only for our client

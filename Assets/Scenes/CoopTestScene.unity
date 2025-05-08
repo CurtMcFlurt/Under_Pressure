@@ -717,7 +717,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: NetworkSceneLoader, Assembly-CSharp
-        m_MethodName: TriggerSceneChange
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1854,8 +1854,36 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8535280549031904604, guid: 4873ef2d71f28b947a10cc9c768b2404, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535280549031904604, guid: 4873ef2d71f28b947a10cc9c768b2404, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535280549031904604, guid: 4873ef2d71f28b947a10cc9c768b2404, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535280549031904604, guid: 4873ef2d71f28b947a10cc9c768b2404, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535280549031904604, guid: 4873ef2d71f28b947a10cc9c768b2404, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 2195.13
+      value: 2002.7299
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535280549031904604, guid: 4873ef2d71f28b947a10cc9c768b2404, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1046.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535280549031904604, guid: 4873ef2d71f28b947a10cc9c768b2404, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -181.16507
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535280549031904604, guid: 4873ef2d71f28b947a10cc9c768b2404, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -523.2
       objectReference: {fileID: 0}
     - target: {fileID: 9220245046943581714, guid: 4873ef2d71f28b947a10cc9c768b2404, type: 3}
       propertyPath: m_Pivot.x

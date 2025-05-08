@@ -10,7 +10,7 @@ public class Scouting :ScriptableBehaviour
         base.Behave(logic);
         FindCorrectHex(logic);
     }
-
+  
 
 
 

@@ -132,12 +132,12 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DeepColor: {r: 0.13008183, g: 0.19811317, b: 0.11307401, a: 0.45490196}
+    - _DeepColor: {r: 0.041963324, g: 0.21698105, b: 0.0030704818, a: 0.80784315}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 0.23589353, g: 0.5377358, b: 0.47180706, a: 0.50980395}
     - _RefractionScale: {r: 10, g: 10, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SurfaceColor: {r: 0.5286579, g: 0.7117302, b: 0.8301887, a: 0.28235295}
+    - _SurfaceColor: {r: 0.5308384, g: 0.745283, b: 0.7430449, a: 0.48235294}
     - _UV: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

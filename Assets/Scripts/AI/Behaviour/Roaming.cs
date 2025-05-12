@@ -18,6 +18,8 @@ public class Roaming : ScriptableBehaviour
         logic.updateGoal(HexMath.Axial2World(logic.optimalRoaming, logic.WeightMap.cellSize));
         logic.pathfinder.maxSpeed = roamingMovementSpeed;
         logic.hearingRange = roamingHearingRange;
+        logic.newSound = false;
+        logic.reactToNewSound = false;
 
     }
 

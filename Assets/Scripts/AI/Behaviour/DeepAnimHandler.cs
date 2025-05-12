@@ -17,9 +17,10 @@ public class DeepAnimHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(logic.myBehaviour == ActiveBehaviour.hunting && logic.TrackingObject!=null && !StillHunting||debugSceam)
+        if(logic.myBehaviour == ActiveBehaviour.hunting && logic.TrackingObject!=null && !StillHunting||debugSceam || logic.ForceScream)
         {
             debugSceam = false;
+            logic.ForceScream = false;
             StillHunting = true;
             Screaming();
         }
@@ -34,7 +35,7 @@ public class DeepAnimHandler : MonoBehaviour
             AttackIng();
         }
 
-        if (logic.mood.alertness > 0.9f && !StillSearching ||debugListen) 
+        if (logic.mood.alertness > 0.9f && !StillSearching ||debugListen || logic.ForceListen) 
         {
             StillSearching = true;
             debugListen = false;
@@ -50,7 +51,7 @@ public class DeepAnimHandler : MonoBehaviour
             debugEat = false;
             Eating();
         }
-        anim.SetFloat("CurrentSpeed", logic.pathfinder.curentSpeed);
+        anim.SetFloat("CurrentSpeed", logic.Speed.Value);
     }
 
     private void AttackIng()

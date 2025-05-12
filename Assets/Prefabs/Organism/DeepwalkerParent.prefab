@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 3886811971848908395}
   - component: {fileID: 3233905933598059947}
   - component: {fileID: 4122018481761063363}
+  - component: {fileID: 4385557012628450888}
   m_Layer: 10
   m_Name: DeepWalker
   m_TagString: Untagged
@@ -455,6 +456,12 @@ MonoBehaviour:
   neutral: 1
   feedTime: 0
   sleepTime: 0
+  ammountToHunt: 2
+  ammountToKill: 4
+  NearbyValue: 4
+  Speed:
+    m_InternalValue: 0
+  keys: []
 --- !u!54 &8739728790375095593
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -538,7 +545,7 @@ SphereCollider:
     m_Bits: 512
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 130487
+    m_Bits: 261559
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -688,6 +695,34 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
+--- !u!114 &4385557012628450888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349037532338826166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ef898bd3ce1d343ae1426e703d04cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 1e28861210a5c47458107e9d7cfe89d5, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2946835541160975649}
+        m_TargetAssemblyTypeName: DeepWalkerLogic, Assembly-CSharp
+        m_MethodName: UnPackData
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &498834849836991601
 GameObject:
   m_ObjectHideFlags: 0
@@ -3973,7 +4008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 0
+  GlobalObjectIdHash: 3398850150
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -4313,7 +4348,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 8981830883532105017}
   logic: {fileID: 2946835541160975649}
-  findPath: {fileID: 6290572586073559860}
   attack: {fileID: 2633435358114455319}
   audioEvent: {fileID: 11400000, guid: 6690cfc70da92204ca14adf9f7daf35d, type: 2}
   timeForAttack: 2

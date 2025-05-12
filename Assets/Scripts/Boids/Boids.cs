@@ -28,7 +28,7 @@ public class Boids : MonoBehaviour
 
     void Awake()
     {
-        material = transform.GetComponentInChildren<MeshRenderer>().material;
+        //material = transform.GetComponentInChildren<MeshRenderer>().material;
         cachedTransform = transform;
     }
 

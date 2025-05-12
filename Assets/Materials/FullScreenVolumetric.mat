@@ -108,7 +108,7 @@ Material:
     - _GlossyReflections: 0
     - _LightPower: 1
     - _LightScattering: 0.749
-    - _MaxDistance: 300
+    - _MaxDistance: 150
     - _Metallic: 0
     - _NoiseOffset: 1
     - _NoiseTiling: 0.94
@@ -131,7 +131,7 @@ Material:
     - _debugInt: 1
     - _fogFalloff: 3.23
     - _fogOffset: 3
-    - _totalLights: 2
+    - _totalLights: 1
     - _visionMaxDistance: 4.1
     - _visionMinDistance: 4.13
     m_Colors:

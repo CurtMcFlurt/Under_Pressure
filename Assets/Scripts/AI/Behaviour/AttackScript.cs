@@ -35,7 +35,7 @@ public class AttackScript : MonoBehaviour
                 logic.TrackingObject = null;
                 hitPlayerCol.enabled = false;
                 logic.mood.anger = 0;
-
+                Debug.Log("Reached Max Attacks");
             }
             return;
         }
@@ -61,6 +61,7 @@ public class AttackScript : MonoBehaviour
         {
           if( !other.GetComponent<PlayerDeath>().IsDead && other.GetComponent<PlayerDeath>() != null)
             {
+                Debug.Log("foundYOU");
                 logic.TrackingObject = other.gameObject;
                 logic.AngerInfluence(1);
                 logic.AlertnessInfluence(1);

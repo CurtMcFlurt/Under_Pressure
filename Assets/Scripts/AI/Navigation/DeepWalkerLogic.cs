@@ -70,6 +70,17 @@ public class DeepWalkerLogic : NetworkBehaviour
     private float maxDistance = 0f;
     public float feedTime = 0;
     public float sleepTime = 0;
+    [NonSerialized]
+    public bool ForceScream,ForceListen, newSound, reactToNewSound;
+    private int currentAmmount;
+    private bool Nearby;
+    [Tooltip("ammount of winConditions to go be able to murder")]
+    public int ammountToHunt = 2;
+    [Tooltip("ammount of winConditions to go maximum murder")]
+    public int ammountToKill = 4;
+    public int NearbyValue=4;
+    public NetworkVariable<float> Speed = new(writePerm: NetworkVariableWritePermission.Server);
+
     public override void OnNetworkSpawn()
     {
         if (!HasAuthority)
@@ -170,6 +181,7 @@ public class DeepWalkerLogic : NetworkBehaviour
         {
             TimeToSleep();
         }
+        Speed.Value = pathfinder.curentSpeed;
     }
 
     private void FixedUpdate()
@@ -246,15 +258,34 @@ public class DeepWalkerLogic : NetworkBehaviour
             HungerInfluence((Time.deltaTime * activeLogic.tickrateHunger)/100);
         }
         else mood.hunger = 1;
-      
-        if (mood.alertness > .5f && mood.anger<1)
+        if (currentAmmount >= ammountToHunt)
         {
-            AngerInfluence(Time.deltaTime / 10);
+            if (currentAmmount >= ammountToKill)
+            {
+                if (mood.alertness > .5f && mood.anger < 1)
+                {
+                    AngerInfluence(Time.deltaTime / 10);
 
+                }
+            }else if(Nearby==true)
+            {
+                Nearby = false;
+                if(mood.anger < 1)
+                {
+                    AngerInfluence(Time.deltaTime / 12);
+                }
+            }
+            
         }
+        
 
         if (mood.alertness > 0 && inHexRange.Keys.Contains(probableVictimPosition.hexCoords))
         {
+            if(reactToNewSound && newSound && HexMath.HexDistance(myHex.hexCoords, probableVictimPosition.hexCoords) < NearbyValue/2)
+            {
+                ForceListen = true;
+                reactToNewSound = false;
+            }
             mood.alertness -= Time.deltaTime/2;
         }
        
@@ -316,7 +347,7 @@ public class DeepWalkerLogic : NetworkBehaviour
     }
 
     private Vector3 previousGoal;
-
+    
     public void updateGoal(Vector3 position)
     {
         if (position == previousGoal || recalculateTime>0) return;
@@ -412,6 +443,8 @@ public class DeepWalkerLogic : NetworkBehaviour
                 inHexRange[neighborCoords] = memoryNeighbor;
             }
         }
+        if (HexMath.HexDistance(myHex.hexCoords, loudestReactHex.hexCoords) < NearbyValue) Nearby = true;
+        if (newSound == false) newSound = true;
         return loudestReactHex;
       
     }
@@ -642,4 +675,34 @@ public class DeepWalkerLogic : NetworkBehaviour
 
 
     }
+
+
+    public List<String> keys = new List<String>();
+
+    public void UnPackData(Component sender, object data)
+    {
+        // Check if the data is a string before proceeding
+        if (data is string keyName)
+        {
+            Debug.Log($"Scene change requested: {keyName}");
+
+            // Trigger the scene change with the provided scene name
+            if (!keys.Contains(keyName))
+            {
+                currentAmmount++;
+                keys.Add(keyName);
+                ForceScream = true;
+                
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Data is not a valid scene name string.");
+        }
+
+      
+    }
+
+
+
 }

@@ -64,6 +64,7 @@ public class BoidFollowTarget : MonoBehaviour
                 if (currentDeath > TimeTillDeath)
                 {
                     myDeath.Die();
+                    currentDeath = 0;
                 }
             }
             else if (checkIfInside)

@@ -40,6 +40,7 @@ public class PlayerMovement : NetworkBehaviour
     public float currentAngle;
     public Animator myAnim;
     public GameObject playerVisualRoot;
+    public GameEvent spawnEvent;
 
     public override void OnNetworkSpawn()
     {
@@ -79,7 +80,7 @@ public class PlayerMovement : NetworkBehaviour
             SetLayerRecursively(playerVisualRoot, 9);
         }
             TrySpawnAtPoint();
-
+        spawnEvent.Raise(this, this);
     }
     void SetLayerRecursively(GameObject obj, int newLayer)
     {

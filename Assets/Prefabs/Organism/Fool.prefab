@@ -1483,6 +1483,8 @@ GameObject:
   - component: {fileID: 1848772153272343955}
   - component: {fileID: 3054373178530537104}
   - component: {fileID: 4919837966510297474}
+  - component: {fileID: 5265856201605855213}
+  - component: {fileID: 2268001645992575640}
   m_Layer: 9
   m_Name: Fool
   m_TagString: Player
@@ -1622,6 +1624,7 @@ MonoBehaviour:
   currentAngle: 0
   myAnim: {fileID: 2048456973754545902}
   playerVisualRoot: {fileID: 4569192355711735197}
+  spawnEvent: {fileID: 11400000, guid: bda0432c95c0bbf4ca4d02ef4e620afc, type: 2}
   StopMoving: 0
   mySprint: 0
   myMove: 0
@@ -1816,6 +1819,48 @@ MonoBehaviour:
   Stolen: 0
   Debuging: 0
   activeStealer: {fileID: 0}
+--- !u!114 &5265856201605855213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3853958961406216230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32b99dbcae2f5bf498c9d2877ea61c6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconSprite: {fileID: 21300000, guid: 09e8f1948fd4d48489dacfb11f30036d, type: 3}
+  compassTargetEvent: {fileID: 11400000, guid: d19c80ddbe9def14c8847c7543cc3a7d, type: 2}
+--- !u!114 &2268001645992575640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3853958961406216230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ef898bd3ce1d343ae1426e703d04cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: bda0432c95c0bbf4ca4d02ef4e620afc, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5265856201605855213}
+        m_TargetAssemblyTypeName: CompassTargetSender, Assembly-CSharp
+        m_MethodName: SendToCompass
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3992917765594039046
 GameObject:
   m_ObjectHideFlags: 0

@@ -67,6 +67,14 @@ public class CompassHandler : MonoBehaviour
             return;
         }
 
+        // Prevent duplicates: Check if the target is already in the list
+        bool alreadyExists = targets.Exists(t => t.target == targetTransform);
+        if (alreadyExists)
+        {
+            Debug.Log($"CompassHandler: Target '{targetTransform.name}' already exists. Skipping.");
+            return;
+        }
+
         GameObject markerObj = Instantiate(markerPrefab, compassRect);
         Image markerImage = markerObj.GetComponent<Image>();
         markerImage.sprite = icon;
@@ -81,7 +89,6 @@ public class CompassHandler : MonoBehaviour
 
         targets.Add(ct);
     }
-
     public void RemoveTarget(Transform targetTransform)
     {
         CompassTarget ct = targets.Find(t => t.target == targetTransform);

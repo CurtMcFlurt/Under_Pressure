@@ -52,8 +52,8 @@ public class PlayerDeath : MonoBehaviour
 
     public void Revive(Vector3 respawnPoint)
     {
-       myTimer=0;
-    IsDead = false;
+        myTimer=0;
+        IsDead = false;
         myCollider.height = originalHeight;
         myCollider.center = VectorFix.returnVector3With0Y(myCollider.center);
         transform.position = respawnPoint;

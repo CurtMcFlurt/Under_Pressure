@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8245782180554762108}
+  - component: {fileID: 8865637100309032310}
   m_Layer: 0
   m_Name: BigButtonEnergy
   m_TagString: Untagged
@@ -34,6 +35,20 @@ Transform:
   - {fileID: 6443567500219394984}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8865637100309032310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047086600831886341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32b99dbcae2f5bf498c9d2877ea61c6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconSprite: {fileID: 21300000, guid: 322781518ee644c8c97ba31f7ded5eb6, type: 3}
+  compassTargetEvent: {fileID: 11400000, guid: d19c80ddbe9def14c8847c7543cc3a7d, type: 2}
 --- !u!1 &3962405067130013564
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,6 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12f14652e39811d43b6cf55fcbc6aa12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taken: 0
   buttonEvent: {fileID: 11400000, guid: 42979720d0facb245a5ba36401f909a9, type: 2}
   sendString: EliasScen
 --- !u!1 &7907874316288825682

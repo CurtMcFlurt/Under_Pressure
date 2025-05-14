@@ -696,7 +696,8 @@ Transform:
   m_LocalPosition: {x: -25.385931, y: 55.699017, z: -36.992676}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1027652503}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &389376123
@@ -1657,6 +1658,11 @@ RectTransform:
   m_AnchoredPosition: {x: -9.12, y: 10.13}
   m_SizeDelta: {x: 24, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &1027652503 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 9220245046943581714, guid: 4873ef2d71f28b947a10cc9c768b2404, type: 3}
+  m_PrefabInstance: {fileID: 1387608141}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1261022294
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1831,7 +1837,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 389376122}
     m_Modifications:
     - target: {fileID: 4198352647434501067, guid: 4873ef2d71f28b947a10cc9c768b2404, type: 3}
       propertyPath: m_MaxPlayers
@@ -2493,25 +2499,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2012770393 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1047086600831886341, guid: ab95966ac3b0f2d438f36e8389a7188b, type: 3}
-  m_PrefabInstance: {fileID: 9072093261370495782}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2012770395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2012770393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32b99dbcae2f5bf498c9d2877ea61c6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  iconSprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  compassTargetEvent: {fileID: 11400000, guid: d19c80ddbe9def14c8847c7543cc3a7d, type: 2}
 --- !u!1001 &3440149512478805711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2589,10 +2576,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigButtonEnergy
       objectReference: {fileID: 0}
-    - target: {fileID: 1415967806014253042, guid: ab95966ac3b0f2d438f36e8389a7188b, type: 3}
-      propertyPath: sendString
-      value: Speltest_1
-      objectReference: {fileID: 0}
     - target: {fileID: 8245782180554762108, guid: ab95966ac3b0f2d438f36e8389a7188b, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.4469396
@@ -2648,10 +2631,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1047086600831886341, guid: ab95966ac3b0f2d438f36e8389a7188b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2012770395}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab95966ac3b0f2d438f36e8389a7188b, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -2667,7 +2647,6 @@ SceneRoots:
   - {fileID: 522446874}
   - {fileID: 470446913}
   - {fileID: 389376122}
-  - {fileID: 1387608141}
   - {fileID: 9072093261370495782}
   - {fileID: 793981038}
   - {fileID: 1505247810}

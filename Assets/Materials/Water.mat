@@ -98,7 +98,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Distance: 1.55
+    - _Distance: 0.53
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -118,7 +118,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RefractionSpeed: 0.075
-    - _RefractionStreangth: 0.25
+    - _RefractionStreangth: 0
     - _Smoothness: 0.135
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -132,12 +132,12 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DeepColor: {r: 0.15244645, g: 0.22641504, b: 0.1356354, a: 0.69411767}
+    - _DeepColor: {r: 0.15244642, g: 0.22641501, b: 0.13563538, a: 0.5254902}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FoamColor: {r: 0.23589343, g: 0.53773564, b: 0.47180688, a: 0}
+    - _FoamColor: {r: 0.23589337, g: 0.53773564, b: 0.47180682, a: 0.31764707}
     - _RefractionScale: {r: 10, g: 10, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SurfaceColor: {r: 0.5308384, g: 0.745283, b: 0.7430449, a: 0.44705883}
+    - _SurfaceColor: {r: 0.5308384, g: 0.745283, b: 0.7430449, a: 1}
     - _UV: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

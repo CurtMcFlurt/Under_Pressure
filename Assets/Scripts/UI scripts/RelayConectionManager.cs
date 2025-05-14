@@ -56,7 +56,10 @@ public class RelayConnectionManager : MonoBehaviour
         State = ConnectionState.Disconnected;
     }
 
-    public void startConnection() => CreateOrJoinSessionAsync(joinCodeInput.text, NameInput.text);
+    public async void startConnection()
+    {
+        await CreateOrJoinSessionAsync(joinCodeInput.text, NameInput.text);
+    }
     public async Task CreateOrJoinSessionAsync(string sessionName, string profileName)
     {
         if (string.IsNullOrEmpty(profileName) || string.IsNullOrEmpty(sessionName))

@@ -109,7 +109,7 @@ public class PlayerMovement : NetworkBehaviour
 
     private bool forcedCrouch;
     private float increasingTvalue=0;
-    public bool StopMoving;
+    public bool StopMoving,stopLooking;
 
     public bool mySprint;
     public bool myMove;
@@ -210,7 +210,7 @@ public class PlayerMovement : NetworkBehaviour
     private void Update()
     {
 
-        if (!IsOwner) return;
+        if (!IsOwner || stopLooking) return;
         Vector2 lookInput = lookAction.ReadValue<Vector2>();
 
         float mouseX = lookInput.x * lookSpeed;

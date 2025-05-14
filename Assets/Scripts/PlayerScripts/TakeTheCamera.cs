@@ -9,7 +9,7 @@ public class TakeTheCamera : MonoBehaviour
     private InputAction escapeAction;
     private InputAction backAction;
     private DebugMovement myMovement;
-    private PlayerMovement PlayerMovement;
+    private PlayerMovement myPlayerMovement;
     public GameObject DebugObject;
     public bool Stolen,Debuging;
     public Interactable activeStealer;
@@ -18,7 +18,7 @@ public class TakeTheCamera : MonoBehaviour
         // Get components
         inting = GetComponent<InteractWithInteractable>();
         myMovement = GetComponent<DebugMovement>();
-        if (myMovement == null) GetComponent<PlayerMovement>();
+        if (myMovement == null)myPlayerMovement= GetComponent<PlayerMovement>();
         // Get actions from PlayerInput component
         var playerInput = GetComponent<PlayerInput>();
         if (playerInput != null)
@@ -39,16 +39,34 @@ public class TakeTheCamera : MonoBehaviour
         escapeAction?.Disable();
         backAction?.Disable();
     }
-
+    private float cd = .25f;
+    private float acd = 0;
     public void Update()
     {
         if(DebugObject != null && !Stolen && Debuging)StealThecamera(DebugObject);
         if(DebugObject == null &&  Stolen && Debuging)ResetPoint();
         if (activeStealer!=null && !activeStealer.taken) { ResetPoint(); }
-        if (myMovement != null) { myMovement.StopMoving = Stolen; } else if (PlayerMovement != null)
+        if (myMovement != null) { myMovement.StopMoving = Stolen; } else if (myPlayerMovement != null)
         {
-            PlayerMovement.StopMoving = Stolen;
+            myPlayerMovement.StopMoving = Stolen;
         }
+        var esc = escapeAction.ReadValue<float>();
+
+        if (!Stolen && esc>0.5 &&acd<=0)
+        {
+            var r = FindAnyObjectByType<RelayConnectionManager>();
+            r.uiPanel.SetActive(!r.uiPanel.activeInHierarchy);
+            myPlayerMovement.StopMoving = !r.uiPanel.activeInHierarchy;
+
+            if (!r.uiPanel.activeInHierarchy)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            else Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = !r.uiPanel.activeInHierarchy;
+            acd = cd;
+        }
+        acd -= Time.deltaTime;
     }
 
     public void StealThecamera(GameObject Point)

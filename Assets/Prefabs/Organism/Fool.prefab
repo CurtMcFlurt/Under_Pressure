@@ -1831,7 +1831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32b99dbcae2f5bf498c9d2877ea61c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconSprite: {fileID: 21300000, guid: 09e8f1948fd4d48489dacfb11f30036d, type: 3}
+  iconSprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
   compassTargetEvent: {fileID: 11400000, guid: d19c80ddbe9def14c8847c7543cc3a7d, type: 2}
 --- !u!114 &2268001645992575640
 MonoBehaviour:

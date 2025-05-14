@@ -2510,7 +2510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32b99dbcae2f5bf498c9d2877ea61c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconSprite: {fileID: 21300000, guid: edf47f252cf3849508fb8878885acc8e, type: 3}
+  iconSprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   compassTargetEvent: {fileID: 11400000, guid: d19c80ddbe9def14c8847c7543cc3a7d, type: 2}
 --- !u!1001 &3440149512478805711
 PrefabInstance:

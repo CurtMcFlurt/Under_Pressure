@@ -68,6 +68,8 @@ public class InteractWithInteractable : MonoBehaviour
 
             currentWait = 0;
         }
+
+
     }
 
     private void CheckInteractRay()

@@ -31,7 +31,7 @@ public class Cog : MonoBehaviour
     private void Update()
     {
 
-        transform.localScale = new Vector3(Size / 100, transform.localScale.y, Size / 100);
+        transform.localScale = new Vector3(transform.localScale.x,Size / 100,  Size / 100);
 
     }
 

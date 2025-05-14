@@ -286,7 +286,7 @@ public class DeepWalkerLogic : NetworkBehaviour
                 ForceListen = true;
                 reactToNewSound = false;
             }
-            mood.alertness -= Time.deltaTime/2;
+            mood.alertness -= Time.deltaTime/5;
         }
        
         

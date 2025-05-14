@@ -10,6 +10,7 @@ using TMPro;
 using System;
 using Unity.Services.Multiplayer;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 
 
@@ -52,8 +53,18 @@ public class RelayConnectionManager : MonoBehaviour
         {
             await m_Session.LeaveAsync();
         }
+
         throwAwayCamera.enabled = true;
         State = ConnectionState.Disconnected;
+
+        // Optional: clean up the NetworkManager
+        if (m_NetworkManager != null && m_NetworkManager.IsConnectedClient)
+        {
+            m_NetworkManager.Shutdown();
+        }
+
+        // Load the starting scene (replace "MainMenu" with your scene name)
+        SceneManager.LoadScene("CoopTestScene");
     }
 
     public async void startConnection()

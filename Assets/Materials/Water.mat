@@ -137,7 +137,7 @@ Material:
     - _FoamColor: {r: 0.23589337, g: 0.53773564, b: 0.47180682, a: 0.31764707}
     - _RefractionScale: {r: 10, g: 10, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SurfaceColor: {r: 0.5308384, g: 0.745283, b: 0.7430449, a: 1}
+    - _SurfaceColor: {r: 0.5308384, g: 0.745283, b: 0.7430449, a: 0.6117647}
     - _UV: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

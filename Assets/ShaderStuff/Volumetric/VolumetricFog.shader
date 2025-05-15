@@ -17,6 +17,7 @@
        _visionMinDistance("Vision min distance",float)=0
        _visionMaxDistance("vision max distance",float)=50
        _fogFalloff("fog fallof",float)=1
+       _MaxClearFogDistance("light showing their objects",float)=50
        _LightPower("added light Power",float)=100
        _totalLights("script value Lights",int)=0
         
@@ -56,6 +57,7 @@ float _NoiseTiling;
 float4 _LightContribution;
 float _LightScattering;
 float _visionMinDistance;
+float _MaxClearFogDistance; // How far away lights can influence fog (e.g. 50)
 float _visionMaxDistance;
 float _fogFalloff;
 float _LightPower;
@@ -74,15 +76,13 @@ float get_density(float3 worldPos)
     density = saturate(density - _DensityThreshold) * _DensityMultiplier;
     return density;
 }
-
 half4 frag(Varyings IN) : SV_Target
 {
-
     float4 col = SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, IN.texcoord);
     float depth = SampleSceneDepth(IN.texcoord);
     float3 worldPos = ComputeWorldSpacePosition(IN.texcoord, depth, UNITY_MATRIX_I_VP);
     float3 entryPoint = _WorldSpaceCameraPos;
-    float3 viewDir = worldPos - _WorldSpaceCameraPos;
+    float3 viewDir = worldPos - entryPoint;
     float viewLength = length(viewDir);
     float3 rayDir = normalize(viewDir);
     float2 pixelCoords = IN.texcoord * _BlitTexture_TexelSize.zw;
@@ -93,55 +93,72 @@ half4 frag(Varyings IN) : SV_Target
     float transmittance = 1.0;
     float4 fogCol = _Color;
 
+    int maxLights = min(_totalLights, 8);
+
+    // 🔁 March through fog volume
     while (distTravelled < distLimit)
     {
         float3 rayPos = entryPoint + rayDir * distTravelled;
         float density = 0;
-        if(distTravelled>_visionMinDistance)
+
+        if (distTravelled > _visionMinDistance)
         {
-             density=get_density(rayPos);
+            density = get_density(rayPos);
 
-            if(distTravelled<_visionMaxDistance)
+            if (distTravelled < _visionMaxDistance)
             {
-                density -= (1-(distTravelled/(_visionMaxDistance*_fogFalloff)));
-            } 
-           
-        }else density=0;
-        
-        float lightDensityReduction = 0.0; // Reset per-step
-
-        // 💡 Accumulate additional lights
-        for (int i = 0; i < _totalLights; ++i)
-        {
-            float3 lightDir = normalize(_AdditionalLightPositions[i].xyz - rayPos);
-            float lightDistance = length(_AdditionalLightPositions[i].xyz - rayPos);
-
-            // ✅ **Light Range Attenuation**
-            if (lightDistance > _AdditionalLightRanges[i])
-                continue;  // Skip if fragment is outside the light range
-
-            float attenuation = 1.0 / (1.0 + lightDistance * lightDistance * 0.1); // Inverse-square law
-
-            // ✅ **Spotlight Handling**
-            float spotlightFactor = 1.0; // Default to 1 for point lights
-            if (_AdditionalLightAngles[i] > 0.0)  // If the light is a spotlight
-            {
-                float spotCosine = dot(-lightDir, normalize(_AdditionalLightDirections[i])); // Compare angle
-                if (spotCosine < _AdditionalLightAngles[i])
-                    continue; // Skip if outside the cone
-
-                spotlightFactor = smoothstep(_AdditionalLightAngles[i], _AdditionalLightAngles[i] + 0.5, spotCosine);
+                density -= (1 - (distTravelled / (_visionMaxDistance * _fogFalloff)));
             }
-
-            // Accumulate light contribution
-            lightDensityReduction += (attenuation * spotlightFactor * _AdditionalLightIntensities[i] * _LightPower);
-
-            // Add light color to fog
-            fogCol.rgb += (_AdditionalLightColors[i].rgb * lightDensityReduction * _LightContribution.rgb);
         }
 
-        // Apply accumulated light reduction to the density
+        float lightDensityReduction = 0.0;
+        float3 lightCol = 0.0;
+
+        // 🔦 Spotlight evaluation
+        [unroll(8)]
+        for (int i = 0; i < 8; ++i)
+        {
+            if (i >= maxLights) break;
+
+            float3 lightPos = _AdditionalLightPositions[i].xyz;
+            float lightRange = _AdditionalLightRanges[i];
+            float3 lightDir = normalize(_AdditionalLightDirections[i]);
+            float3 toSample = rayPos - lightPos;
+            float distToSample = length(toSample);
+
+            if (distToSample > lightRange)
+                continue;
+
+            float3 toSampleDir = toSample / max(distToSample, 0.001);
+            float spotCos = dot(toSampleDir, lightDir);
+
+            float cosCutoff = _AdditionalLightAngles[i];
+            if (cosCutoff > 0.0 && spotCos < cosCutoff)
+                continue;
+
+            // Intensity falloffs
+            float attenuation = 1.0 / (1.0 + distToSample * distToSample * 0.05);
+            float coneFalloff = (cosCutoff > 0.0)
+                ? smoothstep(cosCutoff, cosCutoff + 0.1, spotCos)
+                : 1.0;
+            float edgeFalloff = saturate(1.0 - (distToSample / lightRange));
+            float distanceFade = saturate(1.0 - (distTravelled / _MaxClearFogDistance));
+
+            float lightEffect = attenuation * coneFalloff * edgeFalloff *
+                                _AdditionalLightIntensities[i] * _LightPower;
+
+            // 🌫️ Reduce fog density only *within* cone
+            lightDensityReduction += lightEffect *.25f;
+
+            // 🌈 Add light color with smooth falloff (even past fog clear)
+            lightCol += _AdditionalLightColors[i].rgb * lightEffect *
+                        _LightContribution.rgb * distanceFade;
+        }
+
         density = max(0, density - lightDensityReduction);
+
+      // Always add light color to fog, even if density is zero
+        fogCol.rgb += lightCol * _StepSize;
 
         if (density > 0)
         {
@@ -151,9 +168,9 @@ half4 frag(Varyings IN) : SV_Target
                           henyey_greenstein(dot(rayDir, mainLight.direction), _LightScattering) *
                           density * mainLight.shadowAttenuation * _StepSize;
 
-            density -= max(- distTravelled, 0);
             transmittance *= exp(-density * _StepSize);
         }
+
         distTravelled += _StepSize;
     }
 

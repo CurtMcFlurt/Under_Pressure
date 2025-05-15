@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.13, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.13, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8260392484210374728}
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActiveSocket: {fileID: 0}
-  SpawnLocation: {x: 4.341, y: 0.511, z: 1.063}
+  SpawnLocation: {x: 0, y: 0, z: 0}
   socketLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -151,7 +151,7 @@ MonoBehaviour:
   taken: 0
   cog: {fileID: 0}
   intermid: {fileID: 0}
-  waitToInteract: 1.5
+  waitToInteract: 0.25
   currentWait: 3
 --- !u!1 &7102420488323380047
 GameObject:

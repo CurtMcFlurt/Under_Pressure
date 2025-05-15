@@ -108,6 +108,7 @@ Material:
     - _GlossyReflections: 0
     - _LightPower: 1
     - _LightScattering: 0.749
+    - _MaxClearFogDistance: 50
     - _MaxDistance: 300
     - _Metallic: 0
     - _NoiseOffset: 1

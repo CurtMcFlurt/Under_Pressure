@@ -29,7 +29,7 @@ public class DeepAnimHandler : MonoBehaviour
         {
             StillHunting = false;
         }
-        if (attack.isAttacking|| debugAttack)
+        if (attack.isAttacking.Value|| debugAttack)
         {
             debugAttack = false;
             AttackIng();

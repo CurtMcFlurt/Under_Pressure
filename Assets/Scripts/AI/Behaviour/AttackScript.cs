@@ -1,12 +1,13 @@
 using System.Threading;
+using Unity.Netcode;
 using UnityEngine;
 
-public class AttackScript : MonoBehaviour
+public class AttackScript : NetworkBehaviour
 {
     public SphereCollider hitPlayerCol;
     public GameObject playerMurderSphere;
     public float attackTimer;
-    public bool isAttacking;
+    public NetworkVariable< bool> isAttacking;
     private DeepWalkerLogic logic;
     private Agent_findPath pather;
     public int maxAttacks=7;
@@ -23,12 +24,17 @@ public class AttackScript : MonoBehaviour
     }
     public void FixedUpdate()
     {
-       
+        if (!HasAuthority)
+        {
+            playerMurderSphere.SetActive(isAttacking.Value);
+            return;
+        }
+
         if (logic.TrackingObject != null && hitPlayerCol.bounds.Contains(logic.TrackingObject.transform.position))
         {
-            isAttacking = true;
+            isAttacking.Value = true;
             playerMurderSphere.SetActive(true);
-            pather.ApplyRotation(logic.TrackingObject.transform.position - transform.position, 25);
+            pather.ApplyRotation(logic.TrackingObject.transform.position - transform.position, 125);
             currentAttacks++;
             if (currentAttacks > maxAttacks) 
             {
@@ -51,11 +57,15 @@ public class AttackScript : MonoBehaviour
                     
                     }
         }
-        isAttacking = false;
+        isAttacking.Value = false;
     }
 
     public void OnTriggerEnter(Collider other)
     {
+        if (!HasAuthority)
+        {
+            return;
+        }
         Debug.Log(other.name);
         if (other.tag == "Player" && logic.TrackingObject==null)
         {

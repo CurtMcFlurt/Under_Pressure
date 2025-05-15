@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 4010168768879742439}
   - component: {fileID: 5209811079020378336}
   - component: {fileID: 6311828003828690753}
+  - component: {fileID: -635153944638659809}
+  - component: {fileID: 8495554475443555407}
+  - component: {fileID: -2162680443424551533}
   m_Layer: 0
   m_Name: PuzzleBox
   m_TagString: Untagged
@@ -106,5 +109,68 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.68346745, y: 2.2811165, z: 1.5591629}
-  m_Center: {x: -0.014434963, y: 0.005859852, z: -0.007178068}
+  m_Size: {x: 0.68346745, y: 2.2811165, z: 0.3922643}
+  m_Center: {x: -0.014434963, y: 0.005859852, z: -0.5701425}
+--- !u!65 &-635153944638659809
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2369987426246057698}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.67315215, y: 2.2943676, z: 0.37569118}
+  m_Center: {x: -0.025531203, y: 0, z: 0.56760633}
+--- !u!65 &8495554475443555407
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2369987426246057698}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.72421455, y: 1.0629557, z: 1.6008182}
+  m_Center: {x: 0, y: -0.6033059, z: 0.0025427043}
+--- !u!65 &-2162680443424551533
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2369987426246057698}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6766708, y: 0.6556635, z: 0.7533199}
+  m_Center: {x: -0.023771882, y: 0.8193519, z: 0.0033881366}

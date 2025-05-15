@@ -11,6 +11,10 @@ public class SpawnPoint : MonoBehaviour
         occupant = player;
         occupied = true;
         player.transform.position = transform.position;
+        PlayerDeath t;
+            
+            occupant.TryGetComponent<PlayerDeath>(out t);
+        t.debugRespawnPoint = transform.position;
     }
 
     private void Update()

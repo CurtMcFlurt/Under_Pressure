@@ -37,11 +37,7 @@ public class LightManager : MonoBehaviour
             // 🔥 Reduce the raycast distance by the light's radius
             float checkDistance = Mathf.Max(distToLight - light.range, 0.1f); // Ensure a small minimum distance
 
-            if (Physics.Raycast(camPos, dirToLight, checkDistance, LayerMask.GetMask("Default")))
-            {
-                // 🚫 Skip light if blocked within its effective range
-                continue;
-            }
+           
 
             // ✅ Light is visible within its effective range
             lightPositions[count] = lightPos;

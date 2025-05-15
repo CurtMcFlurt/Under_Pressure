@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8764205079693983500}
   - component: {fileID: 8683836527670771239}
   - component: {fileID: 7173305946290757026}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: NoCollisionBoiler
   m_TagString: Untagged
   m_Icon: {fileID: 0}

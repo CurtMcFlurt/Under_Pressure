@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4265219255774724342}
   - component: {fileID: 8306361508477751531}
   - component: {fileID: 4871530546498163661}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: BarricadeBoiler
   m_TagString: Untagged
   m_Icon: {fileID: 0}

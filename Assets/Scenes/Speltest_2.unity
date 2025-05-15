@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 3e64d96e184288c448ebc95e7a7b1305, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -23021,11 +23021,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmReferences:
   - Guid:
-      Data1: -1558637697
-      Data2: 1178959278
-      Data3: -1434153283
-      Data4: -541266048
-    Path: event:/Music/Ambience Music
+      Data1: -25966719
+      Data2: 1329757355
+      Data3: 1374779811
+      Data4: 693914
+    Path: event:/Music/Engine Room
   - Guid:
       Data1: 895144404
       Data2: 1233689354
@@ -56691,14 +56691,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSettings:
-  - Action: 1
-    bgmEvent: 1
-    paramName: 
-    paramValue: 0
-    paramIsGlobal: 0
-    IgnoreFadeOut: 0
-    IgnoreSeek: 0
-    position: {x: 0, y: 0, z: 0}
   - Action: 1
     bgmEvent: 2
     paramName: 

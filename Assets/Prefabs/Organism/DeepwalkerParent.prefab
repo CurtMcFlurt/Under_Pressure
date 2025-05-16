@@ -4290,6 +4290,7 @@ GameObject:
   - component: {fileID: 8981830883532105017}
   - component: {fileID: 7223764848587246231}
   - component: {fileID: 2194464159855495900}
+  - component: {fileID: 6808718264175434366}
   m_Layer: 0
   m_Name: Deepwalker
   m_TagString: Untagged
@@ -4375,6 +4376,25 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   TransitionStateInfoList: []
   m_Animator: {fileID: 8981830883532105017}
+--- !u!114 &6808718264175434366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7426715514359515541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25f8a0e0bcc3ef4685879c7dc74ed54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterSteppingEvent:
+    Guid:
+      Data1: -678585094
+      Data2: 1325066006
+      Data3: 1764133016
+      Data4: 370128680
+    Path: event:/Sound/Monster/Footsteps
 --- !u!1 &7546361640204075929
 GameObject:
   m_ObjectHideFlags: 0

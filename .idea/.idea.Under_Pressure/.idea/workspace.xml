@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a028df7e-7bea-4c2f-be23-a01b24dc68c7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Under_Pressure/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Under_Pressure/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/DeepwalkerStuff/DeepwalkerWalkANI.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/DeepwalkerStuff/DeepwalkerWalkANI.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/FullScreenVolumetric.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/FullScreenVolumetric.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/CoopTestScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/CoopTestScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Speltest_2.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Speltest_2.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Simon/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Simon/AudioManager.cs" afterDir="false" />
-    </list>
+    <list default="true" id="a028df7e-7bea-4c2f-be23-a01b24dc68c7" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -119,7 +112,7 @@
       <workItem from="1746003184954" duration="3158000" />
       <workItem from="1746011933665" duration="4960000" />
       <workItem from="1746021534173" duration="423000" />
-      <workItem from="1747388984022" duration="4525000" />
+      <workItem from="1747388984022" duration="5263000" />
     </task>
     <servers />
   </component>

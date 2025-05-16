@@ -38,7 +38,7 @@
            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
            #include "Packages/com.unity.render-pipelines.core/RunTime/Utilities/Blit.hlsl"           
            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
-      #define MAX_ADDITIONAL_LIGHTS 8
+      #define MAX_ADDITIONAL_LIGHTS 12
 float4 _AdditionalLightPositions[MAX_ADDITIONAL_LIGHTS];
 float4 _AdditionalLightColors[MAX_ADDITIONAL_LIGHTS];
 float3 _AdditionalLightDirections[MAX_ADDITIONAL_LIGHTS];  // Spotlights need a direction
@@ -93,7 +93,7 @@ half4 frag(Varyings IN) : SV_Target
     float transmittance = 1.0;
     float4 fogCol = _Color;
 
-    int maxLights = min(_totalLights, 8);
+    int maxLights = min(_totalLights, MAX_ADDITIONAL_LIGHTS);
 
     // 🔁 March through fog volume
     while (distTravelled < distLimit)
@@ -115,8 +115,8 @@ half4 frag(Varyings IN) : SV_Target
         float3 lightCol = 0.0;
 
         // 🔦 Spotlight evaluation
-        [unroll(8)]
-        for (int i = 0; i < 8; ++i)
+        [unroll(MAX_ADDITIONAL_LIGHTS)]
+        for (int i = 0; i < MAX_ADDITIONAL_LIGHTS; ++i)
         {
             if (i >= maxLights) break;
 

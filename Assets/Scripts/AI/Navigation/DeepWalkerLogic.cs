@@ -182,6 +182,10 @@ public class DeepWalkerLogic : NetworkBehaviour
             TimeToSleep();
         }
         Speed.Value = pathfinder.curentSpeed;
+        if(myBehaviour != ActiveBehaviour.hunting)
+        {
+            TrackingObject = null;
+        }
     }
 
     private void FixedUpdate()

@@ -4,6 +4,8 @@ using FMODUnity;
 using FMOD.Studio;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
+using System.Collections.Generic;
+
 public enum TriggerAction
 {
     None,
@@ -131,4 +133,29 @@ public class AudioManager : MonoBehaviour
     {
         
     }
+    private int currentAmmount;
+    public List<String> keys = new List<String>();
+
+    public void UnPackData(Component sender, object data)
+    {
+        // Check if the data is a string before proceeding
+        if (data is string keyName)
+        {
+            Debug.Log($"Scene change requested: {keyName}");
+
+            // Trigger the scene change with the provided scene name
+            if (!keys.Contains(keyName))
+            {
+                currentAmmount++;
+                keys.Add(keyName);
+                SetParameter(BackgroundMusicEvents.Ambience1,"Progression",currentAmmount,false, false);
+                Debug.Log( + currentAmmount);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Data is not a valid scene name string.");
+        }
+    }
+
 }

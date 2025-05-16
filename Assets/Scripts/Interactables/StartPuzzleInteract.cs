@@ -31,6 +31,7 @@ public class StartPuzzleInteract : Interactable
         NetworkObject t;
         sender.TryGetComponent<NetworkObject>(out t);
         if(t!=null)puzzleObject.ChangeOwnership(t.OwnerClientId);
+        Debug.Log(t.gameObject.name);
         taken = true;
     }
 

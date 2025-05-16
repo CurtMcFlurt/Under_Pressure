@@ -13,7 +13,7 @@ public class AttackScript : NetworkBehaviour
     public int maxAttacks=7;
     private int currentAttacks;
     private float timer = 0;
-    private float waitfor = 30;
+    private float waitfor = 2.5f;
     private AttackOrbHandler attackOrbHandler;
     public void OnEnable()
     {

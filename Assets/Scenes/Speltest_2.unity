@@ -14488,6 +14488,7 @@ GameObject:
   m_Component:
   - component: {fileID: 652214023}
   - component: {fileID: 652214024}
+  - component: {fileID: 652214025}
   m_Layer: 0
   m_Name: Audio Manager
   m_TagString: AudioManager
@@ -14542,6 +14543,35 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  keys: []
+--- !u!114 &652214025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652214022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ef898bd3ce1d343ae1426e703d04cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 1e28861210a5c47458107e9d7cfe89d5, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 652214024}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: UnPackData
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!43 &657575507
 Mesh:
   m_ObjectHideFlags: 0
@@ -43373,6 +43403,14 @@ MonoBehaviour:
     IgnoreFadeOut: 0
     IgnoreSeek: 0
     position: {x: 0, y: 0, z: 0}
+  - Action: 1
+    bgmEvent: 1
+    paramName: Progression
+    paramValue: 0
+    paramIsGlobal: 0
+    IgnoreFadeOut: 0
+    IgnoreSeek: 0
+    position: {x: 0, y: 0, z: 0}
 --- !u!43 &1654824903
 Mesh:
   m_ObjectHideFlags: 0
@@ -46351,6 +46389,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 565943352292389995, guid: 40693854bff416a40aa1c9cce857151f, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 565943352292389995, guid: 40693854bff416a40aa1c9cce857151f, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1740912060}
+    - target: {fileID: 565943352292389995, guid: 40693854bff416a40aa1c9cce857151f, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 565943352292389995, guid: 40693854bff416a40aa1c9cce857151f, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: UnPackData
+      objectReference: {fileID: 0}
+    - target: {fileID: 565943352292389995, guid: 40693854bff416a40aa1c9cce857151f, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: WinHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 565943352292389995, guid: 40693854bff416a40aa1c9cce857151f, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2339967323385272307, guid: 40693854bff416a40aa1c9cce857151f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -46391,6 +46453,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4010154612159368921, guid: 40693854bff416a40aa1c9cce857151f, type: 3}
+      propertyPath: keys.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7539072092340508832, guid: 40693854bff416a40aa1c9cce857151f, type: 3}
       propertyPath: m_Name
       value: WinButtons
@@ -46401,6 +46467,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40693854bff416a40aa1c9cce857151f, type: 3}
+--- !u!114 &1740912060 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4010154612159368921, guid: 40693854bff416a40aa1c9cce857151f, type: 3}
+  m_PrefabInstance: {fileID: 1740912059}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e20391cce9de1f4b8473a57e304b001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1742352821
 Mesh:
   m_ObjectHideFlags: 0

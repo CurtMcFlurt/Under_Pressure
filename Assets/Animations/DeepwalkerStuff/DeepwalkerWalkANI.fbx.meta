@@ -56,16 +56,16 @@ ModelImporter:
       curves: []
       events:
       - time: 0.75636345
-        functionName: Footstep
+        functionName: MonsterStepping
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: c25f8a0e0bcc3ef4685879c7dc74ed54, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.25454527
-        functionName: Footstep
+        functionName: MonsterStepping
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: c25f8a0e0bcc3ef4685879c7dc74ed54, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

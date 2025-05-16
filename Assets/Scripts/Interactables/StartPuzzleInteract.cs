@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
@@ -11,7 +12,7 @@ public class StartPuzzleInteract : Interactable
     public float lidRotation = 90f; // Desired rotation in degrees
     public float lidLerpSpeed = 2f; // How fast the lid opens/closes
     public bool lockMe;
-   
+    
 
     public void OnEnable()
     {

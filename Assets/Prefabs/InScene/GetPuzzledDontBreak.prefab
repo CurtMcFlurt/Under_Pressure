@@ -773,8 +773,8 @@ MonoBehaviour:
   taken: 0
   cog: {fileID: 0}
   intermid: {fileID: 0}
-  waitToInteract: 1.5
-  currentWait: 3
+  waitToInteract: 0.5
+  currentWait: 0.5
 --- !u!135 &7826688205248489309
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -2002,11 +2002,11 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 0
-  m_Color: {r: 0.047169805, g: 0.047169805, b: 0.047169805, a: 1}
-  m_Intensity: 61
-  m_Range: 8.65
-  m_SpotAngle: 61.488575
-  m_InnerSpotAngle: 25.50636
+  m_Color: {r: 0.019607844, g: 0.019607844, b: 0.019607844, a: 1}
+  m_Intensity: 13.42
+  m_Range: 16.1
+  m_SpotAngle: 67.4097
+  m_InnerSpotAngle: 0
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0

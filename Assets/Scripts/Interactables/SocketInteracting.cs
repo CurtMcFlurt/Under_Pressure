@@ -15,6 +15,7 @@ public class SocketInteracting : MonoBehaviour
                 Correct = true;
             }
             else Correct = false;
+            activeCog.transform.position=transform.position;
         }
         else Correct = false;
         

@@ -158,7 +158,7 @@ half4 frag(Varyings IN) : SV_Target
         density = max(0, density - lightDensityReduction);
 
       // Always add light color to fog, even if density is zero
-        fogCol.rgb += lightCol * _StepSize;
+        fogCol.rgb += (lightCol * _StepSize);
 
         if (density > 0)
         {

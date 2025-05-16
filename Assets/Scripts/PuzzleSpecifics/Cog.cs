@@ -44,15 +44,28 @@ public class Cog : MonoBehaviour
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, transform.localScale.magnitude * 0.5f, socketLayer);
 
+        SocketInteracting closestSocket = null;
+        float closestDistanceSqr = Mathf.Infinity;
+
         foreach (var hit in hits)
         {
             SocketInteracting socket = hit.GetComponent<SocketInteracting>();
-            if (socket != null)
+            if (socket != null && socket.activeCog == null)
             {
-                mySocket = socket;
-                Debug.Log("foundSocket");
-                return true;
+                float distanceSqr = (socket.transform.position - transform.position).sqrMagnitude;
+                if (distanceSqr < closestDistanceSqr)
+                {
+                    closestSocket = socket;
+                    closestDistanceSqr = distanceSqr;
+                }
             }
+        }
+
+        if (closestSocket != null)
+        {
+            mySocket = closestSocket;
+            Debug.Log("Found closest socket");
+            return true;
         }
 
         return false;

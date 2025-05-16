@@ -1481,7 +1481,6 @@ GameObject:
   - component: {fileID: 5155631251265589830}
   - component: {fileID: 6338221338650350762}
   - component: {fileID: 1848772153272343955}
-  - component: {fileID: 3054373178530537104}
   - component: {fileID: 4919837966510297474}
   - component: {fileID: 5265856201605855213}
   - component: {fileID: 2268001645992575640}
@@ -1575,7 +1574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2502365407
+  GlobalObjectIdHash: 3788229309
   InScenePlacedSourceGlobalObjectIdHash: 2502365407
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1790,20 +1789,6 @@ MonoBehaviour:
   IsDead: 0
   debugRespawnPoint: {x: 0, y: 0, z: 0}
   deathTimer: 25
---- !u!114 &3054373178530537104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3853958961406216230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nonRigidbodyVelocity: 0
-  attenuationObject: {fileID: 3853958961406216230}
 --- !u!114 &4919837966510297474
 MonoBehaviour:
   m_ObjectHideFlags: 0

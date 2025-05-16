@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
@@ -12,6 +13,7 @@ public class StartPuzzleInteract : Interactable
     public float lidRotation = 90f; // Desired rotation in degrees
     public float lidLerpSpeed = 2f; // How fast the lid opens/closes
     public bool lockMe;
+    public NetworkObject puzzleObject;
     
 
     public void OnEnable()
@@ -26,7 +28,9 @@ public class StartPuzzleInteract : Interactable
         myCameraNow = take;
         take.activeStealer = this;
         take.StealThecamera(CameraPoint);
-
+        NetworkObject t;
+        sender.TryGetComponent<NetworkObject>(out t);
+        if(t!=null)puzzleObject.ChangeOwnership(t.OwnerClientId);
         taken = true;
     }
 

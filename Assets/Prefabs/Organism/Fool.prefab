@@ -1502,7 +1502,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.23, z: 0}
-  m_LocalScale: {x: 1.9, y: 1.9, z: 1.9}
+  m_LocalScale: {x: 2.85, y: 2.85, z: 2.85}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6815916663698623574}
@@ -1612,6 +1612,8 @@ MonoBehaviour:
   extraRunningSound: 4
   extraRunningRange: 3
   cameraTransform: {fileID: 6981733371161587601}
+  disableObjects:
+  - {fileID: 7610476776508975659}
   rb: {fileID: 1953910241733474021}
   glowStick: {fileID: 2628165128578031410, guid: 03278d1e2f5046048bd76d69a21cdbb8, type: 3}
   cameraPoint: {fileID: 6822449476220128409}

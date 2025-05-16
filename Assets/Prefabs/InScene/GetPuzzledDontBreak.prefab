@@ -348,6 +348,7 @@ MonoBehaviour:
   lidRotation: 160
   lidLerpSpeed: 2
   lockMe: 0
+  puzzleObject: {fileID: 1104141974497612793}
 --- !u!114 &2829106480164123488
 MonoBehaviour:
   m_ObjectHideFlags: 0

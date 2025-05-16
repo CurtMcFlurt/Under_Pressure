@@ -1008,7 +1008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActiveSocket: {fileID: 0}
-  SpawnLocation: {x: -9.820341, y: 2.0715857, z: 28.7992}
+  SpawnLocation: {x: -9.929739, y: 2.2199824, z: 28.764202}
   socketLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -1742,6 +1742,18 @@ PrefabInstance:
       value: GetPuzzled
       objectReference: {fileID: 0}
     - target: {fileID: 914002041494249721, guid: 0c463a190ff51f64990b15f876bb5844, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1741682
+      objectReference: {fileID: 0}
+    - target: {fileID: 914002041494249721, guid: 0c463a190ff51f64990b15f876bb5844, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1741682
+      objectReference: {fileID: 0}
+    - target: {fileID: 914002041494249721, guid: 0c463a190ff51f64990b15f876bb5844, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1741682
+      objectReference: {fileID: 0}
+    - target: {fileID: 914002041494249721, guid: 0c463a190ff51f64990b15f876bb5844, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.635609
       objectReference: {fileID: 0}
@@ -1782,6 +1794,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1104141974497612793, guid: 0c463a190ff51f64990b15f876bb5844, type: 3}
+      propertyPath: Ownership
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1104141974497612793, guid: 0c463a190ff51f64990b15f876bb5844, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 1700794209
       objectReference: {fileID: 0}
@@ -1799,15 +1815,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4754744616688114294, guid: 0c463a190ff51f64990b15f876bb5844, type: 3}
       propertyPath: SpawnLocation.x
-      value: -9.440981
+      value: -9.447428
       objectReference: {fileID: 0}
     - target: {fileID: 4754744616688114294, guid: 0c463a190ff51f64990b15f876bb5844, type: 3}
       propertyPath: SpawnLocation.y
-      value: 2.1676016
+      value: 2.0319107
       objectReference: {fileID: 0}
     - target: {fileID: 4754744616688114294, guid: 0c463a190ff51f64990b15f876bb5844, type: 3}
       propertyPath: SpawnLocation.z
-      value: 28.93994
+      value: 28.955309
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3037,15 +3053,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8245782180554762108, guid: ab95966ac3b0f2d438f36e8389a7188b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4469396
+      value: 0.6325983
       objectReference: {fileID: 0}
     - target: {fileID: 8245782180554762108, guid: ab95966ac3b0f2d438f36e8389a7188b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4469396
+      value: 0.6325983
       objectReference: {fileID: 0}
     - target: {fileID: 8245782180554762108, guid: ab95966ac3b0f2d438f36e8389a7188b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4469396
+      value: 0.6325983
       objectReference: {fileID: 0}
     - target: {fileID: 8245782180554762108, guid: ab95966ac3b0f2d438f36e8389a7188b, type: 3}
       propertyPath: m_LocalPosition.x

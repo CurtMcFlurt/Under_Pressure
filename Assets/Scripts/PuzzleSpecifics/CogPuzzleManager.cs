@@ -12,10 +12,7 @@ public class CogPuzzleManager : NetworkBehaviour
     public GameEvent winEvent;
     public string sendString;
 
-    public NetworkVariable<bool> puzzleSolved = new NetworkVariable<bool>(
-        false,
-        NetworkVariableReadPermission.Everyone
-    );
+    public NetworkVariable<bool> puzzleSolved = new NetworkVariable<bool>();
 
     private void OnEnable()
     {
@@ -47,7 +44,6 @@ public class CogPuzzleManager : NetworkBehaviour
     }
 
     private bool notWon;
-
     void FixedUpdate()
     {
 
@@ -77,6 +73,8 @@ public class CogPuzzleManager : NetworkBehaviour
         {
             SolvedPuzzle();
         }
+        
+        
     }
 
   

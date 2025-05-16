@@ -1,3 +1,5 @@
+using FMODUnity;
+using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,6 +22,7 @@ public class PlayerMovement : NetworkBehaviour
     private int regularRange;
     private float regularSound;
     public Transform cameraTransform;
+    public List<GameObject> disableObjects = new List<GameObject>();
     public Rigidbody rb;
     public GameObject glowStick;
     public GameObject cameraPoint;
@@ -44,7 +47,7 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (!IsOwner) { cameraTransform.GetComponent<Camera>().enabled = false; return; }
+        if (!IsOwner) { cameraTransform.GetComponent<Camera>().enabled = false; cameraTransform.GetComponent<StudioListener>().enabled = false; foreach (var v in disableObjects) { v.SetActive(false); } return; }
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

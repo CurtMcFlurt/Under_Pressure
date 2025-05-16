@@ -62,10 +62,7 @@ public class AttackScript : NetworkBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (!HasAuthority)
-        {
-            return;
-        }
+      
         Debug.Log(other.name);
         if (other.tag == "Player" && logic.TrackingObject==null)
         {

@@ -1650,7 +1650,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 102913
   minTimeBetweenInteraction: 0.25
-  raySize: 3
+  raySize: 4.69
   fixedScale: 0.01
   aimIndicator: {fileID: 2800148742923031153}
   rayOffset: 0.5

@@ -333,8 +333,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: In game you will have to find 6 buttons spread around the map. Press them
-    to unlock the door and win the game!
+  m_text: In game you will have to find, and complete, 6 puzzles spread around the
+    map. Finish them to unlock the door and win the game!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -1008,7 +1008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActiveSocket: {fileID: 0}
-  SpawnLocation: {x: -9.929739, y: 2.2199824, z: 28.764202}
+  SpawnLocation: {x: -10.660699, y: 5.5022492, z: 29.902384}
   socketLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -1233,7 +1233,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Welcome to the Under Pressure playtest!
+  m_text: Welcome to the Under Pressure playtest nr 2!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}

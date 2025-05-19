@@ -145,7 +145,6 @@ public class Agent_findPath : MonoBehaviour
             return;
         }
       
-        if (PathSegment < Path.Count-1 && followDist<maxDist && Path.Count!=0) MoveAlongPath();
         if (RecalculatePath)
         {
             var cachedPath = Path;
@@ -184,6 +183,8 @@ public class Agent_findPath : MonoBehaviour
 
             
         }
+
+        if (PathSegment < Path.Count - 1 && followDist < maxDist && Path.Count != 0) { MoveAlongPath(); } else curentSpeed = 0;
     }
     public int PathSegment;
     private float TValue=0;
@@ -213,11 +214,7 @@ public class Agent_findPath : MonoBehaviour
                 TValue = 0f;
                 PathSegment++;
 
-                if (PathSegment >= Path.Count - 2)
-                {
-                    PathSegment = Path.Count - 2;
                
-                }
             }
     }
 

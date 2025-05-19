@@ -119,13 +119,22 @@ public class PlayerMovement : NetworkBehaviour
     private void FixedUpdate()
     {
 
-        if (!IsOwner || myDeath.IsDead || StopMoving) {
+
+        if (!IsOwner  || StopMoving) {
 
           
 
             return; 
         
         }
+
+        var sound = GetComponentInChildren<PlayerWeightSyncer>();
+        if (myDeath.IsDead)
+        {
+            sound.SetMovementState(false, false);
+            return;
+        }
+
         Vector2 moveInput = moveAction.ReadValue<Vector2>();
         Vector3 moveDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
         float crouchValue = crouchAction.ReadValue<float>();
@@ -159,7 +168,6 @@ public class PlayerMovement : NetworkBehaviour
         }
         myAnim.SetBool("Running", isSprinting);
 
-        var sound = GetComponentInChildren<PlayerWeightSyncer>();
         if (moveInput.magnitude>0.1 && !isCrouching)
         {
             myMove = true;

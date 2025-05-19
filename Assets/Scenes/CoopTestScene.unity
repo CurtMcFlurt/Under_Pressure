@@ -2063,6 +2063,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6258653680040962207, guid: 305f00f4a734e55469042b0d069d5e67, type: 3}
+      propertyPath: regularRange
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6258653680040962207, guid: 305f00f4a734e55469042b0d069d5e67, type: 3}
+      propertyPath: regularSound
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6373857431981157979, guid: 305f00f4a734e55469042b0d069d5e67, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3923962205

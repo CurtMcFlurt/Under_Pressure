@@ -40159,6 +40159,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  keys: []
 --- !u!43 &1432333844
 Mesh:
   m_ObjectHideFlags: 0
@@ -58959,9 +58960,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSettings:
-  - Action: 0
-    bgmEvent: 0
-    paramName: 
+  - Action: 1
+    bgmEvent: 1
+    paramName: Progression
     paramValue: 0
     paramIsGlobal: 0
     IgnoreFadeOut: 0

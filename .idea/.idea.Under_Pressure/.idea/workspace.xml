@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a028df7e-7bea-4c2f-be23-a01b24dc68c7" name="Changes" comment="" />
+    <list default="true" id="a028df7e-7bea-4c2f-be23-a01b24dc68c7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Under_Pressure/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Under_Pressure/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/FullScreenVolumetric.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/FullScreenVolumetric.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Musik&amp;Ljud.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Musik&amp;Ljud.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Simon/PlayerAudio.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Simon/PlayerAudio.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +23,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Simon/FoolFootStep.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Simon/MonsterOneShots.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Simon/PlayerAudio.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Simon/ScriptableObjects/InteractablesAudio.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox/Editor/VivoxApiClient.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -112,7 +118,10 @@
       <workItem from="1746003184954" duration="3158000" />
       <workItem from="1746011933665" duration="4960000" />
       <workItem from="1746021534173" duration="423000" />
-      <workItem from="1747388984022" duration="5263000" />
+      <workItem from="1747388984022" duration="5861000" />
+      <workItem from="1747640387151" duration="29000" />
+      <workItem from="1747640439037" duration="166000" />
+      <workItem from="1747640920252" duration="1465000" />
     </task>
     <servers />
   </component>

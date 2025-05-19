@@ -6,9 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="a028df7e-7bea-4c2f-be23-a01b24dc68c7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Under_Pressure/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Under_Pressure/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/FullScreenVolumetric.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/FullScreenVolumetric.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Banks/Desktop/Master.bank" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/Banks/Desktop/Master.bank" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Musik&amp;Ljud.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Musik&amp;Ljud.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Simon/PlayerAudio.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Simon/PlayerAudio.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Simon/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Simon/AudioManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Simon/AudioTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Simon/AudioTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Simon/InteractablesAudio.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Simon/InteractablesAudio.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,6 +124,8 @@
       <workItem from="1747640387151" duration="29000" />
       <workItem from="1747640439037" duration="166000" />
       <workItem from="1747640920252" duration="1465000" />
+      <workItem from="1747656849508" duration="5326000" />
+      <workItem from="1747662249990" duration="442000" />
     </task>
     <servers />
   </component>

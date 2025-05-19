@@ -5,6 +5,7 @@ using FMOD.Studio;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 using System.Collections.Generic;
+using Unity.Services.Matchmaker.Models;
 
 public enum TriggerAction
 {
@@ -18,16 +19,17 @@ public enum TriggerAction
 public enum BackgroundMusicEvents
 {
     None,
-    Ambience1,
-    Ambience2
+    AmbienceMusic,
+    AmbienceSound,
+    BoidsSound
 }
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
     [Header("Background Music")] 
-    [SerializeField] private EventReference[] bgmReferences = new EventReference[2];
-    private EventInstance[] bgmInstances = new EventInstance[2];
+    [SerializeField] private EventReference[] bgmReferences = new EventReference[3];
+    private EventInstance[] bgmInstances = new EventInstance[3];
 
     [Header("GameOver")] [SerializeField] private EventReference gameOverStinger;
     private void Awake()
@@ -43,12 +45,12 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private BoidFollowTarget bFT;
+    private void Start()
     {
-        
+        bFT = GameObject.FindGameObjectWithTag("Player").GetComponent<BoidFollowTarget>();
     }
-    
+
     public void PlayMusic(BackgroundMusicEvents bgmEvent, Vector3 pos)
     {
         int num = Convert.ToInt32(bgmEvent) - 1;
@@ -128,13 +130,19 @@ public class AudioManager : MonoBehaviour
     {
         RuntimeManager.PlayOneShot(gameOverStinger);
     }
-    // Update is called once per frame
+    
     void Update()
     {
-        
+        if (bFT.boidCounter > 0) 
+        {
+           SetParameter(BackgroundMusicEvents.BoidsSound, "Boids", bFT.boidCounter, false, false); 
+           Debug.Log("Boid parameter is " + bFT.boidCounter);
+        }
     }
+    
     private int currentAmmount;
     public List<String> keys = new List<String>();
+    
 
     public void UnPackData(Component sender, object data)
     {
@@ -148,7 +156,7 @@ public class AudioManager : MonoBehaviour
             {
                 currentAmmount++;
                 keys.Add(keyName);
-                SetParameter(BackgroundMusicEvents.Ambience1,"Progression",currentAmmount,false, false);
+                SetParameter(BackgroundMusicEvents.AmbienceMusic,"Progression",currentAmmount,true, false);
                 Debug.Log( + currentAmmount);
             }
         }
@@ -157,5 +165,4 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Data is not a valid scene name string.");
         }
     }
-
 }

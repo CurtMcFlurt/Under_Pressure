@@ -6,9 +6,15 @@ using FMOD.Studio;
 public class InteractablesAudio : ScriptableObject
 {
     public EventReference pickupCogEvent;
+    public EventReference completePuzzleEvent;
 
     public void PickupCogPlay()
     {
         RuntimeManager.PlayOneShot(pickupCogEvent);
+    }
+    
+    public void CompletePuzzlePlay()
+    {
+        RuntimeManager.PlayOneShot(completePuzzleEvent);
     }
 }

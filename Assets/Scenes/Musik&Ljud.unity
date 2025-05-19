@@ -1603,6 +1603,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1614851577}
+    - target: {fileID: 4560635281256868211, guid: 0547bb80b7f9c7b4b849fba5cb4610f9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4565430912677819323, guid: 0547bb80b7f9c7b4b849fba5cb4610f9, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -2123,6 +2127,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1624619693}
+    - target: {fileID: 6142957867372791642, guid: 0547bb80b7f9c7b4b849fba5cb4610f9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6166201534217136130, guid: 0547bb80b7f9c7b4b849fba5cb4610f9, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -17697,6 +17705,39 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &577813344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 577813345}
+  m_Layer: 0
+  m_Name: Audio Triggers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &577813345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577813344}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 173.14001, y: -9.42, z: 26.46}
+  m_LocalScale: {x: 18.570646, y: 6.3429003, z: 12.013773}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2018638367}
+  - {fileID: 1501278650}
+  m_Father: {fileID: 1787766399}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &587318027
 Mesh:
   m_ObjectHideFlags: 0
@@ -31790,7 +31831,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6676282916670248000, guid: 8988ea4bf06b9304f82d49ba641cf633, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 153.14676
+      value: -3.6
       objectReference: {fileID: 0}
     - target: {fileID: 6676282916670248000, guid: 8988ea4bf06b9304f82d49ba641cf633, type: 3}
       propertyPath: m_LocalPosition.y
@@ -31798,7 +31839,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6676282916670248000, guid: 8988ea4bf06b9304f82d49ba641cf633, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.6543033
+      value: -4.09
       objectReference: {fileID: 0}
     - target: {fileID: 6676282916670248000, guid: 8988ea4bf06b9304f82d49ba641cf633, type: 3}
       propertyPath: m_LocalRotation.w
@@ -40152,6 +40193,12 @@ MonoBehaviour:
       Data3: -1749363806
       Data4: -1283647006
     Path: event:/Sound/Ambiance/Ambience Sound
+  - Guid:
+      Data1: -521366443
+      Data2: 1138630426
+      Data3: 2056417178
+      Data4: -1695529680
+    Path: event:/Sound/Monster/Boids
   gameOverStinger:
     Guid:
       Data1: 0
@@ -41850,6 +41897,7 @@ MonoBehaviour:
     paramIsGlobal: 0
     IgnoreFadeOut: 1
     IgnoreSeek: 0
+    exit: 0
     position: {x: 0, y: 0, z: 0}
 --- !u!65 &1501278649
 BoxCollider:
@@ -41881,11 +41929,11 @@ Transform:
   m_GameObject: {fileID: 1501278647}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 136.08, y: -4.86, z: 16.6}
-  m_LocalScale: {x: 1, y: 3, z: 4}
+  m_LocalPosition: {x: -1.9956224, y: 0.7189141, z: -0.82072455}
+  m_LocalScale: {x: 0.053848423, y: 0.47296977, z: 0.3329512}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1787766399}
+  m_Father: {fileID: 577813345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1501680154
 Mesh:
@@ -49677,8 +49725,7 @@ Transform:
   - {fileID: 44686601}
   - {fileID: 949941379}
   - {fileID: 1203529286}
-  - {fileID: 2018638367}
-  - {fileID: 1501278650}
+  - {fileID: 577813345}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1788732473
@@ -56775,7 +56822,7 @@ GameObject:
   - component: {fileID: 2018638366}
   - component: {fileID: 2018638365}
   m_Layer: 0
-  m_Name: Audio Trigger
+  m_Name: 'Boids Trigger '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56797,12 +56844,22 @@ MonoBehaviour:
   destroyAfterUse: 0
   audioSettings:
   - Action: 1
-    bgmEvent: 1
+    bgmEvent: 3
     paramName: 
     paramValue: 0
     paramIsGlobal: 0
     IgnoreFadeOut: 0
     IgnoreSeek: 0
+    exit: 0
+    position: {x: 0, y: 0, z: 0}
+  - Action: 2
+    bgmEvent: 3
+    paramName: 
+    paramValue: 0
+    paramIsGlobal: 0
+    IgnoreFadeOut: 0
+    IgnoreSeek: 0
+    exit: 1
     position: {x: 0, y: 0, z: 0}
 --- !u!65 &2018638366
 BoxCollider:
@@ -56834,11 +56891,11 @@ Transform:
   m_GameObject: {fileID: 2018638364}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 177.94, y: -4.85, z: 16.84}
-  m_LocalScale: {x: 1, y: 3, z: 4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1787766399}
+  m_Father: {fileID: 577813345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &2019328488
 Mesh:

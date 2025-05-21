@@ -35,7 +35,7 @@ public class DeepAnimHandler : MonoBehaviour
             AttackIng();
         }
 
-        if (logic.mood.alertness > 0.9f && !StillSearching ||debugListen || logic.ForceListen) 
+        if ((logic.mood.alertness > 0.9f && !StillSearching) && logic.mood.anger<0.9f ||debugListen || logic.ForceListen) 
         {
             StillSearching = true;
             debugListen = false;

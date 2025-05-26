@@ -47,7 +47,10 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (!IsOwner) { cameraTransform.GetComponent<Camera>().enabled = false; cameraTransform.GetComponent<StudioListener>().enabled = false; foreach (var v in disableObjects) { v.SetActive(false); } return; }
+        if (!IsOwner) { cameraTransform.GetComponent<Camera>().enabled = false; cameraTransform.GetComponent<StudioListener>().enabled = false; foreach (var v in disableObjects) { v.SetActive(false);}
+
+           
+            return; }
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

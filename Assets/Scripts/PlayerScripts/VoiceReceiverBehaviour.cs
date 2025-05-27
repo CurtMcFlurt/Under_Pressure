@@ -4,6 +4,10 @@ using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using FMOD;
+using FMODUnity;
+using System.Runtime.InteropServices;
+using Debug = UnityEngine.Debug;
 
 public class VoiceReceiverBehaviour : NetworkBehaviour
 {
@@ -11,16 +15,10 @@ public class VoiceReceiverBehaviour : NetworkBehaviour
     private short[] decodeBuffer;
     private float[] floatBuffer;
 
-    public AudioSource audioSource;
-
     private static Dictionary<ulong, VoiceReceiverBehaviour> receivers = new();
 
-    private Queue<float> playbackBuffer = new(); // Buffer PCM samples for playback
     private const int sampleRate = 16000;
     private const int channels = 1;
-
-    private AudioClip playbackClip;
-    private const int playbackClipLengthSeconds = 1; // 1-second clip buffer
 
     private object bufferLock = new object();
 
@@ -49,41 +47,7 @@ public class VoiceReceiverBehaviour : NetworkBehaviour
         decodeBuffer = new short[320];
         floatBuffer = new float[320];
 
-        // Create a streaming AudioClip for continuous playback
-        playbackClip = AudioClip.Create("VoicePlayback", sampleRate * playbackClipLengthSeconds, channels, sampleRate, true, OnAudioRead, OnAudioSetPosition);
-
-        if (audioSource != null)
-        {
-            audioSource.clip = playbackClip;
-            audioSource.loop = true;
-            audioSource.Play();
-        }
-
-        Debug.Log("VoiceReceiverBehaviour initialized with playback buffer");
-    }
-
-    // This is called on the audio thread by Unity to fill the audio buffer
-    private void OnAudioRead(float[] data)
-    {
-        lock (bufferLock)
-        {
-            for (int i = 0; i < data.Length; i++)
-            {
-                if (playbackBuffer.Count > 0)
-                    data[i] = playbackBuffer.Dequeue();
-                else
-                    data[i] = 0f; // Silence if no data buffered
-            }
-        }
-    }
-
-    private void OnAudioSetPosition(int newPosition)
-    {
-        // Reset playback buffer on position change
-        lock (bufferLock)
-        {
-            playbackBuffer.Clear();
-        }
+        Debug.Log("VoiceReceiverBehaviour initialized with FMOD playback");
     }
 
     public void ReceiveVoiceData(byte[] encoded)
@@ -95,17 +59,48 @@ public class VoiceReceiverBehaviour : NetworkBehaviour
         }
 
         int decodedSamples = decoder.Decode(encoded, 0, encoded.Length, decodeBuffer, 0, decodeBuffer.Length, false);
-        for (int i = 0; i < decodedSamples; i++)
-            floatBuffer[i] = decodeBuffer[i] / 32768f;
 
-        lock (bufferLock)
+        // Convert short[] to byte[] for FMOD
+        byte[] pcmBytes = new byte[decodedSamples * sizeof(short)];
+        Buffer.BlockCopy(decodeBuffer, 0, pcmBytes, 0, pcmBytes.Length);
+
+        PlayFmodVoice(pcmBytes, decodedSamples);
+
+      //  Debug.Log($"[VoiceReceiver] Received {encoded.Length} bytes, decoded to {decodedSamples} samples");
+    }
+
+    private void PlayFmodVoice(byte[] pcmData, int sampleCount)
+    {
+        FMOD.CREATESOUNDEXINFO exinfo = new FMOD.CREATESOUNDEXINFO();
+        exinfo.cbsize = Marshal.SizeOf(typeof(FMOD.CREATESOUNDEXINFO));
+        exinfo.length = (uint)pcmData.Length;
+        exinfo.numchannels = channels;
+        exinfo.defaultfrequency = sampleRate;
+        exinfo.format = FMOD.SOUND_FORMAT.PCM16;
+
+        FMOD.Sound sound;
+        FMOD.RESULT result = RuntimeManager.CoreSystem.createSound(
+            pcmData,
+            FMOD.MODE.OPENMEMORY | FMOD.MODE.OPENRAW | FMOD.MODE.LOOP_OFF,
+            ref exinfo,
+            out sound
+        );
+
+        if (result != FMOD.RESULT.OK)
         {
-            // Enqueue decoded samples for playback
-            foreach (var sample in floatBuffer.AsSpan(0, decodedSamples))
-                playbackBuffer.Enqueue(sample);
+            Debug.LogError($"[FMOD] Failed to create sound: {result}");
+            return;
+        }
+        FMOD.ChannelGroup nullGroup = new FMOD.ChannelGroup(IntPtr.Zero);
+        result = RuntimeManager.CoreSystem.playSound(sound, nullGroup, false, out FMOD.Channel channel);
+        if (result != FMOD.RESULT.OK)
+        {
+            Debug.LogError($"[FMOD] Failed to play sound: {result}");
+            return;
         }
 
-        Debug.Log($"Received voice data: {encoded.Length} bytes, decoded to {decodedSamples} samples. Buffer length: {playbackBuffer.Count}");
+        // Optionally release the sound after playback
+        sound.release();
     }
 
     private void OnDestroy()

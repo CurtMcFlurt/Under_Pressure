@@ -1485,6 +1485,7 @@ GameObject:
   - component: {fileID: 1848772153272343955}
   - component: {fileID: 4919837966510297474}
   - component: {fileID: 5265856201605855213}
+  - component: {fileID: 745186905718081716}
   - component: {fileID: 2268001645992575640}
   - component: {fileID: 8829175584933576354}
   m_Layer: 9
@@ -1690,7 +1691,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  audioSource: {fileID: 8829175584933576354}
 --- !u!114 &8979354530499879030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1854,6 +1854,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   compassTargetEvent: {fileID: 11400000, guid: d19c80ddbe9def14c8847c7543cc3a7d, type: 2}
+--- !u!114 &745186905718081716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3853958961406216230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49192ed9b7d9ad440bc95072f589ac5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  handHoldItem: {fileID: 0}
+  handAnchor_Net: {fileID: 2692061393507871758}
+  handAnchor_Pers: {fileID: 6822449476220128409}
+  itemOrigin: {fileID: 0}
+  offset_net: {x: 0.02, y: 0.22, z: -0.08}
+  offset_pers: {x: 0.47, y: -0.15, z: 0.56}
+  rot_net: {x: 0, y: 0, z: 0}
+  rot_pers: {x: 0, y: 0, z: 0}
+  scale_net: {x: 2, y: 2, z: 2}
+  scale_pers: {x: 2, y: 2, z: 2}
+  autoDetectHeldItemChange: 1
 --- !u!114 &2268001645992575640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3511,7 +3535,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 80
+  far clip plane: 131.1
   field of view: 60
   orthographic: 0
   orthographic size: 5

@@ -13,7 +13,9 @@ public class CogPuzzleManager : NetworkBehaviour
     public string sendString;
 
     public NetworkVariable<bool> puzzleSolved = new NetworkVariable<bool>();
-
+    public NetworkVariable<bool> inUse = new NetworkVariable<bool>();
+    public NetworkVariable<bool> foundLost = new NetworkVariable<bool>();
+    public StartPuzzleInteract puzzleInt;
     private void OnEnable()
     {
         myCollider = GetComponent<Collider>();
@@ -46,15 +48,19 @@ public class CogPuzzleManager : NetworkBehaviour
     private bool notWon;
     void FixedUpdate()
     {
-
-        foreach (var cog in myCogs)
+        if (!HasAuthority)
         {
-            if (!myCollider.bounds.Contains(cog.transform.position))
+            puzzleInt.taken = inUse.Value;
+        }else if(!puzzleInt.taken) inUse.Value = false;
+
+            foreach (var cog in myCogs)
             {
-                cog.Reset();
-                Debug.Log("getMyCog");
+                if (!myCollider.bounds.Contains(cog.transform.position))
+                {
+                    cog.Reset();
+                    Debug.Log("getMyCog");
+                }
             }
-        }
 
         int totalSolved = 0;
         for (int i = 0; i < mySocks.Count; i++)

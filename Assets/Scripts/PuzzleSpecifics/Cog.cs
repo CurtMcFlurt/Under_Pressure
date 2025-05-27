@@ -20,7 +20,8 @@ public class Cog : MonoBehaviour
     {
         if(ActiveSocket != null)
         {
-            transform.position =new Vector3( ActiveSocket.transform.position.x,ActiveSocket.transform.position.y,transform.position.z);
+            //transform.position =new Vector3( ActiveSocket.transform.position.x,ActiveSocket.transform.position.y,transform.position.z);
+            transform.position =new Vector3( transform.position.x,ActiveSocket.transform.position.y,ActiveSocket.transform.position.z);
             rigid.useGravity = false;
         }
         else rigid.useGravity = true;

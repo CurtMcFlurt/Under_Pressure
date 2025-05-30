@@ -14,7 +14,8 @@ public class StartPuzzleInteract : Interactable
     public float lidLerpSpeed = 2f; // How fast the lid opens/closes
     public bool lockMe;
     public NetworkObject puzzleObject;
-    
+    public GameObject missingCog;
+    public GameObject cogTomiss;
 
     public void OnEnable()
     {
@@ -24,19 +25,40 @@ public class StartPuzzleInteract : Interactable
     public override void StartInteraction(GameObject sender)
     {
         if (lockMe) { return; }
+        bool myCog=false;
+        if (missingCog != null) 
+        { 
+            var v = sender.GetComponent<HoldAThing>();
+            if (v.handHoldItem != null) 
+            {
+                if (v.handHoldItem == missingCog) 
+                { 
+                missingCog = null;
+                cogTomiss.SetActive(true);
+                   myCog = true;
+                     
+                   
+                v.DropHeldItem();
+                }
+            }
+        }
         var take = sender.GetComponent<TakeTheCamera>();
         myCameraNow = take;
         take.activeStealer = this;
         take.StealThecamera(CameraPoint);
         NetworkObject t;
         sender.TryGetComponent<NetworkObject>(out t);
-        if(t!=null)puzzleObject.ChangeOwnership(t.OwnerClientId);
+        if (t != null) { puzzleObject.ChangeOwnership(t.OwnerClientId); 
+        puzzleObject.GetComponent<CogPuzzleManager>().inUse.Value = true;
+            if(myCog)puzzleObject.GetComponent<CogPuzzleManager>().foundLost.Value = true;
+        }
         Debug.Log(t.gameObject.name);
         taken = true;
     }
 
     public void Update()
     {
+        if(puzzleObject.GetComponent<CogPuzzleManager>().foundLost.Value)cogTomiss.SetActive(true);
         if (taken)
         {
             interactCollider.enabled = false;

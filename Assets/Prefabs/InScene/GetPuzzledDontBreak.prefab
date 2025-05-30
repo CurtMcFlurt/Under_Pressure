@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32b99dbcae2f5bf498c9d2877ea61c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconSprite: {fileID: 21300000, guid: f970471a0c3beab4aae58842ce205dcf, type: 3}
+  iconSprite: {fileID: 1348486156, guid: eea802d2bad5bd7479c4b639a439dfe1, type: 3}
   compassTargetEvent: {fileID: 11400000, guid: d19c80ddbe9def14c8847c7543cc3a7d, type: 2}
 --- !u!1 &1241397121206345066
 GameObject:
@@ -349,6 +349,8 @@ MonoBehaviour:
   lidLerpSpeed: 2
   lockMe: 0
   puzzleObject: {fileID: 1104141974497612793}
+  missingCog: {fileID: 0}
+  cogTomiss: {fileID: 0}
 --- !u!114 &2829106480164123488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -602,6 +604,11 @@ MonoBehaviour:
   sendString: Tutorial
   puzzleSolved:
     m_InternalValue: 0
+  inUse:
+    m_InternalValue: 0
+  foundLost:
+    m_InternalValue: 0
+  puzzleInt: {fileID: 0}
 --- !u!65 &8417398621953849861
 BoxCollider:
   m_ObjectHideFlags: 0

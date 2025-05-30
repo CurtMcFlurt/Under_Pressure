@@ -77,7 +77,6 @@ public class VoiceSenderBehaviour : NetworkBehaviour
             byte[] compressed = new byte[encodedLength];
             Array.Copy(encodedBuffer, compressed, encodedLength);
 
-            Debug.Log("🎙️ tryToSend");
 
             TransmitVoiceRpc(compressed, NetworkManager.Singleton.LocalClientId);  // ✅ Correct call with sender ID
 
@@ -87,7 +86,6 @@ public class VoiceSenderBehaviour : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     private void TransmitVoiceRpc(byte[] compressedData, ulong senderId)
     {
-        Debug.Log("Send");
         if (NetworkManager.Singleton.LocalClientId == senderId)
             return; // 🚫 Don't process your own voice
 

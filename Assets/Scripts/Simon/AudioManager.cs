@@ -7,6 +7,7 @@ using STOP_MODE = FMOD.Studio.STOP_MODE;
 using System.Collections.Generic;
 using Unity.Services.Matchmaker.Models;
 
+// Enum Trigger Action skapar en lista som fungerar som en meny med flera alternativ som går att välja mellan. Dessa används för att bestämma vad som ska hända i ett FMOD event.
 public enum TriggerAction
 {
     None,
@@ -16,6 +17,7 @@ public enum TriggerAction
     OneShot
 }
 
+// Enum Background Music Events skapar en lista som används för att bestämma vilket FMOD event som ska påverkas.
 public enum BackgroundMusicEvents
 {
     None,
@@ -25,13 +27,17 @@ public enum BackgroundMusicEvents
 }
 public class AudioManager : MonoBehaviour
 {
+    // Här skapar vi en enda global instans av AudioManager så att andra skript kan komma åt den
     public static AudioManager Instance;
 
+    // Vi skapar referenser för att komma åt och lägga till FMOD event i inspektorn, och instanser som används för att spela ljud. 
     [Header("Background Music")] 
     [SerializeField] private EventReference[] bgmReferences = new EventReference[3];
     private EventInstance[] bgmInstances = new EventInstance[3];
 
     [Header("GameOver")] [SerializeField] private EventReference gameOverStinger;
+    
+    // I Awake ser vi till att det bara finns en Audiomanager i scenen och att den inte förstörs mellan scenbyten.
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -44,13 +50,15 @@ public class AudioManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
     }
-
+    
+    // Vi hittar ett skript som heter BoidFollowTarget så att vi kan komma åt data från den längre ner i detta skript under "Update".
     private BoidFollowTarget bFT;
     private void Start()
     {
         bFT = GameObject.FindGameObjectWithTag("Player").GetComponent<BoidFollowTarget>();
     }
 
+    // Play Music är en funktion som startar ett FMOD event så länge det inte redan är aktivt.
     public void PlayMusic(BackgroundMusicEvents bgmEvent, Vector3 pos)
     {
         int num = Convert.ToInt32(bgmEvent) - 1;
@@ -69,9 +77,9 @@ public class AudioManager : MonoBehaviour
             bgmInstances[num] = RuntimeManager.CreateInstance(bgmReferences[num]); 
             bgmInstances[num].start(); 
         }
-
-        
     }
+    
+    // Stop Music stoppar ett FMOD event. Här finns möjligheten att låta musiken "fade out" eller ej.
     public void StopMusic(BackgroundMusicEvents bgmEvent, bool ignoreFadeOut)
     {
         int num = Convert.ToInt32(bgmEvent) - 1;
@@ -94,6 +102,7 @@ public class AudioManager : MonoBehaviour
         bgmInstances[num].release();
     }
 
+    // Set Parameter ändrar valfri parameter i FMOD.
     public void SetParameter(BackgroundMusicEvents bgmEvent, string paramName, float paramValue, bool ignoreSeek, bool globalParam)
     {
         if (globalParam)
@@ -113,6 +122,7 @@ public class AudioManager : MonoBehaviour
         bgmInstances[num].setParameterByName(paramName, paramValue, ignoreSeek);
     }
 
+    // Check Active State används för att se om ett FMOD event är aktivt eller ej.
     private bool CheckActiveState(EventInstance eInstance)
     {
         bool isActive = true;
@@ -125,12 +135,13 @@ public class AudioManager : MonoBehaviour
         }
         return isActive;
     }
-
+    
     public void PlayGameOver()
     {
         RuntimeManager.PlayOneShot(gameOverStinger);
     }
     
+    // I Update tar vi information från ett annat skript som håller koll på hur många boids omringar spelaren. Antalet boids ändrar en parameter i FMOD.
     void Update()
     {
         if (bFT.boidCounter > 0) 
@@ -143,15 +154,14 @@ public class AudioManager : MonoBehaviour
     private int currentAmmount;
     public List<String> keys = new List<String>();
     
-
+    // UnPackData kallas när data skickas till AudioManager. I detta fall skickas information när spelare har löst ett pussel och "Progression" parametern i FMOD ökar beroende på "currentAmmount" (medveten om felstavning).
     public void UnPackData(Component sender, object data)
     {
-        // Check if the data is a string before proceeding
+        // Kollar om datan är en string innan det går vidare.
         if (data is string keyName)
         {
             Debug.Log($"Scene change requested: {keyName}");
-
-            // Trigger the scene change with the provided scene name
+            
             if (!keys.Contains(keyName))
             {
                 currentAmmount++;

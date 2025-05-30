@@ -27,6 +27,7 @@ public class AudioZoneSettings : MonoBehaviour
         GenerateAudioSettings();
     }
 
+    
     private void GenerateAudioSettings()
     {
         foreach (AudioSettings aS in audioSettings)

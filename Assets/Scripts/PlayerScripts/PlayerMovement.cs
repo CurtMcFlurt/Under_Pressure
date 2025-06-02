@@ -89,6 +89,11 @@ public class PlayerMovement : NetworkBehaviour
         }
             TrySpawnAtPoint();
         spawnEvent.Raise(this, this);
+        var heat = FindAnyObjectByType(typeof(Hexagon_HeatmapManager));
+        if (heat != null)
+        {
+            heat.GetComponent<Hexagon_HeatmapManager>().WeightChangers.Add(walkSound);
+        }
     }
     void SetLayerRecursively(GameObject obj, int newLayer)
     {

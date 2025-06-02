@@ -608,7 +608,7 @@ MonoBehaviour:
     m_InternalValue: 0
   foundLost:
     m_InternalValue: 0
-  puzzleInt: {fileID: 0}
+  puzzleInt: {fileID: 5129532882165236097}
 --- !u!65 &8417398621953849861
 BoxCollider:
   m_ObjectHideFlags: 0

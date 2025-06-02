@@ -96,8 +96,8 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DensityMultiplier: 1.33
-    - _DensityThreshold: 0.081
+    - _DensityMultiplier: 1.25
+    - _DensityThreshold: 0.272
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -107,7 +107,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _LightPower: 1
-    - _LightScattering: 0.749
+    - _LightScattering: 0.642
     - _MaxClearFogDistance: 61.6
     - _MaxDistance: 120
     - _Metallic: 0

@@ -648,6 +648,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: 4127f29279067ea4eb474b84b0edccfa, type: 2}
   compute: {fileID: 7200000, guid: 6c598ba480d384a4ca53ff58f7bdee4f, type: 3}
+  angerGain: 0
+  angerLoss: 0
   boids: []
   boundCollider: {fileID: 2823593356142668749}
 --- !u!114 &8172490896734019528
@@ -662,6 +664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f225bdbd700806947a3887e4bacbd241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boidOwner: {fileID: 0}
   prefab: {fileID: 3010929653078517150, guid: dda9dd22b9f65264283a2d20a04c9695, type: 3}
   spawnRadius: 3.91
   spawnCount: 350
@@ -679,7 +682,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 16.5, y: 16.5, z: 16.5}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5

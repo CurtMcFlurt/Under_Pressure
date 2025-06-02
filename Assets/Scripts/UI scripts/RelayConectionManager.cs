@@ -11,24 +11,34 @@ using System;
 using Unity.Services.Multiplayer;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
-
-
-
-
+using UnityEngine.UI;
 
 public class RelayConnectionManager : MonoBehaviour
 {
     public Camera throwAwayCamera;
-    [SerializeField]
-    int m_MaxPlayers = 4;
+    [SerializeField] int m_MaxPlayers = 4;
+
     [Header("UI References")]
     public TMP_InputField joinCodeInput;
     public TMP_InputField NameInput;
     public TMP_Text joinCodeDisplay;
     public GameObject uiPanel;
-    ISession m_Session;
+
+    [Header("Connection Mode Buttons")]
+    public Button relayConnectButton;
+    public Button lanConnectButton;
+    public Button lanHostButton;
+
     [Header("Netcode")]
-    public NetworkManager m_NetworkManager; // Assign your scene's NetworkManager here
+    public NetworkManager m_NetworkManager;
+    public LANDiscoveryManager lanDiscoveryManager;
+
+    [Header("Mode Panels")]
+    public GameObject relayPanel;
+    public GameObject lanPanel;
+
+    private ISession m_Session;
+
     public enum ConnectionState
     {
         Disconnected,
@@ -36,15 +46,28 @@ public class RelayConnectionManager : MonoBehaviour
         Connected,
     }
 
+    public enum ConnectionMode
+    {
+        None,
+        Relay,
+        LAN
+    }
+
     public ConnectionState State { get; private set; } = ConnectionState.Disconnected;
+    public ConnectionMode Mode { get; private set; } = ConnectionMode.None;
 
     async void Awake()
     {
-        // Find the NetworkManager in the Scene
         m_NetworkManager = FindFirstObjectByType<NetworkManager>();
         m_NetworkManager.OnSessionOwnerPromoted += OnSessionOwnerPromoted;
         m_NetworkManager.OnClientConnectedCallback += OnClientConnectedCallback;
+
         await UnityServices.InitializeAsync();
+
+        // Hook button click events
+        relayConnectButton.onClick.AddListener(() => StartRelayConnection());
+        lanConnectButton.onClick.AddListener(() => StartLANHostConnection());
+        lanHostButton.onClick.AddListener(() => StartLAN());
     }
 
     public async void Disconnect()
@@ -57,20 +80,54 @@ public class RelayConnectionManager : MonoBehaviour
         throwAwayCamera.enabled = true;
         State = ConnectionState.Disconnected;
 
-        // Optional: clean up the NetworkManager
         if (m_NetworkManager != null && m_NetworkManager.IsConnectedClient)
         {
             m_NetworkManager.Shutdown();
         }
 
-        // Load the starting scene (replace "MainMenu" with your scene name)
         SceneManager.LoadScene("CoopTestScene");
+        Destroy(m_NetworkManager.gameObject);
     }
 
-    public async void startConnection()
+    public void StartRelayConnection()
+    {
+        if (Mode == ConnectionMode.LAN)
+        {
+            lanDiscoveryManager.Stop(); // <--- Safely stop LAN discovery
+        }
+
+        Mode = ConnectionMode.Relay;
+        relayPanel.SetActive(true);
+        lanPanel.SetActive(false);
+
+        StartRelay();
+    }
+
+
+    public void StartLANHostConnection()
+    {
+        if (m_NetworkManager.IsListening)
+            m_NetworkManager.Shutdown();
+
+        Mode = ConnectionMode.LAN;
+        relayPanel.SetActive(false);
+        lanPanel.SetActive(true);
+
+        var transport = (UnityTransport)m_NetworkManager.NetworkConfig.NetworkTransport;
+        transport.SetConnectionData("0.0.0.0", 7777, "0.0.0.0");
+
+        lanDiscoveryManager.StartLANHost();
+    }
+    public async void StartRelay()
     {
         await CreateOrJoinSessionAsync(joinCodeInput.text, NameInput.text);
     }
+
+    public void StartLAN()
+    {
+        lanDiscoveryManager.StartLANClient(); // or StartLANHost() based on how you want to test
+    }
+
     public async Task CreateOrJoinSessionAsync(string sessionName, string profileName)
     {
         if (string.IsNullOrEmpty(profileName) || string.IsNullOrEmpty(sessionName))
@@ -82,21 +139,18 @@ public class RelayConnectionManager : MonoBehaviour
         State = ConnectionState.Connecting;
         try
         {
-            // Only sign in if not already signed in.
             if (!AuthenticationService.Instance.IsSignedIn)
             {
                 AuthenticationService.Instance.SwitchProfile(profileName);
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
             }
 
-            // Set the session options.
             var options = new SessionOptions()
             {
                 Name = sessionName,
                 MaxPlayers = m_MaxPlayers
             }.WithDistributedAuthorityNetwork();
 
-            // Join a session if it already exists, or create a new one.
             m_Session = await MultiplayerService.Instance.CreateOrJoinSessionAsync(sessionName, options);
             State = ConnectionState.Connected;
         }
@@ -106,7 +160,7 @@ public class RelayConnectionManager : MonoBehaviour
             Debug.LogException(e);
         }
     }
-    // Just for logging.
+
     void OnClientConnectedCallback(ulong clientId)
     {
         if (m_NetworkManager.LocalClientId == clientId)
@@ -116,7 +170,6 @@ public class RelayConnectionManager : MonoBehaviour
         }
     }
 
-    // Just for logging.
     void OnSessionOwnerPromoted(ulong sessionOwnerPromoted)
     {
         if (m_NetworkManager.LocalClient.IsSessionOwner)
@@ -130,6 +183,8 @@ public class RelayConnectionManager : MonoBehaviour
     {
         throwAwayCamera.enabled = false;
 
-        uiPanel.gameObject.SetActive(false);
+        uiPanel.SetActive(false);
+        relayPanel.SetActive(false);
+        lanPanel.SetActive(false);
     }
 }

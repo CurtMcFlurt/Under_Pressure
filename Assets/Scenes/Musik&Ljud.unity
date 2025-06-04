@@ -56823,7 +56823,7 @@ GameObject:
   - component: {fileID: 2018638365}
   m_Layer: 0
   m_Name: 'Boids Trigger '
-  m_TagString: Untagged
+  m_TagString: AudioTrigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56852,7 +56852,7 @@ MonoBehaviour:
     IgnoreSeek: 0
     exit: 0
     position: {x: 0, y: 0, z: 0}
-  - Action: 2
+  - Action: 3
     bgmEvent: 3
     paramName: 
     paramValue: 0
@@ -56891,7 +56891,7 @@ Transform:
   m_GameObject: {fileID: 2018638364}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.018, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

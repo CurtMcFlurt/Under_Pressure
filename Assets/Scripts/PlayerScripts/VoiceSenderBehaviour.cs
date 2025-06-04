@@ -5,7 +5,6 @@ using System;
 using System.Collections;
 using Unity.Collections;
 using Unity.Netcode;
-using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
 public class VoiceSenderBehaviour : NetworkBehaviour
@@ -83,7 +82,7 @@ public class VoiceSenderBehaviour : NetworkBehaviour
             lastMicPos = (lastMicPos + frameSize) % micClip.samples;
         }
     }
-    [Rpc(SendTo.Everyone)]
+    [Rpc(SendTo.NotMe)]
     private void TransmitVoiceRpc(byte[] compressedData, ulong senderId)
     {
         if (NetworkManager.Singleton.LocalClientId == senderId)
@@ -92,7 +91,7 @@ public class VoiceSenderBehaviour : NetworkBehaviour
         var receiver = VoiceReceiverBehaviour.GetReceiver(senderId);
         if (receiver != null)
         {
-            receiver.ReceiveVoiceData(compressedData);
+            receiver.ReceiveVoiceData(compressedData,this.gameObject);
         }
     }
 

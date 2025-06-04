@@ -1820,10 +1820,6 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 3923962205
       objectReference: {fileID: 0}
-    - target: {fileID: 6429379723393718855, guid: 305f00f4a734e55469042b0d069d5e67, type: 3}
-      propertyPath: raySize
-      value: 4.69
-      objectReference: {fileID: 0}
     - target: {fileID: 9027510292019023371, guid: 305f00f4a734e55469042b0d069d5e67, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.642483

@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7133390911102284664
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2072126878949039163}
+  - component: {fileID: 6956118186317409400}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: AudioManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2072126878949039163
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7133390911102284664}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 38.65848, y: -11.33, z: 13.9879}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6956118186317409400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7133390911102284664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1661a14adf2047e46832dca919f1a6d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmReferences:
+  - Guid:
+      Data1: -25966719
+      Data2: 1329757355
+      Data3: 1374779811
+      Data4: 693914
+    Path: event:/Music/Engine Room
+  - Guid:
+      Data1: 895144404
+      Data2: 1233689354
+      Data3: -1749363806
+      Data4: -1283647006
+    Path: event:/Sound/Ambiance/Ambience Sound
+  - Guid:
+      Data1: -521366443
+      Data2: 1138630426
+      Data3: 2056417178
+      Data4: -1695529680
+    Path: event:/Sound/Monster/Boids
+  gameOverStinger:
+    Guid:
+      Data1: -287562238
+      Data2: 1143863057
+      Data3: 302082193
+      Data4: 35101716
+    Path: event:/Music/Game Over Music
+  snapshotReference:
+    Guid:
+      Data1: -224201701
+      Data2: 1195064337
+      Data3: -1247404625
+      Data4: 707793081
+    Path: snapshot:/Under Water
+  keys: []

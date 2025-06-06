@@ -59,8 +59,7 @@ public class DeepAnimHandler : MonoBehaviour
    
         //audioEvent.Raise(this,attackSound);
         anim.SetTrigger("Attack");
-
-        audioEvent.MonsterListeningPlay(gameObject);
+        
         logic.pathfinder.AddTimeToWait(timeForAttack);
     }
     private void Screaming()
@@ -75,8 +74,7 @@ public class DeepAnimHandler : MonoBehaviour
     {
 
         anim.SetTrigger("IsEating");
-
-        audioEvent.MonsterHuntingPlay(gameObject);
+        
         logic.pathfinder.AddTimeToWait(timeForEat);
     }
     private void Listening()

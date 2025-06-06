@@ -2423,6 +2423,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2099015853}
+    - target: {fileID: 1928322029639916649, guid: 05b019ed7eca8b44f97fa6fe980456fa, type: 3}
+      propertyPath: m_VersionIndex
+      value: 694
+      objectReference: {fileID: 0}
     - target: {fileID: 3225119314317446600, guid: 05b019ed7eca8b44f97fa6fe980456fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 28.037773
@@ -17600,6 +17604,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1012478158}
+    - target: {fileID: 1963247628896168432, guid: 06174ae18d6eae0408f76932263a7307, type: 3}
+      propertyPath: m_VersionIndex
+      value: 1322
+      objectReference: {fileID: 0}
     - target: {fileID: 3034720085199072142, guid: 06174ae18d6eae0408f76932263a7307, type: 3}
       propertyPath: m_Name
       value: Shortcut1
@@ -23088,6 +23096,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 895401711}
+    - target: {fileID: 2472060162900366649, guid: 6a45de805bd32aa49a1ca41c250b7eb0, type: 3}
+      propertyPath: m_VersionIndex
+      value: 790
+      objectReference: {fileID: 0}
     - target: {fileID: 4908206757611680752, guid: 6a45de805bd32aa49a1ca41c250b7eb0, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -27436,6 +27448,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1733129097}
+    - target: {fileID: 1757385811745536124, guid: d196167ab7a88d84ea90e8c95d5fa1b6, type: 3}
+      propertyPath: m_VersionIndex
+      value: 800
+      objectReference: {fileID: 0}
     - target: {fileID: 3586104784883733580, guid: d196167ab7a88d84ea90e8c95d5fa1b6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 28.037773
@@ -32574,6 +32590,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 629950425}
+    - target: {fileID: 5021834789233672753, guid: 5d3fe20c2623bcc4897f95b0c26ef27e, type: 3}
+      propertyPath: m_VersionIndex
+      value: 2232
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -38010,6 +38030,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1213671864}
+    - target: {fileID: 8486958991383715546, guid: 2dc57ae1e012c0a4da9bca09e76dc85e, type: 3}
+      propertyPath: m_VersionIndex
+      value: 1306
+      objectReference: {fileID: 0}
     - target: {fileID: 9019391275376844005, guid: 2dc57ae1e012c0a4da9bca09e76dc85e, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -38244,6 +38268,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1064440015}
+    - target: {fileID: 5880560843064982327, guid: 950fb553d50a96c42a15853b85790628, type: 3}
+      propertyPath: m_VersionIndex
+      value: 3320
+      objectReference: {fileID: 0}
     - target: {fileID: 8196409008853976788, guid: 950fb553d50a96c42a15853b85790628, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -48065,6 +48093,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 621962094}
+    - target: {fileID: 6024510876983302331, guid: 32e6859509a7fca42af0b413f4e58f2b, type: 3}
+      propertyPath: m_VersionIndex
+      value: 512
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -53592,6 +53624,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6956118186317409400, guid: d854cd61f8eab8643ab5455956827048, type: 3}
+      propertyPath: bgmReferences.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956118186317409400, guid: d854cd61f8eab8643ab5455956827048, type: 3}
+      propertyPath: bgmReferences.Array.data[3].Path
+      value: event:/Music/Titel Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956118186317409400, guid: d854cd61f8eab8643ab5455956827048, type: 3}
+      propertyPath: bgmReferences.Array.data[3].Guid.Data1
+      value: -655708270
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956118186317409400, guid: d854cd61f8eab8643ab5455956827048, type: 3}
+      propertyPath: bgmReferences.Array.data[3].Guid.Data2
+      value: 1241912927
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956118186317409400, guid: d854cd61f8eab8643ab5455956827048, type: 3}
+      propertyPath: bgmReferences.Array.data[3].Guid.Data3
+      value: -1388023407
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956118186317409400, guid: d854cd61f8eab8643ab5455956827048, type: 3}
+      propertyPath: bgmReferences.Array.data[3].Guid.Data4
+      value: 125066903
+      objectReference: {fileID: 0}
     - target: {fileID: 7133390911102284664, guid: d854cd61f8eab8643ab5455956827048, type: 3}
       propertyPath: m_Name
       value: Audio Manager
@@ -53609,6 +53665,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1787766399}
     m_Modifications:
+    - target: {fileID: 3782528903623086920, guid: b6fe9a94276e3904994484e32933d2bf, type: 3}
+      propertyPath: audioSettings.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782528903623086920, guid: b6fe9a94276e3904994484e32933d2bf, type: 3}
+      propertyPath: audioSettings.Array.data[1].Action
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782528903623086920, guid: b6fe9a94276e3904994484e32933d2bf, type: 3}
+      propertyPath: audioSettings.Array.data[2].Action
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782528903623086920, guid: b6fe9a94276e3904994484e32933d2bf, type: 3}
+      propertyPath: audioSettings.Array.data[3].Action
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782528903623086920, guid: b6fe9a94276e3904994484e32933d2bf, type: 3}
+      propertyPath: audioSettings.Array.data[0].bgmEvent
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782528903623086920, guid: b6fe9a94276e3904994484e32933d2bf, type: 3}
+      propertyPath: audioSettings.Array.data[1].bgmEvent
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782528903623086920, guid: b6fe9a94276e3904994484e32933d2bf, type: 3}
+      propertyPath: audioSettings.Array.data[2].bgmEvent
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782528903623086920, guid: b6fe9a94276e3904994484e32933d2bf, type: 3}
+      propertyPath: audioSettings.Array.data[3].bgmEvent
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782528903623086920, guid: b6fe9a94276e3904994484e32933d2bf, type: 3}
+      propertyPath: audioSettings.Array.data[0].paramName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3874179768907269525, guid: b6fe9a94276e3904994484e32933d2bf, type: 3}
       propertyPath: m_Name
       value: Audio Zone Settings

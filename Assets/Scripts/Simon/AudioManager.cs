@@ -24,7 +24,8 @@ public enum BackgroundMusicEvents
     None,
     AmbienceMusic,
     AmbienceSound,
-    BoidsSound
+    BoidsSound,
+    TitleScreen
 }
 public class AudioManager : MonoBehaviour
 {
@@ -33,8 +34,8 @@ public class AudioManager : MonoBehaviour
 
     // Vi skapar referenser för att komma åt och lägga till FMOD event i inspektorn, och instanser som används för att spela ljud. 
     [Header("Background Music")] 
-    [SerializeField] private EventReference[] bgmReferences = new EventReference[3];
-    private EventInstance[] bgmInstances = new EventInstance[3];
+    [SerializeField] private EventReference[] bgmReferences = new EventReference[4];
+    private EventInstance[] bgmInstances = new EventInstance[4];
 
     [Header("GameOver")] [SerializeField] private EventReference gameOverStinger;
 

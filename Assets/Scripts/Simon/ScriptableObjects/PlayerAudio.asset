@@ -19,3 +19,10 @@ MonoBehaviour:
       Data3: 235695021
       Data4: 853788823
     Path: event:/Sound/Player/Footsteps
+  playerDieEvent:
+    Guid:
+      Data1: 1953933370
+      Data2: 1256302774
+      Data3: 420903848
+      Data4: 1978116616
+    Path: event:/Sound/Player/Player Die

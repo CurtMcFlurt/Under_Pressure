@@ -6,10 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="a028df7e-7bea-4c2f-be23-a01b24dc68c7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Under_Pressure/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Under_Pressure/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/DeepwalkerStuff/DeepwalkerKillANI.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/DeepwalkerStuff/DeepwalkerKillANI.fbx.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Banks/Desktop/Master.bank" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/Banks/Desktop/Master.bank" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/DesignerScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/DesignerScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Banks/Desktop/Master.strings.bank" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/Banks/Desktop/Master.strings.bank" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Musik&amp;Ljud.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Musik&amp;Ljud.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AI/Behaviour/DeepAnimHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AI/Behaviour/DeepAnimHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Simon/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Simon/AudioManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Simon/FoolFootStep.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Simon/FoolFootStep.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Simon/MonsterOneShots.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Simon/MonsterOneShots.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Simon/PlayerAudio.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Simon/PlayerAudio.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Simon/ScriptableObjects/MonsterOneShots.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Simon/ScriptableObjects/MonsterOneShots.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Simon/ScriptableObjects/PlayerAudio.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Simon/ScriptableObjects/PlayerAudio.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +134,8 @@
       <workItem from="1748594555709" duration="3180000" />
       <workItem from="1749045854514" duration="2608000" />
       <workItem from="1749202009956" duration="2775000" />
-      <workItem from="1749209543664" duration="4167000" />
+      <workItem from="1749209543664" duration="5831000" />
+      <workItem from="1749219656080" duration="220000" />
     </task>
     <servers />
   </component>

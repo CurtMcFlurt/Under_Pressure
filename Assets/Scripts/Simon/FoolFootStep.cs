@@ -9,7 +9,6 @@ public class FoolFootStep : MonoBehaviour
     
     public void FoolRunning()
         {
-            Debug.Log("Running");
             EventInstance eventInstance = RuntimeManager.CreateInstance(playerSteppingEvent);
             RuntimeManager.AttachInstanceToGameObject(eventInstance, this.transform);
             eventInstance.setParameterByName("Strenght", 0);
@@ -19,7 +18,6 @@ public class FoolFootStep : MonoBehaviour
     
     public void FoolWalking()
         {
-            Debug.Log("Walking");
             EventInstance eventInstance = RuntimeManager.CreateInstance(playerSteppingEvent);
             RuntimeManager.AttachInstanceToGameObject(eventInstance, this.transform);
             eventInstance.setParameterByName("Strenght", 1);
@@ -29,7 +27,6 @@ public class FoolFootStep : MonoBehaviour
     
     public void FoolCrouching()
     {
-        Debug.Log("Crouching");
         EventInstance eventInstance = RuntimeManager.CreateInstance(playerSteppingEvent);
         RuntimeManager.AttachInstanceToGameObject(eventInstance, this.transform);
         eventInstance.setParameterByName("Strenght", 2);

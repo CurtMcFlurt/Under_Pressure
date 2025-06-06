@@ -19,13 +19,6 @@ MonoBehaviour:
       Data3: 1473884344
       Data4: 2029006527
     Path: event:/Sound/Monster/Monster Listen
-  deepWalkerHuntingEvent:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
   deepWalkerFoundYouEvent:
     Guid:
       Data1: -1377004819
@@ -33,3 +26,10 @@ MonoBehaviour:
       Data3: -798291
       Data4: 1225609790
     Path: event:/Sound/Monster/Monster Roar
+  deepWalkerKillEvent:
+    Guid:
+      Data1: 1682571283
+      Data2: 1132884989
+      Data3: -636381310
+      Data4: 755164814
+    Path: event:/Sound/Monster/Monster Kill

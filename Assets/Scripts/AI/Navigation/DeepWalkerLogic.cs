@@ -81,6 +81,7 @@ public class DeepWalkerLogic : NetworkBehaviour
     public int NearbyValue=4;
     public NetworkVariable<float> Speed = new(writePerm: NetworkVariableWritePermission.Server);
     public GameEvent changeMusic;
+   
     public override void OnNetworkSpawn()
     {
         if (!HasAuthority)
@@ -155,7 +156,7 @@ public class DeepWalkerLogic : NetworkBehaviour
             changeMusic.Raise(this,"startMusic");
             if (HasAuthority)
             {
-                UpdateVision();
+                huntThePerson();
 
             }   Debug.Log("Hunting");
             return;
@@ -199,7 +200,7 @@ public class DeepWalkerLogic : NetworkBehaviour
         Speed.Value = pathfinder.curentSpeed;
         if(myBehaviour != ActiveBehaviour.hunting)
         {
-            TrackingObject = null;
+            //TrackingObject = null;
         }
     }
 

@@ -37,7 +37,7 @@ public class AttackScript : NetworkBehaviour
         // Already hunting a player
         if (logic.TrackingObject != null)
         {
-            if (hitPlayerCol.bounds.Contains(logic.TrackingObject.transform.position))
+            if (hitPlayerCol.bounds.Contains(logic.TrackingObject.transform.position) && logic.pathfinder.waitForTimer<=0)
             {
                 // Handle attack
                 isAttacking.Value = true;
@@ -69,6 +69,8 @@ public class AttackScript : NetworkBehaviour
                         logic.TrackingObject = hit.gameObject;
                         logic.AngerInfluence(1);
                         logic.AlertnessInfluence(1);
+                        logic.ForceScream = true;
+                        logic.pathfinder.AddTimeToWait(.1f);
                         Debug.Log("Target Acquired: " + hit.name);
                         break;
                     }

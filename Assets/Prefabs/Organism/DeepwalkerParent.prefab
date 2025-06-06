@@ -173,6 +173,7 @@ MonoBehaviour:
     m_Bits: 49153
   debugPath: []
   RecalculatePath: 0
+  waitForTimer: 0
   PathSegment: 0
   targetLeadDistance: 2
 --- !u!114 &2946835541160975649
@@ -461,6 +462,7 @@ MonoBehaviour:
   NearbyValue: 4
   Speed:
     m_InternalValue: 0
+  changeMusic: {fileID: 11400000, guid: 0335b9a3c5a1e7543b93359491f2f597, type: 2}
   keys: []
 --- !u!54 &8739728790375095593
 Rigidbody:
@@ -4352,14 +4354,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b99e4b32419f5842bd5bc28fca26f2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 8981830883532105017}
-  logic: {fileID: 2946835541160975649}
-  attack: {fileID: 2633435358114455319}
+  anim: {fileID: 0}
+  logic: {fileID: 0}
+  attack: {fileID: 0}
   audioEvent: {fileID: 11400000, guid: 6690cfc70da92204ca14adf9f7daf35d, type: 2}
-  timeForAttack: 2
-  timeForScream: 2
+  timeForAttack: 1.87
+  timeForScream: 2.1
   timeForEat: 4
-  timeForListen: 3
+  timeForListen: 3.1
   debugSceam: 0
   debugAttack: 0
   debugEat: 0

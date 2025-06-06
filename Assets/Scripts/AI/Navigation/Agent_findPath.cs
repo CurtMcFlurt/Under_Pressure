@@ -133,7 +133,7 @@ public class Agent_findPath : MonoBehaviour
     }
 
 
-    private float waitForTimer = 0;
+    public float waitForTimer = 0;
     private int nudge;
     // Update is called once per frame
     void Update()

@@ -12,10 +12,29 @@ public class CogPuzzleManager : NetworkBehaviour
     public GameEvent winEvent;
     public string sendString;
 
-    public NetworkVariable<bool> puzzleSolved = new NetworkVariable<bool>();
-    public NetworkVariable<bool> inUse = new NetworkVariable<bool>();
-    public NetworkVariable<bool> foundLost = new NetworkVariable<bool>();
+    public NetworkVariable<bool> inUse = new(
+      false,
+       NetworkVariableReadPermission.Everyone, // default is Everyone
+      NetworkVariableWritePermission.Owner
+  );
+
+    public NetworkVariable<bool> foundLost = new(
+     false,
+       NetworkVariableReadPermission.Everyone, // default is Everyone
+      NetworkVariableWritePermission.Owner
+    );
+
+    public NetworkVariable<bool> puzzleSolved = new(
+        false,
+       NetworkVariableReadPermission.Everyone, // default is Everyone
+      NetworkVariableWritePermission.Owner
+    );
+
+
     public StartPuzzleInteract puzzleInt;
+
+    private bool notWon;
+
     private void OnEnable()
     {
         myCollider = GetComponent<Collider>();
@@ -35,60 +54,65 @@ public class CogPuzzleManager : NetworkBehaviour
         {
             foreach (Transform child2 in child)
             {
-                SocketInteracting cog = child2.GetComponent<SocketInteracting>();
-                if (cog != null && !mySocks.Contains(cog))
+                SocketInteracting sock = child2.GetComponent<SocketInteracting>();
+                if (sock != null && !mySocks.Contains(sock))
                 {
-                    mySocks.Add(cog);
+                    mySocks.Add(sock);
                 }
             }
         }
-
     }
 
-    private bool notWon;
     void FixedUpdate()
     {
-        if (!HasAuthority)
+        if (!IsOwner)
         {
             puzzleInt.taken = inUse.Value;
-        }else if(!puzzleInt.taken) inUse.Value = false;
-
-            foreach (var cog in myCogs)
-            {
-                if (!myCollider.bounds.Contains(cog.transform.position))
-                {
-                    cog.Reset();
-                    Debug.Log("getMyCog");
-                }
-            }
-
-        int totalSolved = 0;
-        for (int i = 0; i < mySocks.Count; i++)
+        }
+        else if (!puzzleInt.taken)
         {
-            if (mySocks[i].Correct) totalSolved++;
-            Debug.Log(totalSolved + " ammount solved");
+            inUse.Value = false;
         }
 
-        if (totalSolved >= mySocks.Count && totalSolved != 0)
+        foreach (var cog in myCogs)
         {
-            puzzleSolved.Value = true; // This will trigger OnPuzzleSolvedChanged on all clients
-            Debug.Log("puzzle should be solved");
+            if (!myCollider.bounds.Contains(cog.transform.position))
+            {
+                cog.Reset();
+                Debug.Log("Resetting cog position");
+            }
+        }
+
+        int totalSolved = 0;
+        foreach (var sock in mySocks)
+        {
+            if (sock.Correct) totalSolved++;
+        }
+
+        if (totalSolved >= mySocks.Count && totalSolved != 0 && IsOwner)
+        {
+            puzzleSolved.Value = true;
+            Debug.Log("Puzzle solved!");
         }
 
         if (puzzleSolved.Value && !notWon)
         {
             SolvedPuzzle();
         }
-        
-        
     }
-
-  
 
     public void SolvedPuzzle()
     {
         Debug.Log("Solved: " + sendString);
         winEvent.Raise(this, sendString);
         notWon = true;
+    }
+
+    [Rpc(SendTo.Server)]
+    public void RequestPuzzleStartRpc(ulong playerId, bool lostCogFound)
+    {
+        NetworkObject.ChangeOwnership(playerId);
+        inUse.Value = true;
+        foundLost.Value = lostCogFound;
     }
 }

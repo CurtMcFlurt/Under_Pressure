@@ -11,11 +11,17 @@ public class LANDiscoveryManager : MonoBehaviour
     public NetworkManager networkManager;
     public Button hostButton;
     public Button joinButton;
+    public Button refreshButton;
     public Transform sessionListParent;
     public GameObject sessionButtonPrefab;
 
     private MyNetworkDiscovery networkDiscovery;
     private Dictionary<string, string> discoveredSessions = new Dictionary<string, string>();
+
+    private bool isDiscovering = false;
+    private float discoveryTimer = 0f;
+    private float discoveryInterval = 1f;
+    private float maxDiscoveryDuration = 10f;
 
     void Start()
     {
@@ -24,6 +30,8 @@ public class LANDiscoveryManager : MonoBehaviour
 
         hostButton.onClick.AddListener(StartLANHost);
         joinButton.onClick.AddListener(StartLANClient);
+        if (refreshButton != null)
+            refreshButton.onClick.AddListener(RefreshDiscovery);
     }
 
     void OnDestroy()
@@ -31,67 +39,76 @@ public class LANDiscoveryManager : MonoBehaviour
         if (networkDiscovery != null)
             networkDiscovery.OnServerFound -= OnServerFound;
     }
-   public void StartLANHost()
+
+    public void StartLANHost()
     {
         networkManager.StartHost();
         networkDiscovery.StartServer();
+
+     
     }
 
-    private float discoveryInterval = 1f;
-    private float discoveryDuration = 10f;
-    private float elapsed = 0f;
-    private bool isDiscovering = false;
-
     public void StartLANClient()
+    {
+        RefreshDiscovery();
+    }
+
+    public void RefreshDiscovery()
     {
         discoveredSessions.Clear();
         foreach (Transform child in sessionListParent)
             Destroy(child.gameObject);
 
-        networkDiscovery.StartClient();
+        if (!isDiscovering)
+            networkDiscovery.StartClient();
+
         isDiscovering = true;
-        elapsed = 0f;
+        discoveryTimer = 0f;
     }
 
     void Update()
     {
         if (!isDiscovering) return;
 
-        elapsed += Time.deltaTime;
-        if (elapsed >= discoveryDuration)
+        discoveryTimer += Time.deltaTime;
+
+        if (discoveryTimer >= discoveryInterval)
         {
-            isDiscovering = false;
-            return;
+            discoveryTimer = 0f;
+            networkDiscovery.ClientBroadcast(new DiscoveryBroadcastData());
         }
 
-        if (Time.frameCount % Mathf.RoundToInt(discoveryInterval / Time.deltaTime) == 0)
+        if (discoveryTimer >= maxDiscoveryDuration)
         {
-            networkDiscovery.ClientBroadcast(new DiscoveryBroadcastData());
+            isDiscovering = false;
+            networkDiscovery.StopDiscovery();
         }
     }
 
     public void Stop()
     {
         networkDiscovery.StopDiscovery();
+        isDiscovering = false;
     }
+
     void OnServerFound(IPEndPoint sender, DiscoveryResponseData response)
     {
-        Debug.Log("ShouldFindServer");
-        if (!discoveredSessions.ContainsKey(response.ServerAddress.ToString()))
-        {
-            discoveredSessions.Add(response.ServerAddress.ToString(), sender.Address.ToString());
-            Debug.Log("foundServer");
-            GameObject buttonObj = Instantiate(sessionButtonPrefab, sessionListParent);
-            buttonObj.GetComponentInChildren<TMP_Text>().text = response.ServerName.ToString();
-            buttonObj.GetComponentInChildren<Button>().onClick.AddListener(() =>
-            {
-                // Stop listening/receiving before changing transport or starting client
-                networkDiscovery.StopDiscovery();
+        if (discoveredSessions.ContainsKey(response.ServerAddress.ToString()))
+            return;
 
-                var transport = (Unity.Netcode.Transports.UTP.UnityTransport)networkManager.NetworkConfig.NetworkTransport;
-                transport.SetConnectionData(sender.Address.ToString(), 7777);
-                networkManager.StartClient();
-            });
-        }
+        discoveredSessions.Add(response.ServerAddress.ToString(), sender.Address.ToString());
+
+        GameObject buttonObj = Instantiate(sessionButtonPrefab, sessionListParent);
+        buttonObj.GetComponentInChildren<TMP_Text>().text = response.ServerName.ToString();
+        buttonObj.GetComponentInChildren<Button>().onClick.AddListener(() =>
+        {
+            Stop();
+
+            var transport = (Unity.Netcode.Transports.UTP.UnityTransport)networkManager.NetworkConfig.NetworkTransport;
+            transport.SetConnectionData(sender.Address.ToString(), 7777);
+            networkManager.StartClient();
+        });
+
+        Debug.Log($"? Found LAN server: {response.ServerName} at {sender.Address}");
     }
 }

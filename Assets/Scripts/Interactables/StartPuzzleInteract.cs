@@ -1,7 +1,5 @@
-using NUnit.Framework;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
 
 public class StartPuzzleInteract : Interactable
 {
@@ -10,8 +8,8 @@ public class StartPuzzleInteract : Interactable
     public Collider interactCollider;
     public GameObject lidObject;
     public CogPuzzleManager manager;
-    public float lidRotation = 90f; // Desired rotation in degrees
-    public float lidLerpSpeed = 2f; // How fast the lid opens/closes
+    public float lidRotation = 90f;
+    public float lidLerpSpeed = 2f;
     public bool lockMe;
     public NetworkObject puzzleObject;
     public GameObject missingCog;
@@ -24,41 +22,39 @@ public class StartPuzzleInteract : Interactable
 
     public override void StartInteraction(GameObject sender)
     {
-        if (lockMe) { return; }
-        bool myCog=false;
-        if (missingCog != null) 
-        { 
-            var v = sender.GetComponent<HoldAThing>();
-            if (v.handHoldItem != null) 
+        if (lockMe) return;
+
+        bool myCog = false;
+
+        if (missingCog != null)
+        {
+            var holder = sender.GetComponent<HoldAThing>();
+            if (holder != null && holder.handHoldItem == missingCog)
             {
-                if (v.handHoldItem == missingCog) 
-                { 
                 missingCog = null;
                 cogTomiss.SetActive(true);
-                   myCog = true;
-                     
-                   
-                v.DropHeldItem();
-                }
+                myCog = true;
+                holder.DropHeldItem();
             }
         }
-        var take = sender.GetComponent<TakeTheCamera>();
-        myCameraNow = take;
-        take.activeStealer = this;
-        take.StealThecamera(CameraPoint);
-        NetworkObject t;
-        sender.TryGetComponent<NetworkObject>(out t);
-        if (t != null) { puzzleObject.ChangeOwnership(t.OwnerClientId); 
-        puzzleObject.GetComponent<CogPuzzleManager>().inUse.Value = true;
-            if(myCog)puzzleObject.GetComponent<CogPuzzleManager>().foundLost.Value = true;
+
+        var cameraUser = sender.GetComponent<TakeTheCamera>();
+        myCameraNow = cameraUser;
+        cameraUser.activeStealer = this;
+        cameraUser.StealThecamera(CameraPoint);
+
+        if (sender.TryGetComponent(out NetworkObject playerNetworkObj))
+        {
+            manager.RequestPuzzleStartRpc(playerNetworkObj.OwnerClientId, myCog);
         }
-        Debug.Log(t.gameObject.name);
+
         taken = true;
     }
 
     public void Update()
     {
-        if(puzzleObject.GetComponent<CogPuzzleManager>().foundLost.Value)cogTomiss.SetActive(true);
+        if (manager.foundLost.Value) cogTomiss.SetActive(true);
+
         if (taken)
         {
             interactCollider.enabled = false;
@@ -89,22 +85,25 @@ public class StartPuzzleInteract : Interactable
             }
         }
     }
+
     public void UnPackData(Component sender, object data)
     {
-        // Check if the data is a string before proceeding
         if (data is string keyName)
         {
             Debug.Log($"Scene change requested: {keyName}");
 
-            if (keyName == manager.sendString) { taken = false; lockMe = true; }
+            if (keyName == manager.sendString)
+            {
+                taken = false;
+                lockMe = true;
+            }
         }
         else
         {
             Debug.LogWarning("Data is not a valid scene name string.");
         }
-
-        
     }
+
     public void ReleasePuzzle()
     {
         taken = false;

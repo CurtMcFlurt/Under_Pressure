@@ -14,7 +14,8 @@ public enum TriggerAction
     Play,
     Stop,
     SetParameter,
-    OneShot
+    PlaySnapShot,
+    StopSnapShot
 }
 
 // Enum Background Music Events skapar en lista som används för att bestämma vilket FMOD event som ska påverkas.
@@ -36,6 +37,10 @@ public class AudioManager : MonoBehaviour
     private EventInstance[] bgmInstances = new EventInstance[3];
 
     [Header("GameOver")] [SerializeField] private EventReference gameOverStinger;
+
+    [Header("SnapShots")] 
+    [SerializeField] private EventReference snapshotReference;
+    private EventInstance snapshotInstance; 
     
     // I Awake ser vi till att det bara finns en Audiomanager i scenen och att den inte förstörs mellan scenbyten.
     private void Awake()
@@ -120,6 +125,32 @@ public class AudioManager : MonoBehaviour
         }
 
         bgmInstances[num].setParameterByName(paramName, paramValue, ignoreSeek);
+    }
+
+    public void PlaySnapshot()
+    {
+        snapshotInstance = RuntimeManager.CreateInstance(snapshotReference);
+        
+        bool isActive = CheckActiveState(snapshotInstance);
+
+        if (!isActive)
+        {
+            snapshotInstance.start();
+        }
+    }
+
+    public void StopSnapshot(bool ignoreFadeOut)
+    {
+        if (ignoreFadeOut)
+        {
+            snapshotInstance.stop(STOP_MODE.IMMEDIATE);
+        }
+        else
+        {
+            snapshotInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        }
+        
+        snapshotInstance.release();
     }
 
     // Check Active State används för att se om ett FMOD event är aktivt eller ej.

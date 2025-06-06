@@ -60,6 +60,12 @@ public class AudioTrigger : MonoBehaviour
                         aM.SetParameter(aS.bgmEvent, aS.paramName, aS.paramValue, aS.IgnoreSeek, aS.paramIsGlobal); 
                         Debug.Log(aS.paramName + " is = " + aS.paramValue);
                         break;
+                    case TriggerAction.PlaySnapShot:
+                        aM.PlaySnapshot();
+                        break;
+                    case TriggerAction.StopSnapShot:
+                        aM.StopSnapshot(aS.IgnoreFadeOut);
+                        break;
                     
                 }
             }
@@ -94,6 +100,12 @@ public class AudioTrigger : MonoBehaviour
                     case TriggerAction.SetParameter:
                         aM.SetParameter(aS.bgmEvent, aS.paramName, aS.paramValue, aS.IgnoreSeek, aS.paramIsGlobal);
                         Debug.Log(aS.paramName + " is = " + aS.paramValue);
+                        break;
+                    case TriggerAction.PlaySnapShot:
+                        aM.PlaySnapshot();
+                        break;
+                    case TriggerAction.StopSnapShot:
+                        aM.StopSnapshot(aS.IgnoreFadeOut);
                         break;
                 }
             }

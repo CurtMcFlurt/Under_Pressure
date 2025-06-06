@@ -7,6 +7,7 @@ public class Cog : MonoBehaviour
     public LayerMask socketLayer;
     private Rigidbody rigid;
     public SocketInteracting mySocket;
+    public bool xorz=false;
     [Range(1, 100)]
     public float Size=25;
     void OnEnable()
@@ -20,8 +21,16 @@ public class Cog : MonoBehaviour
     {
         if(ActiveSocket != null)
         {
-            //transform.position =new Vector3( ActiveSocket.transform.position.x,ActiveSocket.transform.position.y,transform.position.z);
-            transform.position =new Vector3( transform.position.x,ActiveSocket.transform.position.y,ActiveSocket.transform.position.z);
+            if (!xorz)
+            {
+                transform.position = new Vector3(ActiveSocket.transform.position.x, ActiveSocket.transform.position.y, transform.position.z);
+
+            }
+            else
+            {
+                transform.position = new Vector3(transform.position.x, ActiveSocket.transform.position.y, ActiveSocket.transform.position.z);
+
+            }
             rigid.useGravity = false;
         }
         else rigid.useGravity = true;

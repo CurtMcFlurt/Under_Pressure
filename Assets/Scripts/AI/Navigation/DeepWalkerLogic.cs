@@ -168,7 +168,7 @@ public class DeepWalkerLogic : NetworkBehaviour
             //not true
         }
         if(!HasAuthority) return;
-        
+      
         UpdateMoodTicks();
         //reacting to sound happens when the AI isnt activly hunting a person
         if (reactToSound)
@@ -198,10 +198,12 @@ public class DeepWalkerLogic : NetworkBehaviour
             TimeToSleep();
         }
         Speed.Value = pathfinder.curentSpeed;
-        if(myBehaviour != ActiveBehaviour.hunting)
+        if (TrackingObject!=null)
         {
-            //TrackingObject = null;
+
+            TrackingObject = null;
         }
+
     }
 
     private void FixedUpdate()

@@ -26,8 +26,8 @@ public class RelayConnectionManager : MonoBehaviour
 
     [Header("Connection Mode Buttons")]
     public Button relayConnectButton;
-    public Button lanConnectButton;
-    public Button lanHostButton;
+    public Button lanConnectButton; // ? Client connect
+    public Button lanHostButton;    // ? Host button
 
     [Header("Netcode")]
     public NetworkManager m_NetworkManager;
@@ -66,8 +66,8 @@ public class RelayConnectionManager : MonoBehaviour
 
         // Hook button click events
         relayConnectButton.onClick.AddListener(() => StartRelayConnection());
-        lanConnectButton.onClick.AddListener(() => StartLANHostConnection());
-        lanHostButton.onClick.AddListener(() => StartLAN());
+        lanConnectButton.onClick.AddListener(() => StartLANClientConnection());
+        lanHostButton.onClick.AddListener(() => StartLANHostConnection());
     }
 
     public async void Disconnect()
@@ -91,25 +91,24 @@ public class RelayConnectionManager : MonoBehaviour
 
     public void StartRelayConnection()
     {
-        if (Mode == ConnectionMode.LAN)
-        {
-            lanDiscoveryManager.Stop(); // <--- Safely stop LAN discovery
-        }
+        Debug.Log("Starting Relay Connection...");
 
+        DisconnectLANIfNeeded();
         Mode = ConnectionMode.Relay;
+
         relayPanel.SetActive(true);
         lanPanel.SetActive(false);
 
         StartRelay();
     }
 
-
     public void StartLANHostConnection()
     {
-        if (m_NetworkManager.IsListening)
-            m_NetworkManager.Shutdown();
+        Debug.Log("Starting LAN Host...");
 
+        DisconnectRelayIfNeeded();
         Mode = ConnectionMode.LAN;
+
         relayPanel.SetActive(false);
         lanPanel.SetActive(true);
 
@@ -118,14 +117,23 @@ public class RelayConnectionManager : MonoBehaviour
 
         lanDiscoveryManager.StartLANHost();
     }
+
+    public void StartLANClientConnection()
+    {
+        Debug.Log("Starting LAN Client Discovery...");
+
+        DisconnectRelayIfNeeded();
+        Mode = ConnectionMode.LAN;
+
+        relayPanel.SetActive(false);
+        lanPanel.SetActive(true);
+
+        lanDiscoveryManager.StartLANClient();
+    }
+
     public async void StartRelay()
     {
         await CreateOrJoinSessionAsync(joinCodeInput.text, NameInput.text);
-    }
-
-    public void StartLAN()
-    {
-        lanDiscoveryManager.StartLANClient(); // or StartLANHost() based on how you want to test
     }
 
     public async Task CreateOrJoinSessionAsync(string sessionName, string profileName)
@@ -186,5 +194,32 @@ public class RelayConnectionManager : MonoBehaviour
         uiPanel.SetActive(false);
         relayPanel.SetActive(false);
         lanPanel.SetActive(false);
+    }
+
+    void DisconnectLANIfNeeded()
+    {
+        if (Mode == ConnectionMode.LAN)
+        {
+            if (m_NetworkManager.IsListening || m_NetworkManager.IsClient)
+            {
+                m_NetworkManager.Shutdown();
+            }
+
+            lanDiscoveryManager.Stop();
+            Debug.Log("Cleaned up LAN mode.");
+        }
+    }
+
+    void DisconnectRelayIfNeeded()
+    {
+        if (Mode == ConnectionMode.Relay)
+        {
+            if (m_NetworkManager.IsListening || m_NetworkManager.IsClient)
+            {
+                m_NetworkManager.Shutdown();
+            }
+
+            Debug.Log("Cleaned up Relay mode.");
+        }
     }
 }

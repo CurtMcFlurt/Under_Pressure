@@ -11,6 +11,7 @@ public class PlayerDeath : MonoBehaviour
     private float originalHeight;
     private  float myTimer;
     public float deathTimer;
+    public GameObject deathScreen;
     public void OnEnable()
     {
         debugRespawnPoint = transform.position;
@@ -21,6 +22,7 @@ public class PlayerDeath : MonoBehaviour
 
     public void Update()
     {
+        deathScreen.SetActive(IsDead);
         if (debugDie && !IsDead)
         {
             debugDie = false;
@@ -59,4 +61,11 @@ public class PlayerDeath : MonoBehaviour
         transform.position = respawnPoint;
     }
 
+
+    public void UIrevive()
+    {
+        Debug.Log("revive");
+        debugRespawn = false;
+        Revive(debugRespawnPoint);
+    }
 }

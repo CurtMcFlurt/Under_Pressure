@@ -44,7 +44,7 @@ public class PlayerMovement : NetworkBehaviour
     public Animator myAnim;
     public GameObject playerVisualRoot;
     public GameEvent spawnEvent;
-
+    public bool freeMouse;
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) { cameraTransform.GetComponent<Camera>().enabled = false; cameraTransform.GetComponent<StudioListener>().enabled = false; foreach (var v in disableObjects) {
@@ -232,6 +232,16 @@ public class PlayerMovement : NetworkBehaviour
     {
 
         if (!IsOwner || stopLooking) return;
+        if (myDeath.IsDead || freeMouse)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }else
+        {
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         Vector2 lookInput = lookAction.ReadValue<Vector2>();
 
         float mouseX = lookInput.x * lookSpeed;

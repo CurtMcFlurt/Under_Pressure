@@ -72,9 +72,8 @@ public class LANDiscoveryManager : MonoBehaviour
 
         discoveryTimer += Time.deltaTime;
 
-        if (discoveryTimer >= discoveryInterval)
+        if (discoveryTimer % discoveryInterval < Time.deltaTime)
         {
-            discoveryTimer = 0f;
             networkDiscovery.ClientBroadcast(new DiscoveryBroadcastData());
         }
 
@@ -82,6 +81,12 @@ public class LANDiscoveryManager : MonoBehaviour
         {
             isDiscovering = false;
             networkDiscovery.StopDiscovery();
+
+            if (discoveredSessions.Count == 0)
+            {
+                Debug.LogWarning("No LAN servers found.");
+                // Optional: Trigger UI feedback
+            }
         }
     }
 

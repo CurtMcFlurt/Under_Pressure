@@ -57,12 +57,8 @@ public class TakeTheCamera : MonoBehaviour
             var r = FindAnyObjectByType<RelayConnectionManager>();
             r.uiPanel.SetActive(!r.uiPanel.activeInHierarchy);
             myPlayerMovement.StopMoving = !r.uiPanel.activeInHierarchy;
-
-            if (!r.uiPanel.activeInHierarchy)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-            else Cursor.lockState = CursorLockMode.None;
+            myPlayerMovement.freeMouse = r.uiPanel.activeInHierarchy;
+           
             Cursor.visible = !r.uiPanel.activeInHierarchy;
             acd = cd;
         }

@@ -192,6 +192,25 @@ public class AudioManager : MonoBehaviour
         if (data is string keyName)
         {
             Debug.Log($"Scene change requested: {keyName}");
+
+            if (sender is DeepWalkerLogic)
+            {
+                if (keyName == "startMusic")
+                {
+                    SetParameter(BackgroundMusicEvents.AmbienceMusic,"Detection",1,true, false);
+                    Debug.Log("Parameter is 1");
+                    return;
+                }
+
+                if (keyName == "stopMusic")
+                {
+                    SetParameter(BackgroundMusicEvents.AmbienceMusic,"Detection",0,true, false);
+                    Debug.Log("Parameter is 0");
+                    return;
+                }
+                return;
+            }
+            
             
             if (!keys.Contains(keyName))
             {
@@ -200,6 +219,11 @@ public class AudioManager : MonoBehaviour
                 SetParameter(BackgroundMusicEvents.AmbienceMusic,"Progression",currentAmmount,true, false);
                 Debug.Log( + currentAmmount);
             }
+
+            
+            
+            
+            
         }
         else
         {

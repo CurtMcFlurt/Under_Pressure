@@ -80,7 +80,7 @@ public class DeepWalkerLogic : NetworkBehaviour
     public int ammountToKill = 4;
     public int NearbyValue=4;
     public NetworkVariable<float> Speed = new(writePerm: NetworkVariableWritePermission.Server);
-
+    public GameEvent changeMusic;
     public override void OnNetworkSpawn()
     {
         if (!HasAuthority)
@@ -143,15 +143,30 @@ public class DeepWalkerLogic : NetworkBehaviour
     private float timeSinceLastSound = 0;
     void Update()
     {
-        if (!HasAuthority) return;
-        UpdateVision();
+        if (HasAuthority)
+        {
+            UpdateVision();
+
+        }
      
         if (TrackingObject != null && myBehaviour==ActiveBehaviour.hunting)
         {
-            huntThePerson();
-            Debug.Log("Hunting");
+            //true
+            changeMusic.Raise(this,"startMusic");
+            if (HasAuthority)
+            {
+                UpdateVision();
+
+            }   Debug.Log("Hunting");
             return;
         }
+        else
+        {
+            
+            changeMusic.Raise(this,"stopMusic");
+            //not true
+        }
+        if(!HasAuthority) return;
         
         UpdateMoodTicks();
         //reacting to sound happens when the AI isnt activly hunting a person

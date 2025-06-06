@@ -189,6 +189,7 @@ public class AudioManager : MonoBehaviour
     public void UnPackData(Component sender, object data)
     {
         // Kollar om datan är en string innan det går vidare.
+     
         if (data is string keyName)
         {
             Debug.Log($"Scene change requested: {keyName}");
@@ -198,14 +199,12 @@ public class AudioManager : MonoBehaviour
                 if (keyName == "startMusic")
                 {
                     SetParameter(BackgroundMusicEvents.AmbienceMusic,"Detection",1,true, false);
-                    Debug.Log("Parameter is 1");
                     return;
                 }
 
                 if (keyName == "stopMusic")
                 {
                     SetParameter(BackgroundMusicEvents.AmbienceMusic,"Detection",0,true, false);
-                    Debug.Log("Parameter is 0");
                     return;
                 }
                 return;

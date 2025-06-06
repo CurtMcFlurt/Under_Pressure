@@ -4354,9 +4354,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b99e4b32419f5842bd5bc28fca26f2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  logic: {fileID: 0}
-  attack: {fileID: 0}
+  anim: {fileID: 8981830883532105017}
+  logic: {fileID: 2946835541160975649}
+  attack: {fileID: 2633435358114455319}
   audioEvent: {fileID: 11400000, guid: 6690cfc70da92204ca14adf9f7daf35d, type: 2}
   timeForAttack: 1.87
   timeForScream: 2.1
